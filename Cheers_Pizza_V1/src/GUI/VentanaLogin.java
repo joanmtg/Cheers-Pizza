@@ -1,45 +1,19 @@
-/**
- * Proyecto Desarrollo de Software II
- * Fecha de entrega: 19/04/2017
- * Universidad del Valle
- * EISC
- *
- * Integrantes: 
- *
- * Jhonier Andrés Calero Rodas		1424599
- * Fabio Andrés Castañeda Duarte	1424386
- * Juan Pablo Moreno Muñoz		1423437
- * Joan Manuel Tovar Guzmán		1423124
- *
- * file: VentanaLogin.java
- * 
- */
-
-package GUI;
-
-
-import AccesoDatosORM.AdaptadorCategoriaControlador;
-import AccesoDatosORM.AdaptadorClienteControlador;
-import AccesoDatosORM.AdaptadorEmpleadoControlador;
-import AccesoDatosORM.AdaptadorFacturaControlador;
-import AccesoDatosORM.AdaptadorFacturaItemControlador;
-import AccesoDatosORM.AdaptadorItemControlador;
-import AccesoDatosORM.AdaptadorPedidoControlador;
-import AccesoDatosORM.AdaptadorSucursalControlador;
-import Administracion.*;
-import Reportes.Reportes;
-import java.awt.event.KeyEvent;
-import Validaciones.Validaciones;
-import java.time.LocalTime;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package GUI;
+
+import AccesoDatosORM.*;
+import Administracion.*;
+import Validaciones.Validaciones;
+import java.time.LocalTime;
+import javax.swing.border.Border;
 
 /**
  *
- * @author Fabio Andres
+ * @author Joan
  */
 public class VentanaLogin extends javax.swing.JFrame {
 
@@ -53,9 +27,13 @@ public class VentanaLogin extends javax.swing.JFrame {
     AdaptadorFacturaItemControlador controladorFacturaItem = new AdaptadorFacturaItemControlador();
     AdaptadorPedidoControlador controladorPedido = new AdaptadorPedidoControlador();
     
+    /**
+     * Creates new form GUILogin
+     */
     public VentanaLogin() {
-        super("Bienvenido a Pizzeria Cheers");
+        super("Bienvenido a la Pizzería Cheers");
         initComponents();
+        setLocationRelativeTo(null);
         
         // Creando sucursal
         Sucursal nuevaSucursal = new Sucursal("Cheers Cali", "Calle 20", "2945423");
@@ -108,6 +86,13 @@ public class VentanaLogin extends javax.swing.JFrame {
         Pedido nuevoPedido = new Pedido("A domicilio", LocalTime.of(9, 10), LocalTime.of(9, 15), nuevoCliente, nuevaSucursal);
         controladorPedido.crearPedido(nuevoPedido);
     }
+    
+    public void limpiarCampos(){
+        setLocationRelativeTo(null);
+        tfUser.setText("");
+        tfPasswd.setText("");        
+        tfUser.requestFocus();        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -118,187 +103,117 @@ public class VentanaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        panelInfoVentanaP = new javax.swing.JPanel();
-        labelInfoUsuarioVentanaP = new javax.swing.JLabel();
-        tfUsuarioVentanaP = new javax.swing.JTextField();
-        labelInfoContraseñaVentanaP = new javax.swing.JLabel();
-        separatorVentanaP = new javax.swing.JSeparator();
-        tfContraseñaVentanaP = new javax.swing.JPasswordField();
-        botonIngresarVentanaP = new javax.swing.JButton();
-        labelInfoOlvidoPass = new javax.swing.JLabel();
-        labelImagenVentanaP = new javax.swing.JLabel();
+        panelPrincipal = new javax.swing.JPanel();
+        tfUser = new javax.swing.JTextField();
+        tfPasswd = new javax.swing.JPasswordField();
+        lLogo = new javax.swing.JLabel();
+        bLogin = new javax.swing.JButton();
+        lInfoIngreso = new javax.swing.JLabel();
+        lUser = new javax.swing.JLabel();
+        lPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(65, 105, 225));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(102, 0, 51));
+        panelPrincipal.setBackground(new java.awt.Color(89, 30, 27));
 
-        panelInfoVentanaP.setBackground(new java.awt.Color(102, 0, 51));
-        panelInfoVentanaP.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Acceso al sistema", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14), new java.awt.Color(255, 255, 255))); // NOI18N
-        panelInfoVentanaP.setForeground(new java.awt.Color(255, 255, 255));
-        panelInfoVentanaP.setToolTipText("");
-        panelInfoVentanaP.setName(""); // NOI18N
+        tfUser.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
+        tfUser.setText("username");
+        tfUser.setPreferredSize(new java.awt.Dimension(53, 30));
 
-        labelInfoUsuarioVentanaP.setBackground(new java.awt.Color(255, 255, 255));
-        labelInfoUsuarioVentanaP.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
-        labelInfoUsuarioVentanaP.setForeground(new java.awt.Color(255, 255, 255));
-        labelInfoUsuarioVentanaP.setText("USUARIO");
+        tfPasswd.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
+        tfPasswd.setText("jPasswordField1");
 
-        tfUsuarioVentanaP.setToolTipText("");
-        tfUsuarioVentanaP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        tfUsuarioVentanaP.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tfUsuarioVentanaPKeyTyped(evt);
-            }
-        });
+        lLogo.setBackground(new java.awt.Color(89, 30, 27));
+        lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
 
-        labelInfoContraseñaVentanaP.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
-        labelInfoContraseñaVentanaP.setForeground(new java.awt.Color(255, 255, 255));
-        labelInfoContraseñaVentanaP.setText("CONTRASEÑA");
-
-        tfContraseñaVentanaP.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tfContraseñaVentanaPKeyTyped(evt);
-            }
-        });
-
-        botonIngresarVentanaP.setText("Ingresar");
-        botonIngresarVentanaP.addActionListener(new java.awt.event.ActionListener() {
+        bLogin.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
+        bLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLogin.png"))); // NOI18N
+        bLogin.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLoginPR.png"))); // NOI18N
+        bLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonIngresarVentanaPActionPerformed(evt);
+                bLoginActionPerformed(evt);
             }
         });
 
-        labelInfoOlvidoPass.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
-        labelInfoOlvidoPass.setForeground(new java.awt.Color(255, 255, 255));
-        labelInfoOlvidoPass.setText("Los datos no coinciden. Intentelo nuevamente");
+        lInfoIngreso.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
+        lInfoIngreso.setForeground(new java.awt.Color(255, 255, 255));
+        lInfoIngreso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lInfoIngreso.setText("Por favor, ingrese sus datos para iniciar sesión");
 
-        javax.swing.GroupLayout panelInfoVentanaPLayout = new javax.swing.GroupLayout(panelInfoVentanaP);
-        panelInfoVentanaP.setLayout(panelInfoVentanaPLayout);
-        panelInfoVentanaPLayout.setHorizontalGroup(
-            panelInfoVentanaPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfoVentanaPLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(separatorVentanaP)
-                .addContainerGap())
-            .addGroup(panelInfoVentanaPLayout.createSequentialGroup()
-                .addGroup(panelInfoVentanaPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInfoVentanaPLayout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addGroup(panelInfoVentanaPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelInfoVentanaPLayout.createSequentialGroup()
-                                .addComponent(labelInfoUsuarioVentanaP)
-                                .addGap(37, 37, 37))
-                            .addGroup(panelInfoVentanaPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfUsuarioVentanaP, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tfContraseñaVentanaP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panelInfoVentanaPLayout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(labelInfoContraseñaVentanaP))
-                    .addGroup(panelInfoVentanaPLayout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(botonIngresarVentanaP)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoVentanaPLayout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
-                .addComponent(labelInfoOlvidoPass)
-                .addGap(62, 62, 62))
-        );
-        panelInfoVentanaPLayout.setVerticalGroup(
-            panelInfoVentanaPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfoVentanaPLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(labelInfoUsuarioVentanaP)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tfUsuarioVentanaP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelInfoContraseñaVentanaP)
-                .addGap(13, 13, 13)
-                .addComponent(tfContraseñaVentanaP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(botonIngresarVentanaP)
-                .addGap(18, 18, 18)
-                .addComponent(separatorVentanaP, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(labelInfoOlvidoPass)
-                .addContainerGap(77, Short.MAX_VALUE))
-        );
+        lUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
 
-        labelImagenVentanaP.setBackground(new java.awt.Color(204, 204, 204));
-        labelImagenVentanaP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logoVentanaP.png"))); // NOI18N
-        labelImagenVentanaP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelInfoVentanaP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(labelImagenVentanaP)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lInfoIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(lUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfUser, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(lPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(100, 100, 100))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(labelImagenVentanaP, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(panelInfoVentanaP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lPass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32)
+                .addComponent(lInfoIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfUsuarioVentanaPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfUsuarioVentanaPKeyTyped
-        // Para que capture el ENTER
-        char cTeclaPresionada = evt.getKeyChar();
+    private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
         
-        if(cTeclaPresionada == KeyEvent.VK_ENTER){
-            botonIngresarVentanaP.doClick();
-        }
-        /*                
-        validaciones.validarTamano(tfUsuarioVentanaP, evt, 10);
-        validaciones.validarNumeros(evt);*/
+        VentanaPrincipal ventanaPpal = new VentanaPrincipal(this);
+        ventanaPpal.setVisible(true);
+        this.setVisible(false);
         
-    }//GEN-LAST:event_tfUsuarioVentanaPKeyTyped
-
-    private void tfContraseñaVentanaPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfContraseñaVentanaPKeyTyped
-        // Para que capture el ENTER
-        char cTeclaPresionada = evt.getKeyChar();
-        
-        if(cTeclaPresionada == KeyEvent.VK_ENTER){
-            botonIngresarVentanaP.doClick();
-        }
-    }//GEN-LAST:event_tfContraseñaVentanaPKeyTyped
-
-    private void botonIngresarVentanaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarVentanaPActionPerformed
-        // TODO add your handling code here:
-        if(tfUsuarioVentanaP.getText().equals("") || tfContraseñaVentanaP.getText().equals("")){
-            separatorVentanaP.setVisible(true);
-            labelInfoOlvidoPass.setVisible(true);
-        }
-        
-        Reportes prueba = new Reportes();
-        prueba.reportePrueba();
-    }//GEN-LAST:event_botonIngresarVentanaPActionPerformed
+    }//GEN-LAST:event_bLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,14 +226,10 @@ public class VentanaLogin extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-                /*if ("Nimbus".equals(info.getName())) {
-                 javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                 break;
-                 }*/
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -331,47 +242,23 @@ public class VentanaLogin extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VentanaLogin objVentanaPrincipal = new VentanaLogin();
-                objVentanaPrincipal.setVisible(true);
-                objVentanaPrincipal.separatorVentanaP.setVisible(false);
-                objVentanaPrincipal.labelInfoOlvidoPass.setVisible(false);
-                
-                
+                new VentanaLogin().setVisible(true);
             }
         });
-        
-        
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonIngresarVentanaP;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel labelImagenVentanaP;
-    private javax.swing.JLabel labelInfoContraseñaVentanaP;
-    private javax.swing.JLabel labelInfoOlvidoPass;
-    private javax.swing.JLabel labelInfoUsuarioVentanaP;
-    private javax.swing.JPanel panelInfoVentanaP;
-    public javax.swing.JSeparator separatorVentanaP;
-    private javax.swing.JPasswordField tfContraseñaVentanaP;
-    private javax.swing.JTextField tfUsuarioVentanaP;
+    private javax.swing.JButton bLogin;
+    private javax.swing.JLabel lInfoIngreso;
+    private javax.swing.JLabel lLogo;
+    private javax.swing.JLabel lPass;
+    private javax.swing.JLabel lUser;
+    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPasswordField tfPasswd;
+    private javax.swing.JTextField tfUser;
     // End of variables declaration//GEN-END:variables
 }
