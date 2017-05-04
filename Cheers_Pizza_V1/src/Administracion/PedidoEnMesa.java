@@ -18,17 +18,13 @@
 
 package Administracion;
 
-import java.util.ArrayList;
+import java.time.LocalTime;
 
 /**
  *
  * @author invitado
  */
 public class PedidoEnMesa extends Pedido{
-    
-    private String numMesa;
-    private String IDMesero;
-
     
     //Constructor N°1
     
@@ -37,26 +33,10 @@ public class PedidoEnMesa extends Pedido{
     
     //Constructor N°2
 
-    public PedidoEnMesa(String numMesa, String IDMesero, int numeroMesa, String horaInicio, String mesero, String horaEntrega, ArrayList<Item> items) {
-        this.numMesa = numMesa;
-        this.IDMesero = IDMesero;
+    public PedidoEnMesa(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, Cliente cliente, Empleado mesero, Sucursal sucursal) {
+        super(tipoPedido, horaInicio, horaEntrega, mesa, cliente, mesero, sucursal);
     }
-
-    public String getNumMesa() {
-        return numMesa;
-    }
-
-    public void setNumMesa(String numMesa) {
-        this.numMesa = numMesa;
-    }
-
-    public String getIDMesero() {
-        return IDMesero;
-    }
-
-    public void setIDMesero(String IDMesero) {
-        this.IDMesero = IDMesero;
-    }
+    
     
     
 }

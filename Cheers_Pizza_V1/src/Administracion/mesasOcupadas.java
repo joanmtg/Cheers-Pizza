@@ -29,7 +29,7 @@ public class mesasOcupadas extends Mesa{
     
     private int numeroMesa;
 
-    public mesasOcupadas(int numero, int cantidadPersonas) {
+    public mesasOcupadas(Long numero, int cantidadPersonas) {
         super(numero, cantidadPersonas);
     }
     

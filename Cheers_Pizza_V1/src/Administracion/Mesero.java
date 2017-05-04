@@ -18,6 +18,7 @@
 
 package Administracion;
 
+import java.time.LocalTime;
 import java.util.*;
 import javax.swing.ImageIcon;
 
@@ -30,8 +31,8 @@ public class Mesero extends Empleado{
     int mesaNoDisponible;
     ArrayList<Integer> mesasND = new ArrayList<>();
 
-    public Mesero(String id, String tipoId, String nombre, String apellido, String cargo, String horarioSemanal, String direccion, String email, String password, String telefono, String celular, ImageIcon foto) {
-        super(id, tipoId, nombre, apellido, cargo, horarioSemanal, direccion, email, password, telefono, celular, foto);
+    public Mesero(String id, String tipoId, String nombre, String apellidos, String direccion, String telefono, String cargo, String password, LocalTime horaInicio, LocalTime horaFin, String fotoURL, Sucursal cod_sucursal) {
+        super(id, tipoId, nombre, apellidos, direccion, telefono, cargo, password, horaInicio, horaFin, fotoURL, cod_sucursal);
     }
     
     
@@ -43,7 +44,7 @@ public class Mesero extends Empleado{
     }*/
     
     public void darInfoMesas(){
-        String info="Hola, soy el mesero  " + this.nombre + " " + this.apellido + ". Le informo que las siguientes mesas no se encuentran disponibles en estos momentos:";
+        String info="Hola, soy el mesero  " + this.getNombre() + " " + this.getApellidos() + ". Le informo que las siguientes mesas no se encuentran disponibles en estos momentos:";
         
         System.out.println(info);
         for (int i = 0; i < mesasND.size(); i++) {

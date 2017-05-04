@@ -18,7 +18,7 @@
 
 package Administracion;
 
-import java.util.ArrayList;
+import java.time.LocalTime;
 
 /**
  *
@@ -26,27 +26,20 @@ import java.util.ArrayList;
  */
 public class PedidoADomicilio extends Pedido{
     
-    private String direccion;
-
-    //Constructor N°|
+    //Constructor N°1
     
     public PedidoADomicilio() {
     }
 
     //Constructor N°2
     
-    public PedidoADomicilio(String direccion, int numeroMesa, String horaInicio, String mesero, String horaEntrega, ArrayList<Item> items) {
-        this.direccion = direccion;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public PedidoADomicilio(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Cliente cliente, Sucursal sucursal) {
+        super(tipoPedido, horaInicio, horaEntrega, cliente, sucursal);
     }
     
-    
+    public Pedido toPedido(){
+        Pedido pedido = new Pedido(this.getTipoPedido(), this.getHoraInicio(), this.getHoraEntrega(), this.getCliente(), this.getSucursal());
+        return pedido;
+    }
     
 }
