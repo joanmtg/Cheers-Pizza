@@ -18,94 +18,164 @@
 
 package Administracion;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.time.LocalTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  *
  * @author Fabio Andres
  */
-public class Factura {
+
+@Entity
+@Table(name = "Factura")
+public class Factura implements Serializable {
     
-    private int numero, propina, descuento, impuestos, clienteId;
-    private String horaPago, tipoPago;
-    private ArrayList<Item> items;
+    private static final long serialVersionUID = 5L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "fac_gen")
+    @SequenceGenerator(name = "fac_gen", sequenceName = "FACTURA_SEQ")
+    private Long numero;
+    
+    @Column(name = "tipo_pago")
+    private String tipoPago;
+    
+    @Column(name = "horaPago")
+    private LocalTime horaPago;
+    
+    @Column(name = "impuestos")
+    private double impuestos;
+    
+    @Column(name = "propina")
+    private double propina;
+    
+    @Column(name = "descuento")
+    private double descuento;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_empleado")
+    private Empleado empleado;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
     
     //Constructor N°1
-    public Factura(int numero, int propina, int descuento, int impuestos, int clienteId, String horaPago, String tipoPago, ArrayList<Item> items) {
-        this.numero = numero;
+    
+    public Factura() {
+    }
+
+    //Constructor N°2
+
+    public Factura(String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, Empleado empleado, Cliente cliente) {
+        this.tipoPago = tipoPago;
+        this.horaPago = horaPago;
+        this.impuestos = impuestos;
         this.propina = propina;
         this.descuento = descuento;
-        this.impuestos = impuestos;
-        this.clienteId = clienteId;
-        this.horaPago = horaPago;
-        this.tipoPago = tipoPago;
-        this.items = items;
+        this.empleado = empleado;
+        this.cliente = cliente;
     }
+    
     
     //Setters & Getters
 
-    public void setClienteId(int clienteId) {
-        this.clienteId = clienteId;
+    public Long getNumero() {
+        return numero;
     }
 
-    public void setDescuento(int descuento) {
-        this.descuento = descuento;
-    }
-
-    public void setHoraPago(String horaPago) {
-        this.horaPago = horaPago;
-    }
-
-    public void setImpuestos(int impuestos) {
-        this.impuestos = impuestos;
-    }
-
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-    }
-
-    public void setNumero(int numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
 
-    public void setPropina(int propina) {
-        this.propina = propina;
+    public String getTipoPago() {
+        return tipoPago;
     }
 
     public void setTipoPago(String tipoPago) {
         this.tipoPago = tipoPago;
     }
 
-    public int getClienteId() {
-        return clienteId;
-    }
-
-    public int getDescuento() {
-        return descuento;
-    }
-
-    public String getHoraPago() {
+    public LocalTime getHoraPago() {
         return horaPago;
     }
 
-    public int getImpuestos() {
+    public void setHoraPago(LocalTime horaPago) {
+        this.horaPago = horaPago;
+    }
+
+    public double getImpuestos() {
         return impuestos;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public void setImpuestos(double impuestos) {
+        this.impuestos = impuestos;
     }
 
-    public int getNumero() {
-        return numero;
-    }
-
-    public int getPropina() {
+    public double getPropina() {
         return propina;
     }
 
-    public String getTipoPago() {
-        return tipoPago;
+    public void setPropina(double propina) {
+        this.propina = propina;
+    }
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (numero != null ? numero.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Factura)) {
+            return false;
+        }
+        Factura other = (Factura) object;
+        if ((this.numero == null && other.numero != null) || (this.numero != null && !this.numero.equals(other.numero))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", empleado=" + empleado + ", cliente=" + cliente + '}';
     }
     
     

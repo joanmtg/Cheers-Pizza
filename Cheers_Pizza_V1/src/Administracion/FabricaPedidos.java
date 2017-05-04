@@ -17,6 +17,8 @@
 
 package Administracion;
 
+import java.time.LocalTime;
+
 /**
  *
  * @author invitado
@@ -27,7 +29,7 @@ public class FabricaPedidos {
     }
     
         
-    public Pedido crearPedido(String tipoPedido){
+    public Pedido crearPedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, Empleado mesero, Cliente cliente, Sucursal sucursal){
         
         Pedido pedidoGenerado = null;
         
@@ -36,11 +38,11 @@ public class FabricaPedidos {
         }
         
         else if(tipoPedido.equalsIgnoreCase("En mesa")){
-            pedidoGenerado = new PedidoEnMesa();
+            pedidoGenerado = new PedidoEnMesa(tipoPedido, horaInicio, horaEntrega, mesa, cliente, mesero, sucursal);
         }
         
         else if(tipoPedido.equalsIgnoreCase("A domicilio")){
-            pedidoGenerado = new PedidoADomicilio();
+            pedidoGenerado = new PedidoADomicilio(tipoPedido, horaInicio, horaEntrega, cliente, sucursal);
         }
         
         return pedidoGenerado;

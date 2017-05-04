@@ -24,24 +24,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  *
  * @author Jhonier Andrés
  */
 @Entity
+@Table(name = "Sucursal")
 public class Sucursal implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    private Long id;
     
-    @Column(name = "nom_sucursal")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "suc_gen")
+    @SequenceGenerator(name = "suc_gen", sequenceName = "SUCURSAL_SEQ")
+    private Long codigo;
+    
+    @Column(name = "nombre")
     private String nombre;
     
-    @Column(name = "dir_sucursal")
+    @Column(name = "direccion")
     private String direccion;
     
-    @Column(name = "tel_sucursal")
+    @Column(name = "telefono")
     private String telefono;
 
       
@@ -53,8 +59,7 @@ public class Sucursal implements Serializable {
     
     //Constructor N°2
     
-    public Sucursal(Long id, String nombre, String direccion, String telefono) {
-        this.id = id;
+    public Sucursal(String nombre, String direccion, String telefono) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -63,12 +68,12 @@ public class Sucursal implements Serializable {
     
     //Setters & Getters
 
-     public Long getId() {
-        return id;
+     public Long getCodigo() {
+        return codigo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
     }
   
     
@@ -95,10 +100,11 @@ public class Sucursal implements Serializable {
     public String getTelefono() {
         return telefono;
     }
+    
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
 
@@ -109,7 +115,7 @@ public class Sucursal implements Serializable {
             return false;
         }
         Sucursal other = (Sucursal) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;
@@ -117,7 +123,7 @@ public class Sucursal implements Serializable {
 
     @Override
     public String toString() {
-        return "Sucursal{" + "id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + '}';
+        return "Sucursal{" + "codigo=" + codigo + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
 
     

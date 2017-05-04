@@ -18,8 +18,6 @@
 package AccesoDatosORM;
 
 import Administracion.Sucursal;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *

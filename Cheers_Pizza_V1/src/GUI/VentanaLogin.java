@@ -18,13 +18,19 @@
 package GUI;
 
 
+import AccesoDatosORM.AdaptadorCategoriaControlador;
+import AccesoDatosORM.AdaptadorClienteControlador;
+import AccesoDatosORM.AdaptadorEmpleadoControlador;
+import AccesoDatosORM.AdaptadorFacturaControlador;
+import AccesoDatosORM.AdaptadorFacturaItemControlador;
+import AccesoDatosORM.AdaptadorItemControlador;
+import AccesoDatosORM.AdaptadorPedidoControlador;
 import AccesoDatosORM.AdaptadorSucursalControlador;
 import Administracion.*;
 import Reportes.Reportes;
 import java.awt.event.KeyEvent;
-import javax.swing.*;
 import Validaciones.Validaciones;
-import AccesoDatosORM.SucursalJpaController;
+import java.time.LocalTime;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,95 +45,68 @@ public class VentanaLogin extends javax.swing.JFrame {
 
     Validaciones validaciones = new Validaciones();
     AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
+    AdaptadorEmpleadoControlador controladorEmpleado = new AdaptadorEmpleadoControlador();
+    AdaptadorCategoriaControlador controladorCategoria = new AdaptadorCategoriaControlador();
+    AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
+    AdaptadorClienteControlador controladorCliente = new AdaptadorClienteControlador();
+    AdaptadorFacturaControlador controladorFactura = new AdaptadorFacturaControlador();
+    AdaptadorFacturaItemControlador controladorFacturaItem = new AdaptadorFacturaItemControlador();
+    AdaptadorPedidoControlador controladorPedido = new AdaptadorPedidoControlador();
     
     public VentanaLogin() {
         super("Bienvenido a Pizzeria Cheers");
         initComponents();
         
-        /* PRUEBA SINGLETON */
-        /* Para probar el patron singleton, cuando se ejecuta el programa se presenta una ventana
-           de login, al presionar el botón ingresar, se genera un reporte y se abre la visualizacion
-           del mismo. El singleton se puede evidenciar cuando teniendo abierta la visualizacion, se
-           presiona de nuevo el boton ingresar y no se abre una nueva visualizacion del reporte. 
-           Ademas, en la consola se imprime un mensaje que dice "Este reporte ya ha sido abierto"
-        */
+        // Creando sucursal
+        Sucursal nuevaSucursal = new Sucursal("Cheers Cali", "Calle 20", "2945423");
+        controladorSucursal.crearSucursal(nuevaSucursal);
         
-        /* PRUEBA FACTORY METHOD */
-        System.out.println("Prueba de patron Factory Method");
-        FabricaPedidos fabrica = new FabricaPedidos();
-        // Se crea un nuevo pedido en mesa, utilizando la fabrica de pedidos
-        Pedido nuevoPedido = fabrica.crearPedido("En mesa");
-        nuevoPedido.setNumeroMesa(4);
-        System.out.println("Se ha registrado un nuevo pedido en la mesa "+nuevoPedido.getNumeroMesa());
+        // Creando empleados (meseros) asociados a sucursal
+        Empleado mesero_uno = new Empleado("11440927462", "CC", "Vin" , "Diesel",  "Calle 10", "3204542393", "Mesero", "contraseña", LocalTime.of(8, 0), LocalTime.of(16, 0), null, nuevaSucursal);
         
-        /* PRUEBA OBSERVER */
-        System.out.println("\nPrueba de patrón Observer");
-        //Se crea un objeto de la mesaOcupada, del cual van a estar pendiente los meseros
-        //Al principio, colocamos la mesaOcupada de manera general. Este objeto será el único que se cree de su clase
-        //Y a medida que se ocupe alguna mesa, se llama a setMesaOcupada
-        mesasOcupadas mesaOcupada = new mesasOcupadas(0, 0); 
+        Empleado mesero_dos = new Empleado("1144150569", "CC", "Paul" , "Walker",  "Calle 20", "3104953921", "Mesero", "contraseña", LocalTime.of(8, 0), LocalTime.of(16, 0), null, nuevaSucursal);
         
-        //Se crean dos meseros con el constructor de la clase Empleado. (El null es de la foto)
-        Mesero mesero_uno = new Mesero("11440927462", "Cedula", "Vin" , "Diesel",  "Mesero" , "Lunes a Viernes", "Ciudad 2000", "___", "contraseña", "3775696", "315879461", null);
+        controladorEmpleado.crearEmpleado(mesero_uno);
+        controladorEmpleado.crearEmpleado(mesero_dos);
         
-        Mesero mesero_dos = new Mesero("1144150569", "Cedula", "Paul" , "Walker",  "Mesero" , "Sábado y Domingo", "El Caney" , "___", "contraseña", "3854318", "310963215", null);
+        // Obteniendo mesero registrado
+        Empleado mesero_uno_back = controladorEmpleado.obtenerEmpleado("1144150569");
+        System.out.println(mesero_uno_back.toString());
         
-        //Se pone a que los meseros estés pendientes (Observen) una mesa que se va a ocupar
-        mesero_uno.observarMesasOcupadas(mesaOcupada);
-        mesero_dos.observarMesasOcupadas(mesaOcupada);
+        // Creando categoria
+        Categoria nuevaCategoria = new Categoria("Sopas");
+        controladorCategoria.crearCategoria(nuevaCategoria);
         
-        //Se ocupa la mesa 7
-        mesaOcupada.ocuparMesa(7);
+        // Creando Item asociado a categoria
+        Item item1 = new Item("Sopa de pastas", "Sopa hecha con pastas", 3000, null, nuevaCategoria);
+        controladorItem.crearItem(item1);
         
-        //Se ocupa la mesa 9
-        mesaOcupada.ocuparMesa(9);
+        Item item2 = new Item("Sopa de carne", "Sopa con carne cocinada", 3000, null, nuevaCategoria);
+        controladorItem.crearItem(item2);
         
-        //Se ocupa 17
-        mesaOcupada.ocuparMesa(17);
+        // Creando cliente
+        Cliente nuevoCliente = new Cliente("1110230459", "Luis", "Molano", "Calle 15", "3495432", "3184594323", "luis.molano@gmail.com");
+        controladorCliente.crearCliente(nuevoCliente);
         
-        //Se desocupa la mesa 9
-        mesaOcupada.desocuparMesa(9);
+        // Creando empleado (cajero)
+        Empleado cajero1 = new Empleado("1120349584", "CC", "Victor", "Garcia", "Calle 19", "3214596843", "Cajero", "contraseña", LocalTime.of(8, 0), LocalTime.of(16, 0), null, nuevaSucursal);
+        controladorEmpleado.crearEmpleado(cajero1);
         
+        // Creando Factura
+        Factura nuevaFactura = new Factura("Efectivo", LocalTime.of(10, 0), 5000, 2000, 0, cajero1, nuevoCliente);
+        controladorFactura.crearFactura(nuevaFactura);
         
-        /* PRUEBA ITERATOR */
-        System.out.println("\nPrueba de patrón Iterator");
+        // Agregando Items a la factura
         
+        Factura_Item ingresoItem1 = new Factura_Item(1L, 1L);
+        Factura_Item ingresoItem2 = new Factura_Item(1L, 2L);
         
-        //Se crea una lista de prueba para pasársela al construtor de ListaItems
-        Item[] items = new Item[10];        
+        controladorFacturaItem.crearFacturaItem(ingresoItem1);
+        controladorFacturaItem.crearFacturaItem(ingresoItem2);
         
-        //Se llena la lista con Items genéricos        
-        for (int i = 0; i < 10; i++) {
-            items[i] = new Item("Item " + i, "Desc " + i, "Categoría " + i, new ImageIcon(), 1000 + 1000 * i);            
-        }
-        
-        //Se crea una instancia de la clase ListaItems, pasando como parámetro la lista creada        
-        ListaItems lista = new ListaItems(items);
-        
-        Item item = null;
-        
-        //Se recorre la lista con un iterador y se imprimen los nombres de cada ´Ítem        
-        for(Iterator iter = lista.getIterator(); iter.hasNext();){
-            item = (Item)iter.next();               
-            System.out.println(item.getNombre());
-        } 
-        
-        /* PRUEBA ADAPTER */
-        
-        System.out.println("\nPrueba de patrón Adapter");
-        
-        Sucursal nuevaSucursal = new Sucursal(01L, "Cheers Cali", "Calle 20", "2945423");
-        
-        // Uso del patrón adaptador para llamar el método crear
-        
-        //Para realizar esta prueba, se debe crear una BD vacia llamada "cheers_bd" y
-        //modificar el archivo persistence.xml ubicado en el paquete META-INF con el
-        //usuario y contraseña del propietario. Luego, en la clase FachadaSucursal
-        //descomentar la asignacion del atributo EntityManager y comentar la
-        //declaracion. Por ultimo, descomentar la siguiente linea
-        
-        //controladorSucursal.crear(nuevaSucursal);
-        
+        // Creando Pedido
+        Pedido nuevoPedido = new Pedido("A domicilio", LocalTime.of(9, 10), LocalTime.of(9, 15), nuevoCliente, nuevaSucursal);
+        controladorPedido.crearPedido(nuevoPedido);
     }
 
     /**
@@ -157,7 +136,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 0, 51));
 
         panelInfoVentanaP.setBackground(new java.awt.Color(102, 0, 51));
-        panelInfoVentanaP.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Acceso al sistema", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 2, 14))); // NOI18N
+        panelInfoVentanaP.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Acceso al sistema", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14), new java.awt.Color(255, 255, 255))); // NOI18N
         panelInfoVentanaP.setForeground(new java.awt.Color(255, 255, 255));
         panelInfoVentanaP.setToolTipText("");
         panelInfoVentanaP.setName(""); // NOI18N

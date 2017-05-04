@@ -18,7 +18,6 @@ package AccesoDatosORM;
 
 import Administracion.Sucursal;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
@@ -30,8 +29,7 @@ import javax.persistence.PersistenceContext;
 public class FachadaSucursal extends AbstractFacade<Sucursal>{
 
     @PersistenceContext(name = "Cheers_PizzaPU")
-    //private EntityManager em = Persistence.createEntityManagerFactory("Cheers_PizzaPU").createEntityManager();
-    private EntityManager em;
+    private EntityManager em = Persistence.createEntityManagerFactory("Cheers_PizzaPU").createEntityManager();
     
     public FachadaSucursal() {
         super(Sucursal.class);

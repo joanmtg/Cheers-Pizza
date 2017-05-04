@@ -29,21 +29,21 @@ public class AdaptadorSucursalControlador {
     public AdaptadorSucursalControlador() {
     }
     
-    public int contar() {
+    public int contarSucursales() {
         return controlador.count();
     }
 
-    public void eliminar(Sucursal sucursal) {
+    public void eliminarSucursal(Sucursal sucursal) {
         controlador.delete(sucursal);
         System.out.println("Eliminando la sucursal " + sucursal.getNombre());
     }
 
-    public void crear(Sucursal sucursal) {
+    public void crearSucursal(Sucursal sucursal) {
         controlador.create(sucursal);
         System.out.println("Registrando la sucursal " + sucursal.getNombre());
     }
     
-    public void editar(Sucursal sucursal){
+    public void editarSucursal(Sucursal sucursal){
         controlador.edit(sucursal);
         System.out.println("Editando la sucursal "+sucursal.getNombre());
     }

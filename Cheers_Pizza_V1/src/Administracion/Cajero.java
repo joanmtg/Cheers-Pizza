@@ -19,7 +19,7 @@
 
 package Administracion;
 
-import javax.swing.ImageIcon;
+import java.time.LocalTime;
 
 /**
  *
@@ -27,8 +27,8 @@ import javax.swing.ImageIcon;
  */
 public class Cajero extends Empleado{
 
-    public Cajero(String id, String tipoId, String nombre, String apellido, String cargo, String horarioSemanal, String direccion, String email, String password, String telefono, String celular, ImageIcon foto) {
-        super(id, tipoId, nombre, apellido, cargo, horarioSemanal, direccion, email, password, telefono, celular, foto);
+    public Cajero(String id, String tipoId, String nombre, String apellidos, String direccion, String telefono, String cargo, String password, LocalTime horaInicio, LocalTime horaFin, String fotoURL, Sucursal cod_sucursal) {
+        super(id, tipoId, nombre, apellidos, direccion, telefono, cargo, password, horaInicio, horaFin, fotoURL, cod_sucursal);
     }
     
     public void facturarPedido(){
