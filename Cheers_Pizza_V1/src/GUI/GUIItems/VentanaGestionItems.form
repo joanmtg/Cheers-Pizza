@@ -101,7 +101,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="bVerItem" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="bRegstrar" min="-2" max="-2" attributes="0"/>
+                              <Component id="bRegistrar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="bModificar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
@@ -143,7 +143,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bAtras" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="bVerItem" alignment="0" max="32767" attributes="0"/>
-                          <Component id="bRegstrar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="bRegistrar" alignment="0" max="32767" attributes="0"/>
                           <Component id="bModificar" alignment="0" max="32767" attributes="0"/>
                           <Component id="bEliminar" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -177,21 +177,21 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="4">
-                        <Column editable="true" title="C&#xf3;digo" type="java.lang.Object"/>
-                        <Column editable="true" title="Nombre" type="java.lang.Object"/>
-                        <Column editable="true" title="Precio" type="java.lang.Object"/>
+                        <Column editable="false" title="C&#xf3;digo" type="java.lang.Object"/>
+                        <Column editable="false" title="Nombre" type="java.lang.Object"/>
+                        <Column editable="false" title="Precio" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="bRegstrar">
+            <Component class="javax.swing.JButton" name="bRegistrar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Registrar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bRegstrarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bRegistrarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bModificar">

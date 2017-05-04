@@ -42,7 +42,7 @@ public class VentanaGestionItems extends javax.swing.JFrame {
         bAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaItems = new javax.swing.JTable();
-        bRegstrar = new javax.swing.JButton();
+        bRegistrar = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
         bVerItem = new javax.swing.JButton();
@@ -78,13 +78,21 @@ public class VentanaGestionItems extends javax.swing.JFrame {
             new String [] {
                 "Código", "Nombre", "Precio"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tablaItems);
 
-        bRegstrar.setText("Registrar");
-        bRegstrar.addActionListener(new java.awt.event.ActionListener() {
+        bRegistrar.setText("Registrar");
+        bRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bRegstrarActionPerformed(evt);
+                bRegistrarActionPerformed(evt);
             }
         });
 
@@ -129,7 +137,7 @@ public class VentanaGestionItems extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bVerItem)
                         .addGap(35, 35, 35)
-                        .addComponent(bRegstrar)
+                        .addComponent(bRegistrar)
                         .addGap(35, 35, 35)
                         .addComponent(bModificar)
                         .addGap(24, 24, 24)
@@ -163,7 +171,7 @@ public class VentanaGestionItems extends javax.swing.JFrame {
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bVerItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bRegstrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21))
@@ -215,23 +223,18 @@ public class VentanaGestionItems extends javax.swing.JFrame {
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cerrar la sesión?");
-
-        if(opcion == JOptionPane.YES_OPTION){
-            this.dispose();
-
-            ventanaAnterior.setVisible(true);
-        }
+        this.dispose();
+        ventanaAnterior.setVisible(true);        
 
     }//GEN-LAST:event_bAtrasActionPerformed
 
-    private void bRegstrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegstrarActionPerformed
+    private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
         
         VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Registro");        
         ventanaRegistro.setVisible(true); 
         this.setVisible(false);
         
-    }//GEN-LAST:event_bRegstrarActionPerformed
+    }//GEN-LAST:event_bRegistrarActionPerformed
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
         
@@ -303,7 +306,7 @@ public class VentanaGestionItems extends javax.swing.JFrame {
     private javax.swing.JButton bAtras;
     private javax.swing.JButton bEliminar;
     private javax.swing.JButton bModificar;
-    private javax.swing.JButton bRegstrar;
+    private javax.swing.JButton bRegistrar;
     private javax.swing.JButton bVerItem;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lFiltroCodigo;

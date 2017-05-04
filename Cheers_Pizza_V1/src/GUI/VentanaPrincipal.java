@@ -41,10 +41,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelPrincipal = new javax.swing.JPanel();
         panelInferior = new javax.swing.JPanel();
         bItems = new javax.swing.JButton();
-        bUsuarios = new javax.swing.JButton();
+        bEmpleados = new javax.swing.JButton();
         bSucursales = new javax.swing.JButton();
         bPedidos = new javax.swing.JButton();
-        bRecursos = new javax.swing.JButton();
+        bMesas = new javax.swing.JButton();
         bReportes = new javax.swing.JButton();
         bPagos = new javax.swing.JButton();
         bAtras = new javax.swing.JButton();
@@ -69,7 +69,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        bUsuarios.setText("Usuarios");
+        bEmpleados.setText("Empleados");
 
         bSucursales.setText("Sucursales");
         bSucursales.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +80,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         bPedidos.setText("Pedidos");
 
-        bRecursos.setText("Recursos");
+        bMesas.setText("Mesas");
 
         bReportes.setText("Reportes");
 
@@ -108,14 +108,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bReportes, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(bUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bRecursos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(bEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(56, 56, 56)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bSucursales, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(bPagos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         panelInferiorLayout.setVerticalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,13 +123,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bUsuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(bEmpleados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(bItems, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(43, 43, 43)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bPagos, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(bPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bRecursos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(36, 36, 36)
                 .addComponent(bReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -290,13 +290,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
+    private javax.swing.JButton bEmpleados;
     private javax.swing.JButton bItems;
+    private javax.swing.JButton bMesas;
     private javax.swing.JButton bPagos;
     private javax.swing.JButton bPedidos;
-    private javax.swing.JButton bRecursos;
     private javax.swing.JButton bReportes;
     private javax.swing.JButton bSucursales;
-    private javax.swing.JButton bUsuarios;
     private javax.swing.JLabel lCargo;
     private javax.swing.JLabel lIdentificacion;
     private javax.swing.JLabel lLogo;

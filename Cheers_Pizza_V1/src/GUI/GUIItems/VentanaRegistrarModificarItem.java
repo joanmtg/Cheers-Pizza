@@ -60,14 +60,14 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         bAtras = new javax.swing.JButton();
         bFinalizar = new javax.swing.JButton();
         bFinalizar1 = new javax.swing.JButton();
-        lCodigo1 = new javax.swing.JLabel();
+        lNombre = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
-        lCodigo2 = new javax.swing.JLabel();
+        lPrecio = new javax.swing.JLabel();
         tfPrecio = new javax.swing.JTextField();
-        lCodigo3 = new javax.swing.JLabel();
+        lCategoria = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taDescripcion = new javax.swing.JTextArea();
-        lCodigo4 = new javax.swing.JLabel();
+        lDescription = new javax.swing.JLabel();
         cbCategoria = new javax.swing.JComboBox<>();
         lImagen = new javax.swing.JLabel();
         bFinalizar2 = new javax.swing.JButton();
@@ -99,27 +99,27 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
         bFinalizar1.setText("Limpiar");
 
-        lCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
-        lCodigo1.setForeground(new java.awt.Color(255, 255, 255));
-        lCodigo1.setText("Nombre:");
+        lNombre.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lNombre.setText("Nombre:");
 
-        lCodigo2.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
-        lCodigo2.setForeground(new java.awt.Color(255, 255, 255));
-        lCodigo2.setText("Precio:");
+        lPrecio.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        lPrecio.setText("Precio:");
 
         tfPrecio.setText("0");
 
-        lCodigo3.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
-        lCodigo3.setForeground(new java.awt.Color(255, 255, 255));
-        lCodigo3.setText("Categoría:");
+        lCategoria.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        lCategoria.setText("Categoría:");
 
         taDescripcion.setColumns(20);
         taDescripcion.setRows(5);
         jScrollPane1.setViewportView(taDescripcion);
 
-        lCodigo4.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
-        lCodigo4.setForeground(new java.awt.Color(255, 255, 255));
-        lCodigo4.setText("Descripción:");
+        lDescription.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lDescription.setForeground(new java.awt.Color(255, 255, 255));
+        lDescription.setText("Descripción:");
 
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una categoría" }));
 
@@ -143,7 +143,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                             .addGroup(panelInferiorLayout.createSequentialGroup()
                                 .addGap(53, 53, 53)
                                 .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lCodigo3)
+                            .addComponent(lCategoria)
                             .addComponent(lImagen))
                         .addGap(18, 18, 18)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -158,9 +158,9 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                             .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(panelInferiorLayout.createSequentialGroup()
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lCodigo2)
-                            .addComponent(lCodigo4)
-                            .addComponent(lCodigo1))
+                            .addComponent(lPrecio)
+                            .addComponent(lDescription)
+                            .addComponent(lNombre))
                         .addGap(18, 18, 18)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,19 +174,19 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
             .addGroup(panelInferiorLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lCodigo1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(tfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lCodigo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lCodigo4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lCodigo3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -315,12 +315,12 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     private javax.swing.JButton bFinalizar3;
     public javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lCodigo1;
-    private javax.swing.JLabel lCodigo2;
-    private javax.swing.JLabel lCodigo3;
-    private javax.swing.JLabel lCodigo4;
+    private javax.swing.JLabel lCategoria;
+    private javax.swing.JLabel lDescription;
     private javax.swing.JLabel lImagen;
     private javax.swing.JLabel lLogo;
+    private javax.swing.JLabel lNombre;
+    private javax.swing.JLabel lPrecio;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JTextArea taDescripcion;
