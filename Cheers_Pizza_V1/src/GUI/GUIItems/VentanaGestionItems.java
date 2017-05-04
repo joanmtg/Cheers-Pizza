@@ -131,8 +131,8 @@ public class VentanaGestionItems extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(bRegstrar)
                         .addGap(35, 35, 35)
-                        .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addComponent(bModificar)
+                        .addGap(24, 24, 24)
                         .addComponent(bEliminar)
                         .addGap(25, 25, 25))
                     .addGroup(panelInferiorLayout.createSequentialGroup()
@@ -220,9 +220,7 @@ public class VentanaGestionItems extends javax.swing.JFrame {
         if(opcion == JOptionPane.YES_OPTION){
             this.dispose();
 
-            VentanaLogin vLogin = (VentanaLogin)ventanaAnterior;
-            vLogin.setVisible(true);
-            vLogin.limpiarCampos();
+            ventanaAnterior.setVisible(true);
         }
 
     }//GEN-LAST:event_bAtrasActionPerformed

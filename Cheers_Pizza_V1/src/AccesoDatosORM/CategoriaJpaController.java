@@ -18,6 +18,7 @@
 package AccesoDatosORM;
 
 import Administracion.Categoria;
+import java.util.List;
 
 /**
  *
@@ -46,9 +47,14 @@ public class CategoriaJpaController{
         fachada.edit(categoria);
     }
     
-    public Categoria find(String codigo){
+    public Categoria find(Long codigo){
         Categoria categoria = fachada.find(codigo);
         return categoria;
+    }
+    
+    public List<Categoria> findAll(){
+        List<Categoria> categorias = fachada.findAll();
+        return categorias;
     }
     
 

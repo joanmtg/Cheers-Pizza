@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/University's%20Files/Cheers_Pizza_V1/src/GUI/VentanaLogin.java</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/University's%20Files/Cheers_Pizza_V1/src/GUI/GUIItems/VentanaGestionItems.java</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/University's%20Files/Cheers_Pizza_V1/src/GUI/VentanaPrincipal.java</file>
+            <file>file:/home/invitado/Escritorio/Cheers_Pizza_V1/src/AccesoDatosORM/AdaptadorCategoriaControlador.java</file>
+            <file>file:/home/invitado/Escritorio/Cheers_Pizza_V1/src/GUI/VentanaLogin.java</file>
+            <file>file:/home/invitado/Escritorio/Cheers_Pizza_V1/src/GUI/VentanaPrincipal.java</file>
+            <file>file:/home/invitado/Escritorio/Cheers_Pizza_V1/src/GUI/GUIItems/VentanaRegistrarModificarItem.java</file>
+            <file>file:/home/invitado/Escritorio/Cheers_Pizza_V1/src/GUI/GUIItems/VentanaGestionItems.java</file>
         </group>
     </open-files>
 </project-private>

@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Categoria;
+import java.util.ArrayList;
 
 /**
  *
@@ -48,9 +49,14 @@ public class AdaptadorCategoriaControlador {
         System.out.println("Editando la categoria "+ categoria.getNombre());
     }
     
-    public Categoria obtenerCategoria(String codigoCategoria){
+    public Categoria obtenerCategoria(Long codigoCategoria){
         Categoria categoria = controlador.find(codigoCategoria);
         return categoria;
+    }
+    
+    public ArrayList<Categoria> obtenerTodasCategorias(){
+        ArrayList<Categoria> categorias = (ArrayList)controlador.findAll();
+        return categorias;
     }
     
 }

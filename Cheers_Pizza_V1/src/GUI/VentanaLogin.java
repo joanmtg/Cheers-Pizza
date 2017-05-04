@@ -35,6 +35,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
+        /*
         // Creando sucursal
         Sucursal nuevaSucursal = new Sucursal("Cheers Cali", "Calle 20", "2945423");
         controladorSucursal.crearSucursal(nuevaSucursal);
@@ -85,6 +86,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         // Creando Pedido
         Pedido nuevoPedido = new Pedido("A domicilio", LocalTime.of(9, 10), LocalTime.of(9, 15), nuevoCliente, nuevaSucursal);
         controladorPedido.crearPedido(nuevoPedido);
+        */
     }
     
     public void limpiarCampos(){
