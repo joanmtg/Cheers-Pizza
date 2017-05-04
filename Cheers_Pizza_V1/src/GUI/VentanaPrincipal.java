@@ -6,10 +6,8 @@
 package GUI;
 
 import GUI.GUIItems.VentanaGestionItems;
-import java.awt.Color;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+import GUI.GUISucursales.VentanaGestionSucursales;
+import javax.swing.*;
 
 /**
  *
@@ -74,6 +72,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         bUsuarios.setText("Usuarios");
 
         bSucursales.setText("Sucursales");
+        bSucursales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSucursalesActionPerformed(evt);
+            }
+        });
 
         bPedidos.setText("Pedidos");
 
@@ -241,6 +244,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_bItemsActionPerformed
+
+    private void bSucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSucursalesActionPerformed
+        
+        VentanaGestionSucursales ventanaSucursales = new VentanaGestionSucursales(this);        
+        ventanaSucursales.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_bSucursalesActionPerformed
 
     /**
      * @param args the command line arguments

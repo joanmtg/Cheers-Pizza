@@ -117,7 +117,7 @@
                           </Group>
                           <Component id="bAtras" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                      <EmptySpace pref="53" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -163,6 +163,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sucursales"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSucursalesActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bPedidos">
               <Properties>
