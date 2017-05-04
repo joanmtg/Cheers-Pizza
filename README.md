@@ -1,12 +1,9 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* This repository was created in order to manage the versions of the DS2 project
+* Version 1.0
 
 ### How do I get set up? ###
 
@@ -25,10 +22,10 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Jhonier Andrés Calero Rodas
+* Joan Manuel Tovar Guzmán
 
-## Members:
+### Members: ###
 * Jhonier Andrés Calero Rodas - 1424599
 * Fabio Andrés Castañeda Duarte - 1424386
 * Juan Pablo Moreno Muñoz - 1423437
