@@ -24,7 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelPrincipal" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Component id="panelPrincipal" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -44,27 +44,27 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="278" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="425" max="-2" attributes="0"/>
                           <Component id="lLogo" min="-2" pref="83" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
+                  <EmptySpace pref="41" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="lLogo" min="-2" pref="88" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
@@ -79,7 +79,7 @@
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder justification="2" position="2" title="Gesti&#xf3;n de Sucursales">
+                <TitledBorder justification="2" position="2" title="Gesti&#xf3;n de Usuarios">
                   <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                     <EtchetBorder/>
                   </Border>
@@ -96,28 +96,28 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lFiltroCodigo" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cbColumnaFiltro" min="-2" pref="101" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="tfFiltro" min="-2" pref="156" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="bRegistrar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="bModificar" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="bEliminar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lFiltroCodigo" min="-2" pref="153" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="tfFiltroCodigo" min="-2" pref="86" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                                      <Component id="lFiltroCodigo1" min="-2" pref="68" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="tfFiltroNombre" min="-2" pref="138" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="bVerFoto" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="bRegistrar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="bModificar" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="bEliminar" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jScrollPane1" pref="794" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           </Group>
@@ -128,20 +128,20 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lFiltroCodigo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="tfFiltroCodigo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="lFiltroCodigo1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="tfFiltroNombre" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="tfFiltro" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="cbColumnaFiltro" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="245" max="-2" attributes="0"/>
-                      <EmptySpace pref="40" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="297" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bAtras" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="bModificar" alignment="0" max="32767" attributes="0"/>
                           <Component id="bEliminar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="bVerFoto" alignment="0" max="32767" attributes="0"/>
                           <Component id="bRegistrar" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -173,11 +173,14 @@
                 <Component class="javax.swing.JTable" name="tablaItems">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="4">
-                        <Column editable="false" title="C&#xf3;digo" type="java.lang.Object"/>
+                      <Table columnCount="7" rowCount="4">
+                        <Column editable="false" title="ID" type="java.lang.Object"/>
                         <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                        <Column editable="false" title="Tel&#xe9;fono" type="java.lang.Object"/>
+                        <Column editable="false" title="Apellidos" type="java.lang.Object"/>
                         <Column editable="false" title="Direcci&#xf3;n" type="java.lang.Object"/>
+                        <Column editable="false" title="Tel&#xe9;fono" type="java.lang.Object"/>
+                        <Column editable="false" title="Cargo" type="java.lang.Object"/>
+                        <Column editable="false" title="Sucursal" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -216,23 +219,34 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Filtrar por:      C&#xf3;digo:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tfFiltroNombre">
+            <Component class="javax.swing.JTextField" name="tfFiltro">
             </Component>
-            <Component class="javax.swing.JTextField" name="tfFiltroCodigo">
-            </Component>
-            <Component class="javax.swing.JLabel" name="lFiltroCodigo1">
+            <Component class="javax.swing.JComboBox" name="cbColumnaFiltro">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Eras Demi ITC" size="14" style="0"/>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="5">
+                    <StringItem index="0" value="C&#xf3;digo"/>
+                    <StringItem index="1" value="Nombre"/>
+                    <StringItem index="2" value="Apellidos"/>
+                    <StringItem index="3" value="Cargo"/>
+                    <StringItem index="4" value="Sucursal"/>
+                  </StringArray>
                 </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Nombre:"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="bVerFoto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ver Foto"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVerFotoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

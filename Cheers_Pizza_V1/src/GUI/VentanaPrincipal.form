@@ -106,8 +106,8 @@
                               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="bReportes" pref="120" max="32767" attributes="0"/>
-                                  <Component id="bUsuarios" max="32767" attributes="0"/>
-                                  <Component id="bRecursos" max="32767" attributes="0"/>
+                                  <Component id="bEmpleados" max="32767" attributes="0"/>
+                                  <Component id="bMesas" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -127,14 +127,14 @@
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bSucursales" min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="bUsuarios" alignment="1" pref="36" max="32767" attributes="0"/>
+                          <Component id="bEmpleados" alignment="1" pref="36" max="32767" attributes="0"/>
                           <Component id="bItems" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bPagos" pref="36" max="32767" attributes="0"/>
                           <Component id="bPedidos" max="32767" attributes="0"/>
-                          <Component id="bRecursos" max="32767" attributes="0"/>
+                          <Component id="bMesas" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="bReportes" min="-2" pref="36" max="-2" attributes="0"/>
@@ -154,9 +154,9 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bItemsActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="bUsuarios">
+            <Component class="javax.swing.JButton" name="bEmpleados">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Empleados"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="bSucursales">
@@ -172,9 +172,9 @@
                 <Property name="text" type="java.lang.String" value="Pedidos"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="bRecursos">
+            <Component class="javax.swing.JButton" name="bMesas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Recursos"/>
+                <Property name="text" type="java.lang.String" value="Mesas"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="bReportes">

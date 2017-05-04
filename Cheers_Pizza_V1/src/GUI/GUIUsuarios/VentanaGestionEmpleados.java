@@ -3,25 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.GUISucursales;
+package GUI.GUIUsuarios;
 
-import GUI.VentanaLogin;
 import javax.swing.*;
 
 /**
  *
- * @author Fabio Andres
+ * @author invitado
  */
-public class VentanaGestionSucursales extends javax.swing.JFrame {
+public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
     /**
-     * Creates new form ventanaGestionSucursales
+     * Creates new form VentanaGestionUsuarios
      */
+    
     JFrame ventanaAnterior;
-    public VentanaGestionSucursales(JFrame anterior) {
+    
+    public VentanaGestionEmpleados(JFrame anterior) {
+        super("Gestión de Usuarios");
         initComponents();
-        ventanaAnterior = anterior;
-        setLocationRelativeTo(null);
+        
+        this.ventanaAnterior = anterior;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -42,9 +45,9 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
         lFiltroCodigo = new javax.swing.JLabel();
-        tfFiltroNombre = new javax.swing.JTextField();
-        tfFiltroCodigo = new javax.swing.JTextField();
-        lFiltroCodigo1 = new javax.swing.JLabel();
+        tfFiltro = new javax.swing.JTextField();
+        cbColumnaFiltro = new javax.swing.JComboBox<>();
+        bVerFoto = new javax.swing.JButton();
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,7 +56,7 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         panelPrincipal.setBackground(new java.awt.Color(89, 30, 27));
 
         panelInferior.setBackground(new java.awt.Color(89, 30, 27));
-        panelInferior.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Gestión de Sucursales", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Eras Medium ITC", 0, 16), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelInferior.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Gestión de Usuarios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Eras Medium ITC", 0, 16), new java.awt.Color(255, 255, 255))); // NOI18N
 
         bAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtras.png"))); // NOI18N
         bAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtrasPR.png"))); // NOI18N
@@ -65,17 +68,17 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
 
         tablaItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Nombre", "Teléfono", "Dirección"
+                "ID", "Nombre", "Apellidos", "Dirección", "Teléfono", "Cargo", "Sucursal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -107,11 +110,16 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
 
         lFiltroCodigo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
-        lFiltroCodigo.setText("Filtrar por:      Código:");
+        lFiltroCodigo.setText("Filtrar por:");
 
-        lFiltroCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
-        lFiltroCodigo1.setForeground(new java.awt.Color(255, 255, 255));
-        lFiltroCodigo1.setText("Nombre:");
+        cbColumnaFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nombre", "Apellidos", "Cargo", "Sucursal" }));
+
+        bVerFoto.setText("Ver Foto");
+        bVerFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVerFotoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
@@ -121,43 +129,43 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bRegistrar)
-                        .addGap(35, 35, 35)
-                        .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bEliminar)
-                        .addGap(42, 42, 42))
+                        .addComponent(lFiltroCodigo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbColumnaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addComponent(lFiltroCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfFiltroCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(lFiltroCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfFiltroNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bVerFoto)
+                                .addGap(35, 35, 35)
+                                .addComponent(bRegistrar)
+                                .addGap(35, 35, 35)
+                                .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(bEliminar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
                         .addGap(25, 25, 25))))
         );
         panelInferiorLayout.setVerticalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInferiorLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lFiltroCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfFiltroCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lFiltroCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfFiltroNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbColumnaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bVerFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21))
         );
@@ -178,16 +186,16 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(278, 278, 278)
+                        .addGap(425, 425, 425)
                         .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
         );
@@ -196,7 +204,7 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,43 +215,34 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
-        
+
         this.dispose();
-        ventanaAnterior.setVisible(true);            
-    
+        ventanaAnterior.setVisible(true);        
+        
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
 
-        VentanaRegistrarModificarSucursal ventanaRegistro = new VentanaRegistrarModificarSucursal(this, "Registro");
-        ventanaRegistro.setVisible(true);
-        this.setVisible(false);
-
+        
     }//GEN-LAST:event_bRegistrarActionPerformed
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
 
         //Validar que se seleccione un elemento de la tabla
 
-        VentanaRegistrarModificarSucursal ventanaRegistro = new VentanaRegistrarModificarSucursal(this, "Modificación");
-        ventanaRegistro.setVisible(true);
-        this.setVisible(false);
-
+        
     }//GEN-LAST:event_bModificarActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
 
         //Validar que se seleccione un elemento de la tabla
 
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la sucursal <tal> con código <tal>?");
-
-        if(opcion == JOptionPane.YES_OPTION){
-            //Eliminar item
-            //Actualizar tabla
-            JOptionPane.showMessageDialog(null, "Se ha eliminado la sucursal <tal> con codigo <tal>", "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
-        }
-
+        
     }//GEN-LAST:event_bEliminarActionPerformed
+
+    private void bVerFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerFotoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bVerFotoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,13 +261,13 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionSucursales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGestionEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionSucursales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGestionEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionSucursales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGestionEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaGestionSucursales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaGestionEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -276,7 +275,7 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaGestionSucursales(null).setVisible(true);
+                new VentanaGestionEmpleados(null).setVisible(true);
             }
         });
     }
@@ -286,14 +285,14 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
     private javax.swing.JButton bEliminar;
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bRegistrar;
+    private javax.swing.JButton bVerFoto;
+    private javax.swing.JComboBox<String> cbColumnaFiltro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lFiltroCodigo;
-    private javax.swing.JLabel lFiltroCodigo1;
     private javax.swing.JLabel lLogo;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JTable tablaItems;
-    private javax.swing.JTextField tfFiltroCodigo;
-    private javax.swing.JTextField tfFiltroNombre;
+    private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
 }

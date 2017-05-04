@@ -19,6 +19,7 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
     
     String operacion; //"Registro" o "Modificación"
     JFrame ventanaAnterior;
+    
     public VentanaRegistrarModificarSucursal(JFrame anterior, String operacion) {
         super(operacion + " de Sucursal");
         initComponents();
@@ -52,6 +53,7 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         panelPrincipal.setBackground(new java.awt.Color(89, 30, 27));
 
