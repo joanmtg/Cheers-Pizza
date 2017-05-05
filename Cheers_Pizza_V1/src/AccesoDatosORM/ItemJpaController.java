@@ -18,6 +18,7 @@
 package AccesoDatosORM;
 
 import Administracion.Item;
+import java.util.List;
 
 /**
  *
@@ -46,9 +47,14 @@ public class ItemJpaController {
         fachada.edit(item);
     }
     
-    public Item find(String codigo){
+    public Item find(Long codigo){
         Item item = fachada.find(codigo);
         return item;
+    }
+    
+    public List<Item> findAll(){
+        List<Item> items = fachada.findAll();
+        return items;
     }
 
 }

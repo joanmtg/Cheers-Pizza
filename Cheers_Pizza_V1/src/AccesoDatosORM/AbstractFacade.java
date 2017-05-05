@@ -49,11 +49,10 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findAll() {
-        getEntityManager().getTransaction().begin();
+        getEntityManager().clear();
         javax.persistence.criteria.CriteriaQuery criteriaQ = getEntityManager().getCriteriaBuilder().createQuery();
         criteriaQ.select(criteriaQ.from(entityClass));
         List<T> list = getEntityManager().createQuery(criteriaQ).getResultList();
-        getEntityManager().getTransaction().commit();
         return list;
     }
 
