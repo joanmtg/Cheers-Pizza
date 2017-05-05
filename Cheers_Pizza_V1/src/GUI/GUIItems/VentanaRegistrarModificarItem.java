@@ -275,8 +275,12 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la operación actual?");
 
         if (opcion == JOptionPane.YES_OPTION) {
+            
             this.dispose();
-            ventanaAnterior.setVisible(true);
+            VentanaGestionItems ventanaItems = (VentanaGestionItems)ventanaAnterior;
+            ventanaItems.llenarTablaItems();
+            ventanaItems.setVisible(true);
+            
         }
     }//GEN-LAST:event_bAtrasActionPerformed
 
