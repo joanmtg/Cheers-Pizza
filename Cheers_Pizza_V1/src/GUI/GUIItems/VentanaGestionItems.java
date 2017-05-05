@@ -5,8 +5,12 @@
  */
 package GUI.GUIItems;
 
+import AccesoDatosORM.AdaptadorItemControlador;
+import Administracion.Item;
 import GUI.VentanaLogin;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,16 +22,44 @@ public class VentanaGestionItems extends javax.swing.JFrame {
      * Creates new form VentanaGestionItems
      */
     JFrame ventanaAnterior;
-    
+    AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
+
     public VentanaGestionItems(JFrame anterior) {
         super("Gestión de Items");
         initComponents();
-        
+
         ventanaAnterior = anterior;
         setLocationRelativeTo(null);
-        
+
+        llenarTablaItems();
     }
 
+    
+    public void llenarTablaItems(){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tablaItems.getModel();
+
+        for (int i = 0; i < tablaItems.getRowCount(); i++) {
+           modelo.removeRow(i);
+           i-=1;
+       }
+        
+        ArrayList<Item> items = controladorItem.obtenerTodosItems();
+        
+        for(int i = 0; i < items.size(); i++){
+            System.out.println(""+items.get(i).getPrecioActual());
+            Object[] fila = new Object[3];
+            
+            fila[0] = items.get(i).getCodigo();
+            fila[1] = items.get(i).getNombre();
+            fila[2] = items.get(i).getPrecioActual();
+            
+            modelo.addRow(fila);
+        }
+        
+        tablaItems.setModel(modelo);
+          
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,10 +102,7 @@ public class VentanaGestionItems extends javax.swing.JFrame {
 
         tablaItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Código", "Nombre", "Precio"
@@ -224,46 +253,61 @@ public class VentanaGestionItems extends javax.swing.JFrame {
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
         this.dispose();
-        ventanaAnterior.setVisible(true);        
+        ventanaAnterior.setVisible(true);
 
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
-        
-        VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Registro");        
-        ventanaRegistro.setVisible(true); 
+
+        VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Registro");
+        ventanaRegistro.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_bRegistrarActionPerformed
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
-        
+
         //Validar que se seleccione un elemento de la tabla
-        
-        VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Registro");        
-        ventanaRegistro.setVisible(true); 
-        this.setVisible(false);        
-        
+        int filasSeleccionadas = tablaItems.getSelectedRowCount();
+
+        if (filasSeleccionadas == 1) {
+
+            int filaSeleccionada = tablaItems.getSelectedRow();
+            Long codigoItem = (Long) tablaItems.getValueAt(filaSeleccionada, 0);
+
+            Item itemSeleccionado = controladorItem.obtenerItem(codigoItem);
+            
+            VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Modificacion");
+            ventanaRegistro.setVisible(true);
+            ventanaRegistro.modificacionItem(itemSeleccionado);
+            this.setVisible(false);
+            
+
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item a modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+       
+        }
+
     }//GEN-LAST:event_bModificarActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
-        
+
         //Validar que se seleccione un elemento de la tabla
-        
         int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el ítem <tal> con código <tal>?");
-        
-        if(opcion == JOptionPane.YES_OPTION){
+
+        if (opcion == JOptionPane.YES_OPTION) {
             //Eliminar item 
             //Actualizar tabla
             JOptionPane.showMessageDialog(null, "Se ha eliminado el ítem <tal> con codigo <tal>", "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_bEliminarActionPerformed
 
     private void bVerItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerItemActionPerformed
-        
+
         // Mostrar foto del item
-        
+
     }//GEN-LAST:event_bVerItemActionPerformed
 
     /**

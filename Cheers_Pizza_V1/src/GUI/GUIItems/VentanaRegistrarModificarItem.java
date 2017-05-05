@@ -9,6 +9,7 @@ import AccesoDatosORM.AdaptadorCategoriaControlador;
 import AccesoDatosORM.AdaptadorItemControlador;
 import Administracion.Categoria;
 import Administracion.Item;
+import Validaciones.Validaciones;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -18,9 +19,11 @@ import javax.swing.*;
  */
 public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
+    Validaciones validacion = new Validaciones();
     AdaptadorCategoriaControlador controladorCategoria = new AdaptadorCategoriaControlador();
     AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
     
+    Item itemAModificar = new Item();
     /**
      * Creates new form VentanaRegistrarItem
      */
@@ -35,15 +38,14 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         this.operacion = operacion;
         this.ventanaAnterior = anterior;
         
+        setLocationRelativeTo(null);
+        
         ArrayList<Categoria> categorias = controladorCategoria.obtenerTodasCategorias();
         
         for(int i = 0; i < categorias.size(); i++){
             String categoria = categorias.get(i).getNombre();
             cbCategoria.addItem(categoria);
         }
-
-        setLocationRelativeTo(null);
-
     }
 
     /**
@@ -59,7 +61,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         bFinalizar = new javax.swing.JButton();
-        bFinalizar1 = new javax.swing.JButton();
+        bLimpiar = new javax.swing.JButton();
         lNombre = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
         lPrecio = new javax.swing.JLabel();
@@ -68,7 +70,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         taDescripcion = new javax.swing.JTextArea();
         lDescription = new javax.swing.JLabel();
-        cbCategoria = new javax.swing.JComboBox<>();
+        cbCategoria = new javax.swing.JComboBox<String>();
         lImagen = new javax.swing.JLabel();
         bFinalizar2 = new javax.swing.JButton();
         bFinalizar3 = new javax.swing.JButton();
@@ -81,6 +83,9 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
         panelInferior.setBackground(new java.awt.Color(89, 30, 27));
         panelInferior.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ingrese los datos del Ítem", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Eras Medium ITC", 0, 16), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelInferior.setMaximumSize(new java.awt.Dimension(524, 448));
+        panelInferior.setMinimumSize(new java.awt.Dimension(524, 448));
+        panelInferior.setName(""); // NOI18N
 
         bAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtras.png"))); // NOI18N
         bAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtrasPR.png"))); // NOI18N
@@ -97,17 +102,33 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
             }
         });
 
-        bFinalizar1.setText("Limpiar");
+        bLimpiar.setText("Limpiar");
+        bLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimpiarActionPerformed(evt);
+            }
+        });
 
         lNombre.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lNombre.setForeground(new java.awt.Color(255, 255, 255));
         lNombre.setText("Nombre:");
+
+        tfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfNombreKeyPressed(evt);
+            }
+        });
 
         lPrecio.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lPrecio.setForeground(new java.awt.Color(255, 255, 255));
         lPrecio.setText("Precio:");
 
         tfPrecio.setText("0");
+        tfPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfPrecioKeyPressed(evt);
+            }
+        });
 
         lCategoria.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lCategoria.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,13 +136,15 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
         taDescripcion.setColumns(20);
         taDescripcion.setRows(5);
+        taDescripcion.setMaximumSize(new java.awt.Dimension(164, 94));
+        taDescripcion.setMinimumSize(new java.awt.Dimension(164, 94));
         jScrollPane1.setViewportView(taDescripcion);
 
         lDescription.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lDescription.setForeground(new java.awt.Color(255, 255, 255));
         lDescription.setText("Descripción:");
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una categoría" }));
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una categoría" }));
 
         lImagen.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lImagen.setForeground(new java.awt.Color(255, 255, 255));
@@ -148,7 +171,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInferiorLayout.createSequentialGroup()
@@ -163,11 +186,13 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                             .addComponent(lNombre))
                         .addGap(18, 18, 18)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                            .addGroup(panelInferiorLayout.createSequentialGroup()
+                                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         panelInferiorLayout.setVerticalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +221,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13))
@@ -212,14 +237,14 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                .addGap(263, 263, 263)
+                .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(260, 260, 260))
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(260, 260, 260))
+                .addContainerGap())
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +252,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelInferior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -235,11 +260,11 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -257,20 +282,81 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
 
+        // Obteniendo los campos
         String nombre = tfNombre.getText();
         double precio = Double.parseDouble(tfPrecio.getText());
         String descripcion = taDescripcion.getText();
+        
         Long codCategoria = (long)cbCategoria.getSelectedIndex();
         Categoria categoria = controladorCategoria.obtenerCategoria(codCategoria);
 
         if (nombre.equals("") || precio == 0 || descripcion.equals("")) {
+            
             JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos solicitados", "Mensaje", JOptionPane.WARNING_MESSAGE);
+            
         } else {
+            
             Item nuevoItem = new Item(nombre, descripcion, precio, null, categoria);
-            controladorItem.crearItem(nuevoItem);
+            
+            if(operacion.equalsIgnoreCase("Registro")){
+                
+                controladorItem.crearItem(nuevoItem);
+                JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+                
+            }else if(operacion.equalsIgnoreCase("Modificacion")){
+                
+                nuevoItem.setCodigo(itemAModificar.getCodigo());
+                controladorItem.editarItem(nuevoItem);
+                JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+                
+                VentanaGestionItems ventanaItems = (VentanaGestionItems)ventanaAnterior;
+                ventanaItems.llenarTablaItems();
+                ventanaItems.setVisible(true);
+                this.setVisible(false);
+                        
+            }
+            
+            
+            
         }
+        
     }//GEN-LAST:event_bFinalizarActionPerformed
 
+    private void tfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNombreKeyPressed
+        validacion.validarLetras(evt);
+    }//GEN-LAST:event_tfNombreKeyPressed
+
+    private void tfPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPrecioKeyPressed
+        validacion.validarNumeros(evt);
+    }//GEN-LAST:event_tfPrecioKeyPressed
+
+    private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_bLimpiarActionPerformed
+
+    public void modificacionItem(Item item){
+        
+        itemAModificar = item;
+        
+        tfNombre.setText(itemAModificar.getNombre());
+        tfPrecio.setText(""+itemAModificar.getPrecioActual());
+        taDescripcion.setText(itemAModificar.getDescripcion());
+        cbCategoria.setSelectedItem(itemAModificar.getCategoria().getNombre());
+        
+    }
+    
+    public void limpiarCampos(){
+        
+        tfNombre.setText("");
+        tfPrecio.setText(""+0);
+        taDescripcion.setText("");
+        cbCategoria.setSelectedIndex(0);
+        
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -310,9 +396,9 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
     private javax.swing.JButton bFinalizar;
-    private javax.swing.JButton bFinalizar1;
     private javax.swing.JButton bFinalizar2;
     private javax.swing.JButton bFinalizar3;
+    private javax.swing.JButton bLimpiar;
     public javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lCategoria;
@@ -323,8 +409,8 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     private javax.swing.JLabel lPrecio;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JTextArea taDescripcion;
-    private javax.swing.JTextField tfNombre;
-    private javax.swing.JTextField tfPrecio;
+    public javax.swing.JTextArea taDescripcion;
+    public javax.swing.JTextField tfNombre;
+    public javax.swing.JTextField tfPrecio;
     // End of variables declaration//GEN-END:variables
 }

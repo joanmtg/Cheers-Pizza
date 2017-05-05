@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Item;
+import java.util.ArrayList;
 
 /**
  *
@@ -48,9 +49,14 @@ public class AdaptadorItemControlador {
         System.out.println("Editando el item "+ item.getNombre());
     }
     
-    public Item obtenerItem(String codigoItem){
+    public Item obtenerItem(Long codigoItem){
         Item item = controlador.find(codigoItem);
         return item;
+    }
+    
+    public ArrayList<Item> obtenerTodosItems(){
+        ArrayList<Item> items = (ArrayList)controlador.findAll();
+        return items;
     }
     
 }
