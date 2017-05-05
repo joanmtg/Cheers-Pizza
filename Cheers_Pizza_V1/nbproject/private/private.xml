@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/Cheers_Pizza_V1/src/META-INF/persistence.xml</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/Cheers_Pizza_V1/src/AccesoDatosORM/AdaptadorItemControlador.java</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/Cheers_Pizza_V1/src/AccesoDatosORM/FachadaItem.java</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/Cheers_Pizza_V1/src/GUI/VentanaLogin.java</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/Cheers_Pizza_V1/src/GUI/GUIItems/VentanaGestionItems.java</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/Cheers_Pizza_V1/src/AccesoDatosORM/AbstractFacade.java</file>
-            <file>file:/C:/Users/Jhonier%20Andrés/Desktop/Cheers_Pizza_V1/src/GUI/GUIItems/VentanaRegistrarModificarItem.java</file>
+            <file>file:/home/invitado/Escritorio/cheers-pizza/Cheers_Pizza_V1/src/GUI/GUIItems/VentanaRegistrarModificarItem.java</file>
+            <file>file:/home/invitado/Escritorio/cheers-pizza/Cheers_Pizza_V1/src/GUI/GUIItems/VentanaGestionItems.java</file>
+            <file>file:/home/invitado/Escritorio/cheers-pizza/Cheers_Pizza_V1/src/META-INF/persistence.xml</file>
         </group>
     </open-files>
 </project-private>
