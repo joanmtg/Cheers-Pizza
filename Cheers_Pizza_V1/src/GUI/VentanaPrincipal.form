@@ -158,6 +158,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Empleados"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bEmpleadosActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bSucursales">
               <Properties>
@@ -176,6 +179,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Mesas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bMesasActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bReportes">
               <Properties>

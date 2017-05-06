@@ -6,7 +6,9 @@
 package GUI;
 
 import GUI.GUIItems.VentanaGestionItems;
+import GUI.GUIMesas.VentanaGestionMesas;
 import GUI.GUISucursales.VentanaGestionSucursales;
+import GUI.GUIUsuarios.VentanaGestionEmpleados;
 import javax.swing.*;
 
 /**
@@ -70,6 +72,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         bEmpleados.setText("Empleados");
+        bEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEmpleadosActionPerformed(evt);
+            }
+        });
 
         bSucursales.setText("Sucursales");
         bSucursales.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +88,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         bPedidos.setText("Pedidos");
 
         bMesas.setText("Mesas");
+        bMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bMesasActionPerformed(evt);
+            }
+        });
 
         bReportes.setText("Reportes");
 
@@ -252,6 +264,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_bSucursalesActionPerformed
+
+    private void bMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMesasActionPerformed
+        
+        VentanaGestionMesas ventanMesas = new VentanaGestionMesas(this);
+        ventanMesas.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_bMesasActionPerformed
+
+    private void bEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEmpleadosActionPerformed
+        
+        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados(this);
+        ventanaEmpleados.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_bEmpleadosActionPerformed
 
     /**
      * @param args the command line arguments

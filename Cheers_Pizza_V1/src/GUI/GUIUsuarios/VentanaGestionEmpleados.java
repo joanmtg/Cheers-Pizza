@@ -5,6 +5,7 @@
  */
 package GUI.GUIUsuarios;
 
+import Administracion.Empleado;
 import javax.swing.*;
 
 /**
@@ -222,21 +223,54 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
-
+         
+        Empleado empleado = new Empleado();
+            
+        VentanaRegistrarModificarEmpleado vRegistro = new VentanaRegistrarModificarEmpleado(this, "Registro", empleado);
+        vRegistro.setVisible(true);
+        this.setVisible(false); 
         
     }//GEN-LAST:event_bRegistrarActionPerformed
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
 
-        //Validar que se seleccione un elemento de la tabla
+        int filaSeleccionada = tablaItems.getSelectedRow();
+        
+        if(filaSeleccionada != -1){                  
+            
+            String idEmpleado = (String)tablaItems.getModel().getValueAt(filaSeleccionada, 0);
+            //Traer el empleado a modificar de la BD o crearlo con los campos de la tabla
+            Empleado empleado = new Empleado();            
+            
+            VentanaRegistrarModificarEmpleado vModificacion = new VentanaRegistrarModificarEmpleado(this, "Modificación", empleado);
+            vModificacion.setVisible(true);
+            this.setVisible(false);
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario a modificar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         
     }//GEN-LAST:event_bModificarActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
 
-        //Validar que se seleccione un elemento de la tabla
-
+        int filaSeleccionada = tablaItems.getSelectedRow();
+        
+        if(filaSeleccionada != -1){                  
+            
+            String idEmpleado = (String)tablaItems.getModel().getValueAt(filaSeleccionada, 0);                     
+            
+            int opcion = JOptionPane.showConfirmDialog(null, "Se eliminará el empleado con ID no." + idEmpleado);
+            
+            if(opcion == JOptionPane.YES_OPTION){
+                //Eliminar el empleados
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el empleado con ID no. " + idEmpleado, "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);                
+            }            
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario a modificar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_bEliminarActionPerformed
 
