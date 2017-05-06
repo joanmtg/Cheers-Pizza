@@ -5,6 +5,8 @@
  */
 package GUI.GUISucursales;
 
+import AccesoDatosORM.AdaptadorSucursalControlador;
+import Administracion.Sucursal;
 import javax.swing.*;
 
 /**
@@ -12,10 +14,9 @@ import javax.swing.*;
  * @author Fabio Andres
  */
 public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
-
-    /**
-     * Creates new form ventanaRegistrarModificarSucursal
-     */
+    
+    AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
+    Sucursal sucursalAModificar = new Sucursal();
     
     String operacion; //"Registro" o "Modificación"
     JFrame ventanaAnterior;
@@ -43,11 +44,11 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         bFinalizar = new javax.swing.JButton();
-        bFinalizar1 = new javax.swing.JButton();
+        bLimpiar = new javax.swing.JButton();
         lCodigo1 = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
         lCodigo2 = new javax.swing.JLabel();
-        tfcodigo = new javax.swing.JTextField();
+        tfDireccion = new javax.swing.JTextField();
         lCodigo5 = new javax.swing.JLabel();
         tfTelefono = new javax.swing.JTextField();
         lLogo = new javax.swing.JLabel();
@@ -69,8 +70,18 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
         });
 
         bFinalizar.setText("Finalizar");
+        bFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bFinalizarActionPerformed(evt);
+            }
+        });
 
-        bFinalizar1.setText("Limpiar");
+        bLimpiar.setText("Limpiar");
+        bLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimpiarActionPerformed(evt);
+            }
+        });
 
         lCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lCodigo1.setForeground(new java.awt.Color(255, 255, 255));
@@ -101,12 +112,12 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(tfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                        .addComponent(tfcodigo)
+                        .addComponent(tfDireccion)
                         .addComponent(tfTelefono)))
                 .addContainerGap(97, Short.MAX_VALUE))
         );
@@ -120,7 +131,7 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCodigo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfcodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(tfDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCodigo5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -128,7 +139,7 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13))
@@ -186,10 +197,68 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
 
         if(opcion == JOptionPane.YES_OPTION){
             this.dispose();
+            VentanaGestionSucursales ventanaSucursales = (VentanaGestionSucursales) ventanaAnterior;
+            ventanaSucursales.llenarTablaSucursales();
             ventanaAnterior.setVisible(true);
+            
         }
     }//GEN-LAST:event_bAtrasActionPerformed
 
+    private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
+        // TODO add your handling code here:
+        String nombre = tfNombre.getText();
+        String direccion = tfDireccion.getText();
+        String telefono = tfTelefono.getText();
+        
+        if(nombre.equals("") || direccion.equals("") || telefono.equals("")){
+            
+            JOptionPane.showMessageDialog(null, "Por favor llene todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            
+        }else{
+            
+            Sucursal sucursal = new Sucursal(nombre, direccion, telefono);
+            
+            if(operacion.equalsIgnoreCase("Registro")){
+            
+                controladorSucursal.crearSucursal(sucursal);
+                JOptionPane.showMessageDialog(null, "La sucursal "+ sucursal.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.WARNING_MESSAGE);
+                limpiarCampos();
+                
+            }else if(operacion.equalsIgnoreCase("Modificacion")){
+                
+                sucursal.setCodigo(sucursalAModificar.getCodigo());
+                controladorSucursal.editarSucursal(sucursal);
+                JOptionPane.showMessageDialog(null, "La sucursal " + sucursal.getNombre() + " fue modificada con éxito", "Éxito", JOptionPane.WARNING_MESSAGE);
+                limpiarCampos();
+                
+                VentanaGestionSucursales ventanaSucursales = (VentanaGestionSucursales) ventanaAnterior;
+                ventanaSucursales.llenarTablaSucursales();
+                ventanaSucursales.setVisible(true);
+                this.setVisible(false);            
+            }
+        }
+    }//GEN-LAST:event_bFinalizarActionPerformed
+
+    private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_bLimpiarActionPerformed
+
+    public void modificacionSucursal(Sucursal sucursal){
+        
+        sucursalAModificar = sucursal;
+        
+        tfNombre.setText(sucursalAModificar.getNombre());
+        tfDireccion.setText(sucursalAModificar.getDireccion());
+        tfTelefono.setText(sucursalAModificar.getTelefono());
+        
+    }
+    
+    public void limpiarCampos(){
+        tfNombre.setText("");
+        tfDireccion.setText("");
+        tfTelefono.setText("");
+    }
     /**
      * @param args the command line arguments
      */
@@ -229,15 +298,15 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
     private javax.swing.JButton bFinalizar;
-    private javax.swing.JButton bFinalizar1;
+    private javax.swing.JButton bLimpiar;
     private javax.swing.JLabel lCodigo1;
     private javax.swing.JLabel lCodigo2;
     private javax.swing.JLabel lCodigo5;
     private javax.swing.JLabel lLogo;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JTextField tfDireccion;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfTelefono;
-    private javax.swing.JTextField tfcodigo;
     // End of variables declaration//GEN-END:variables
 }
