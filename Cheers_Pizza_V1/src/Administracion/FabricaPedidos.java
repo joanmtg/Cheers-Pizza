@@ -38,11 +38,11 @@ public class FabricaPedidos {
         }
         
         else if(tipoPedido.equalsIgnoreCase("En mesa")){
-            pedidoGenerado = new PedidoEnMesa(tipoPedido, horaInicio, horaEntrega, mesa, cliente, mesero, sucursal);
+            pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, mesa, cliente, mesero, sucursal);
         }
         
         else if(tipoPedido.equalsIgnoreCase("A domicilio")){
-            pedidoGenerado = new PedidoADomicilio(tipoPedido, horaInicio, horaEntrega, cliente, sucursal);
+            pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, cliente, sucursal);
         }
         
         return pedidoGenerado;
