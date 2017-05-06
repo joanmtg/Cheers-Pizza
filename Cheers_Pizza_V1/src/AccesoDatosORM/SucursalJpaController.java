@@ -18,6 +18,7 @@
 package AccesoDatosORM;
 
 import Administracion.Sucursal;
+import java.util.List;
 
 /**
  *
@@ -44,6 +45,16 @@ public class SucursalJpaController {
     
     public void edit(Sucursal sucursal){
         fachada.edit(sucursal);
+    }
+    
+    public Sucursal find(Long codigo){
+        Sucursal sucursal = fachada.find(codigo);
+        return sucursal;        
+    }
+    
+    public List<Sucursal> findAll(){
+        List<Sucursal> sucursales = fachada.findAll();
+        return sucursales;
     }
     
     

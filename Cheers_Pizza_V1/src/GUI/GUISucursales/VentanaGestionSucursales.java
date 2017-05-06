@@ -5,8 +5,12 @@
  */
 package GUI.GUISucursales;
 
+import AccesoDatosORM.AdaptadorSucursalControlador;
+import Administracion.Sucursal;
 import GUI.VentanaLogin;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,10 +22,41 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
      * Creates new form ventanaGestionSucursales
      */
     JFrame ventanaAnterior;
+    AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
     public VentanaGestionSucursales(JFrame anterior) {
         initComponents();
         ventanaAnterior = anterior;
         setLocationRelativeTo(null);
+        
+        llenarTablaSucursales();
+    }
+    
+    public void llenarTablaSucursales(){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tablaSucursales.getModel();
+        
+        for(int i = 0; i < tablaSucursales.getRowCount(); i++){
+            modelo.removeRow(i);
+            i -= 1;
+        }
+        
+        ArrayList<Sucursal> sucursales = controladorSucursal.obtenerTodasLasSucursales();
+        
+        for(int i = 0; i < sucursales.size(); i++){
+            System.out.println("" + sucursales.get(i).getNombre());
+            Object[] fila = new Object[4];
+            
+            fila[0] = sucursales.get(i).getCodigo();
+            fila[1] = sucursales.get(i).getNombre();
+            fila[2] = sucursales.get(i).getTelefono();
+            fila[3] = sucursales.get(i).getDireccion();
+            
+            modelo.addRow(fila);
+            
+        }
+        
+        tablaSucursales.setModel(modelo);
+               
     }
 
     /**
@@ -37,7 +72,7 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaItems = new javax.swing.JTable();
+        tablaSucursales = new javax.swing.JTable();
         bRegistrar = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
@@ -63,7 +98,7 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
             }
         });
 
-        tablaItems.setModel(new javax.swing.table.DefaultTableModel(
+        tablaSucursales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -82,7 +117,7 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tablaItems);
+        jScrollPane1.setViewportView(tablaSucursales);
 
         bRegistrar.setText("Registrar");
         bRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -224,24 +259,59 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
 
         //Validar que se seleccione un elemento de la tabla
-
-        VentanaRegistrarModificarSucursal ventanaRegistro = new VentanaRegistrarModificarSucursal(this, "Modificación");
-        ventanaRegistro.setVisible(true);
-        this.setVisible(false);
+        int filasSeleccionadas = tablaSucursales.getSelectedRowCount();
+        
+        if(filasSeleccionadas == 1){
+            
+            int filaSeleccionada = tablaSucursales.getSelectedRow();
+            Long codigoSucursal = (Long) tablaSucursales.getValueAt(filaSeleccionada, 0);
+            
+            Sucursal sucursalSeleccionada = controladorSucursal.obtenerSucursal(codigoSucursal);
+            
+            VentanaRegistrarModificarSucursal ventanaRegistro = new VentanaRegistrarModificarSucursal(this, "Modificacion");
+            ventanaRegistro.setVisible(true);
+            ventanaRegistro.modificacionSucursal(sucursalSeleccionada);
+            this.setVisible(false);          
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila de la sucursal a modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        
+        
 
     }//GEN-LAST:event_bModificarActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
 
         //Validar que se seleccione un elemento de la tabla
+        
+        int filasSeleccionadas = tablaSucursales.getSelectedRowCount();
+        
+        if(filasSeleccionadas == 1){
+            
+            int filaSeleccionada = tablaSucursales.getSelectedRow();
+            
+            Long codigoSucursal = (Long) tablaSucursales.getValueAt(filaSeleccionada, 0);
+            Sucursal sucursalAEliminar = controladorSucursal.obtenerSucursal(codigoSucursal);
+            
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la sucursal "+ sucursalAEliminar.getNombre() + " con código " + sucursalAEliminar.getCodigo() + "?");
 
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la sucursal <tal> con código <tal>?");
-
-        if(opcion == JOptionPane.YES_OPTION){
-            //Eliminar item
-            //Actualizar tabla
-            JOptionPane.showMessageDialog(null, "Se ha eliminado la sucursal <tal> con codigo <tal>", "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
+            if(opcion == JOptionPane.YES_OPTION){
+                
+                //Eliminar sucursal
+                controladorSucursal.eliminarSucursal(sucursalAEliminar);
+                
+                //Actualizar tabla
+                JOptionPane.showMessageDialog(null, "Se ha eliminado la sucursal " + sucursalAEliminar.getNombre() + " con código " + sucursalAEliminar.getCodigo(), "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
+                llenarTablaSucursales();
         }
+            
+        }else{
+            
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila de la sucursal que desea eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);            
+        }        
 
     }//GEN-LAST:event_bEliminarActionPerformed
 
@@ -292,7 +362,7 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
     private javax.swing.JLabel lLogo;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JTable tablaItems;
+    private javax.swing.JTable tablaSucursales;
     private javax.swing.JTextField tfFiltroCodigo;
     private javax.swing.JTextField tfFiltroNombre;
     // End of variables declaration//GEN-END:variables

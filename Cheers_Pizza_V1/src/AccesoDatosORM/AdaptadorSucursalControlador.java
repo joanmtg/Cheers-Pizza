@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Sucursal;
+import java.util.ArrayList;
 
 /**
  *
@@ -46,6 +47,16 @@ public class AdaptadorSucursalControlador {
     public void editarSucursal(Sucursal sucursal){
         controlador.edit(sucursal);
         System.out.println("Editando la sucursal "+sucursal.getNombre());
+    }
+    
+    public Sucursal obtenerSucursal(Long codigoSucursal){
+        Sucursal sucursal = controlador.find(codigoSucursal);
+        return sucursal;
+    }
+    
+    public ArrayList<Sucursal> obtenerTodasLasSucursales(){
+        ArrayList<Sucursal> sucursales = (ArrayList)controlador.findAll();
+        return sucursales;
     }
     
 }
