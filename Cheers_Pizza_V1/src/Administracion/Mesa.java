@@ -19,11 +19,15 @@
 package Administracion;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -44,6 +48,9 @@ public class Mesa implements Serializable {
     
     @Column(name = "capacidad")
     private int cantidadPersonas;
+    
+    @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos = new ArrayList<>();
     
     //Constructor N°1
     
@@ -76,6 +83,18 @@ public class Mesa implements Serializable {
         this.cantidadPersonas = cantidadPersonas;
     }
 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    
+    
+    
+
     
     @Override
     public int hashCode() {
@@ -99,8 +118,13 @@ public class Mesa implements Serializable {
 
     @Override
     public String toString() {
-        return "Mesa{" + "numero=" + numero + ", cantidadPersonas=" + cantidadPersonas + '}';
+        return "Mesa{" + "numero=" + numero + ", cantidadPersonas=" + cantidadPersonas + ", pedidos=" + pedidos + '}';
     }
+
+    
+
+    
+    
     
     
     

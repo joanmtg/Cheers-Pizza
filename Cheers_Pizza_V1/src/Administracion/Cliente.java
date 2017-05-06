@@ -19,9 +19,13 @@
 package Administracion;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -56,7 +60,9 @@ public class Cliente implements Serializable {
     @Column(name = "email")
     private String email;
     
-
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos = new ArrayList<>();
+    
     //Constructor N°1    
     public Cliente() {
     }
@@ -132,7 +138,16 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
     
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -155,8 +170,14 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", telefono=" + telefono + ", celular=" + celular + ", email=" + email + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", telefono=" + telefono + ", celular=" + celular + ", email=" + email + ", pedidos=" + pedidos + '}';
     }
+
+    
+
+    
+    
+    
     
     
     

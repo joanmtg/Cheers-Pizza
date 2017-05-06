@@ -24,7 +24,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
     AdaptadorClienteControlador controladorCliente = new AdaptadorClienteControlador();
     AdaptadorFacturaControlador controladorFactura = new AdaptadorFacturaControlador();
-    AdaptadorFacturaItemControlador controladorFacturaItem = new AdaptadorFacturaItemControlador();
+    AdaptadorPedidoItemControlador controladorFacturaItem = new AdaptadorPedidoItemControlador();
     AdaptadorPedidoControlador controladorPedido = new AdaptadorPedidoControlador();
     
     /**
@@ -35,58 +35,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
-        /*
-        // Creando sucursal
-        Sucursal nuevaSucursal = new Sucursal("Cheers Cali", "Calle 20", "2945423");
-        controladorSucursal.crearSucursal(nuevaSucursal);
-        
-        // Creando empleados (meseros) asociados a sucursal
-        Empleado mesero_uno = new Empleado("11440927462", "CC", "Vin" , "Diesel",  "Calle 10", "3204542393", "Mesero", "contraseña", LocalTime.of(8, 0), LocalTime.of(16, 0), null, nuevaSucursal);
-        
-        Empleado mesero_dos = new Empleado("1144150569", "CC", "Paul" , "Walker",  "Calle 20", "3104953921", "Mesero", "contraseña", LocalTime.of(8, 0), LocalTime.of(16, 0), null, nuevaSucursal);
-        
-        controladorEmpleado.crearEmpleado(mesero_uno);
-        controladorEmpleado.crearEmpleado(mesero_dos);
-        
-        // Obteniendo mesero registrado
-        Empleado mesero_uno_back = controladorEmpleado.obtenerEmpleado("1144150569");
-        System.out.println(mesero_uno_back.toString());
-        
-        // Creando categoria
-        Categoria nuevaCategoria = new Categoria("Sopas");
-        controladorCategoria.crearCategoria(nuevaCategoria);
-        
-        // Creando Item asociado a categoria
-        Item item1 = new Item("Sopa de pastas", "Sopa hecha con pastas", 3000, null, nuevaCategoria);
-        controladorItem.crearItem(item1);
-        
-        Item item2 = new Item("Sopa de carne", "Sopa con carne cocinada", 3000, null, nuevaCategoria);
-        controladorItem.crearItem(item2);
-        
-        // Creando cliente
-        Cliente nuevoCliente = new Cliente("1110230459", "Luis", "Molano", "Calle 15", "3495432", "3184594323", "luis.molano@gmail.com");
-        controladorCliente.crearCliente(nuevoCliente);
-        
-        // Creando empleado (cajero)
-        Empleado cajero1 = new Empleado("1120349584", "CC", "Victor", "Garcia", "Calle 19", "3214596843", "Cajero", "contraseña", LocalTime.of(8, 0), LocalTime.of(16, 0), null, nuevaSucursal);
-        controladorEmpleado.crearEmpleado(cajero1);
-        
-        // Creando Factura
-        Factura nuevaFactura = new Factura("Efectivo", LocalTime.of(10, 0), 5000, 2000, 0, cajero1, nuevoCliente);
-        controladorFactura.crearFactura(nuevaFactura);
-        
-        // Agregando Items a la factura
-        
-        Factura_Item ingresoItem1 = new Factura_Item(1L, 1L);
-        Factura_Item ingresoItem2 = new Factura_Item(1L, 2L);
-        
-        controladorFacturaItem.crearFacturaItem(ingresoItem1);
-        controladorFacturaItem.crearFacturaItem(ingresoItem2);
-        
-        // Creando Pedido
-        Pedido nuevoPedido = new Pedido("A domicilio", LocalTime.of(9, 10), LocalTime.of(9, 15), nuevoCliente, nuevaSucursal);
-        controladorPedido.crearPedido(nuevoPedido);
-        */
     }
     
     public void limpiarCampos(){

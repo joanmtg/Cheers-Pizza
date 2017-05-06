@@ -11,12 +11,12 @@
  * Juan Pablo Moreno Muñoz		1423437
  * Joan Manuel Tovar Guzmán		1423124
  *
- * file: FachadaFacturaItem.java
+ * file: FachadaPedidoItem.java
  * 
  */
 package AccesoDatosORM;
 
-import Administracion.Factura_Item;
+import Administracion.Pedido_Item;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -26,13 +26,13 @@ import javax.persistence.PersistenceContext;
  * @author Jhonier Andrés
  */
 
-public class FachadaFacturaItem extends AbstractFacade<Factura_Item>{
+public class FachadaPedidoItem extends AbstractFacade<Pedido_Item>{
 
     @PersistenceContext(name = "Cheers_PizzaPU")
     private EntityManager em = Persistence.createEntityManagerFactory("Cheers_PizzaPU").createEntityManager();
     
-    public FachadaFacturaItem() {
-        super(Factura_Item.class);
+    public FachadaPedidoItem() {
+        super(Pedido_Item.class);
     }
 
     @Override

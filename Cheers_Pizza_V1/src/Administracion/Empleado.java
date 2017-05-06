@@ -19,11 +19,15 @@ package Administracion;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -71,7 +75,13 @@ public class Empleado implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "cod_sucursal")
-    private Sucursal cod_sucursal;
+    private Sucursal sucursal;
+    
+    @OneToMany(mappedBy = "mesero", cascade = CascadeType.ALL)
+    private List<Pedido> pedidosRegistrados = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "cajero", cascade = CascadeType.ALL)
+    private List<Factura> facturasGeneradas = new ArrayList<>();
 
     // Constructor N°1
     
@@ -92,7 +102,7 @@ public class Empleado implements Serializable {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.fotoURL = fotoURL;
-        this.cod_sucursal = cod_sucursal;
+        this.sucursal = cod_sucursal;
     }
     
         
@@ -186,15 +196,34 @@ public class Empleado implements Serializable {
         this.fotoURL = fotoURL;
     }
 
-    public Sucursal getCod_sucursal() {
-        return cod_sucursal;
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setCod_sucursal(Sucursal cod_sucursal) {
-        this.cod_sucursal = cod_sucursal;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 
+    public List<Pedido> getPedidosRegistrados() {
+        return pedidosRegistrados;
+    }
+
+    public void setPedidosRegistrados(List<Pedido> pedidosRegistrados) {
+        this.pedidosRegistrados = pedidosRegistrados;
+    }
+
+    public List<Factura> getFacturasGeneradas() {
+        return facturasGeneradas;
+    }
+
+    public void setFacturasGeneradas(List<Factura> facturasGeneradas) {
+        this.facturasGeneradas = facturasGeneradas;
+    }
     
+    
+    
+
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -217,8 +246,14 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "Empleado{" + "id=" + id + ", tipoId=" + tipoId + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", telefono=" + telefono + ", cargo=" + cargo + ", password=" + password + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fotoURL=" + fotoURL + ", cod_sucursal=" + cod_sucursal + '}';
+        return "Empleado{" + "id=" + id + ", tipoId=" + tipoId + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", telefono=" + telefono + ", cargo=" + cargo + ", password=" + password + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fotoURL=" + fotoURL + ", cod_sucursal=" + sucursal + ", pedidosRegistrados=" + pedidosRegistrados + ", facturasGeneradas=" + facturasGeneradas + '}';
     }
-   
+
+    
+    
+
+    
+
+    
         
 }

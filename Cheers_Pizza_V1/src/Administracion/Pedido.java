@@ -20,6 +20,9 @@ package Administracion;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +30,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -65,11 +69,14 @@ public class Pedido implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "id_empleado")
-    private Empleado empleado;
+    private Empleado mesero;
     
     @ManyToOne
     @JoinColumn(name = "cod_sucursal")
-    private Sucursal sucursal;
+    private Sucursal sucursalPedido;
+    
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<Pedido_Item> pedidoItems = new ArrayList<>();
     
     //Constructor N°1
     
@@ -84,8 +91,8 @@ public class Pedido implements Serializable {
         this.horaEntrega = horaEntrega;
         this.mesa = mesa;
         this.cliente = cliente;
-        this.empleado = empleado;
-        this.sucursal = sucursal;
+        this.mesero = empleado;
+        this.sucursalPedido = sucursal;
     }
     
     //Constructor N°3
@@ -95,7 +102,7 @@ public class Pedido implements Serializable {
         this.horaInicio = horaInicio;
         this.horaEntrega = horaEntrega;
         this.cliente = cliente;
-        this.sucursal = sucursal;
+        this.sucursalPedido = sucursal;
     }
     
        
@@ -150,22 +157,33 @@ public class Pedido implements Serializable {
         this.cliente = cliente;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public Empleado getMesero() {
+        return mesero;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setMesero(Empleado mesero) {
+        this.mesero = mesero;
     }
 
-    public Sucursal getSucursal() {
-        return sucursal;
+    public Sucursal getSucursalPedido() {
+        return sucursalPedido;
     }
 
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
+    public void setSucursalPedido(Sucursal sucursalPedido) {
+        this.sucursalPedido = sucursalPedido;
     }
 
+    public List<Pedido_Item> getPedidoItems() {
+        return pedidoItems;
+    }
+
+    public void setPedidoItems(List<Pedido_Item> pedidoItems) {
+        this.pedidoItems = pedidoItems;
+    }
+
+    
+    
+    
     
     @Override
     public int hashCode() {
@@ -189,8 +207,9 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido{" + "numero=" + numero + ", tipoPedido=" + tipoPedido + ", horaInicio=" + horaInicio + ", horaEntrega=" + horaEntrega + ", mesa=" + mesa + ", cliente=" + cliente + ", empleado=" + empleado + ", sucursal=" + sucursal + '}';
+        return "Pedido{" + "numero=" + numero + ", tipoPedido=" + tipoPedido + ", horaInicio=" + horaInicio + ", horaEntrega=" + horaEntrega + ", mesa=" + mesa + ", cliente=" + cliente + ", mesero=" + mesero + ", sucursalPedido=" + sucursalPedido + ", pedidoItems=" + pedidoItems + '}';
     }
+
     
     
     
