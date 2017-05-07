@@ -65,6 +65,9 @@ public class Factura implements Serializable {
     @JoinColumn(name = "id_empleado")
     private Empleado cajero;
     
+    @ManyToOne
+    @JoinColumn(name = "numero_pedido")
+    private Pedido pedido;
     
     
     //Constructor N°1
@@ -74,14 +77,18 @@ public class Factura implements Serializable {
 
     //Constructor N°2
 
-    public Factura(String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, Empleado cajero) {
+    public Factura(Long numero, String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, Empleado cajero, Pedido pedido) {
+        this.numero = numero;
         this.tipoPago = tipoPago;
         this.horaPago = horaPago;
         this.impuestos = impuestos;
         this.propina = propina;
         this.descuento = descuento;
         this.cajero = cajero;
+        this.pedido = pedido;
     }
+
+    
 
     
     
@@ -143,6 +150,14 @@ public class Factura implements Serializable {
         this.cajero = cajero;
     }
 
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
     
 
     @Override
@@ -167,9 +182,11 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", cajero=" + cajero + '}';
+        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", cajero=" + cajero + ", pedido=" + pedido + '}';
     }
 
+    
+    
     
     
     

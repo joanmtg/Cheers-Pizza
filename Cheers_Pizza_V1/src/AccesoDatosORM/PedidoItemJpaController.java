@@ -46,8 +46,8 @@ public class PedidoItemJpaController{
         fachada.edit(pedidoItem);
     }
     
-    public Pedido_Item find(Long id){
-        Pedido_Item pedidoItem = fachada.find(id);
+    public Pedido_Item find(Long numeroPedido){
+        Pedido_Item pedidoItem = fachada.find(numeroPedido);
         return pedidoItem;
     }
     

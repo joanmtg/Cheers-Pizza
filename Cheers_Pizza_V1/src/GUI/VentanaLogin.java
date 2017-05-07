@@ -6,10 +6,7 @@
 package GUI;
 
 import AccesoDatosORM.*;
-import Administracion.*;
 import Validaciones.Validaciones;
-import java.time.LocalTime;
-import javax.swing.border.Border;
 
 /**
  *
@@ -17,15 +14,7 @@ import javax.swing.border.Border;
  */
 public class VentanaLogin extends javax.swing.JFrame {
 
-    Validaciones validaciones = new Validaciones();
-    AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
-    AdaptadorEmpleadoControlador controladorEmpleado = new AdaptadorEmpleadoControlador();
-    AdaptadorCategoriaControlador controladorCategoria = new AdaptadorCategoriaControlador();
-    AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
-    AdaptadorClienteControlador controladorCliente = new AdaptadorClienteControlador();
-    AdaptadorFacturaControlador controladorFactura = new AdaptadorFacturaControlador();
-    AdaptadorPedidoItemControlador controladorFacturaItem = new AdaptadorPedidoItemControlador();
-    AdaptadorPedidoControlador controladorPedido = new AdaptadorPedidoControlador();
+    Validaciones validaciones = new Validaciones();;
     
     /**
      * Creates new form GUILogin

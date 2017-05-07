@@ -11,46 +11,46 @@
  * Juan Pablo Moreno Muñoz		1423437
  * Joan Manuel Tovar Guzmán		1423124
  *
- * file: AdaptadorFacturaItemControlador.java
+ * file: AdaptadorPedidoItemControlador.java
  * 
  */
 package AccesoDatosORM;
 
-import Administracion.Factura_Item;
+import Administracion.Pedido_Item;
 
 /**
  *
  * @author Jhonier Andrés
  */
-public class AdaptadorFacturaItemControlador {
+public class AdaptadorPedidoItemControlador {
 
-    FacturaItemJpaController controlador = new FacturaItemJpaController();
+    PedidoItemJpaController controlador = new PedidoItemJpaController();
     
-    public AdaptadorFacturaItemControlador() {
+    public AdaptadorPedidoItemControlador() {
     }
     
-    public int contarFacturaItems() {
+    public int contarPedidoItems() {
         return controlador.count();
     }
 
-    public void eliminarFacturaItem(Factura_Item facturaItem) {
-        controlador.delete(facturaItem);
-        System.out.println("Eliminando el item " + facturaItem.getCodigoItem() + " en la factura " + facturaItem.getNumeroFactura());
+    public void eliminarPedidoItem(Pedido_Item pedidoItem) {
+        controlador.delete(pedidoItem);
+        System.out.println("Eliminando el item " + pedidoItem.getCodigoItem() + " en el pedido " + pedidoItem.getNumeroPedido());
     }
 
-    public void crearFacturaItem(Factura_Item facturaItem) {
-        controlador.create(facturaItem);
-        System.out.println("Registrando el item " + facturaItem.getCodigoItem() + " en la factura " + facturaItem.getNumeroFactura());
+    public void crearFacturaItem(Pedido_Item pedidoItem) {
+        controlador.create(pedidoItem);
+        System.out.println("Registrando el item " + pedidoItem.getCodigoItem() + " en el pedido " + pedidoItem.getNumeroPedido());
     }
     
-    public void editarFacturaItem(Factura_Item facturaItem){
-        controlador.edit(facturaItem);
-        System.out.println("Editando el item " + facturaItem.getCodigoItem() + " en la factura " + facturaItem.getNumeroFactura());
+    public void editarPedidoItem(Pedido_Item pedidoItem){
+        controlador.edit(pedidoItem);
+        System.out.println("Editando el item " + pedidoItem.getCodigoItem() + " en el pedido " + pedidoItem.getNumeroPedido());
     }
     
-    public Factura_Item obtenerFacturaItem(String numeroFactura){
-        Factura_Item facturaItem = controlador.find(numeroFactura);
-        return facturaItem;
+    public Pedido_Item obtenerFacturaItem(Long numeroPedido){
+        Pedido_Item pedidoItem = controlador.find(numeroPedido);
+        return pedidoItem;
     }
     
 }
