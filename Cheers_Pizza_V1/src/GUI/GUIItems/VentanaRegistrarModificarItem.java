@@ -10,8 +10,20 @@ import AccesoDatosORM.AdaptadorItemControlador;
 import Administracion.Categoria;
 import Administracion.Item;
 import Validaciones.Validaciones;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -24,6 +36,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
     
     Item itemAModificar = new Item();
+    File ficheroImagen;
     /**
      * Creates new form VentanaRegistrarItem
      */
@@ -46,6 +59,9 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
             String categoria = categorias.get(i).getNombre();
             cbCategoria.addItem(categoria);
         }
+        
+        defaultImage();
+        
     }
 
     /**
@@ -72,8 +88,8 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         lDescription = new javax.swing.JLabel();
         cbCategoria = new javax.swing.JComboBox<String>();
         lImagen = new javax.swing.JLabel();
-        bFinalizar2 = new javax.swing.JButton();
-        bFinalizar3 = new javax.swing.JButton();
+        bCambiarImagen = new javax.swing.JButton();
+        lImagenItem = new javax.swing.JLabel();
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -144,9 +160,14 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         lImagen.setForeground(new java.awt.Color(255, 255, 255));
         lImagen.setText("Imagen:");
 
-        bFinalizar2.setText("Ver Imagen");
+        bCambiarImagen.setText("Cambiar");
+        bCambiarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCambiarImagenActionPerformed(evt);
+            }
+        });
 
-        bFinalizar3.setText("Cambiar");
+        lImagenItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imagenPizzaDefault.jpg"))); // NOI18N
 
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
@@ -154,38 +175,40 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInferiorLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lCategoria)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lImagen))
-                        .addGap(18, 18, 18)
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(32, 32, 32)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelInferiorLayout.createSequentialGroup()
                                 .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addComponent(bFinalizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lImagenItem, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(bFinalizar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lPrecio)
-                            .addComponent(lDescription)
-                            .addComponent(lNombre))
-                        .addGap(18, 18, 18)
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
-                            .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(bCambiarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(panelInferiorLayout.createSequentialGroup()
+                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lPrecio)
+                                .addComponent(lDescription)
+                                .addComponent(lNombre))
+                            .addGap(18, 18, 18)
+                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1)
+                                .addGroup(panelInferiorLayout.createSequentialGroup()
+                                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(panelInferiorLayout.createSequentialGroup()
+                            .addComponent(lCategoria)
+                            .addGap(32, 32, 32)
+                            .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(152, 152, 152))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         panelInferiorLayout.setVerticalGroup(
@@ -193,12 +216,12 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
             .addGroup(panelInferiorLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(tfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(lNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfNombre))
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(tfPrecio))
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,18 +230,20 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bFinalizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bFinalizar3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lImagenItem, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(bCambiarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13))
+                .addGap(19, 19, 19))
         );
 
         lLogo.setBackground(new java.awt.Color(89, 30, 27));
@@ -246,8 +271,8 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelInferior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -258,7 +283,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -280,44 +305,51 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
 
-        // Obteniendo los campos
-        String nombre = tfNombre.getText();
-        double precio = Double.parseDouble(tfPrecio.getText());
-        String descripcion = taDescripcion.getText();
-        
-        Long codCategoria = (long)cbCategoria.getSelectedIndex();
-        Categoria categoria = controladorCategoria.obtenerCategoria(codCategoria);
-
-        if (nombre.equals("") || precio == 0 || descripcion.equals("")) {
+        try {
+            // Obteniendo los campos
+            String nombre = tfNombre.getText();
+            double precio = Double.parseDouble(tfPrecio.getText());
+            String descripcion = taDescripcion.getText();
             
-            JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos solicitados", "Mensaje", JOptionPane.WARNING_MESSAGE);
+            Long codCategoria = (long)cbCategoria.getSelectedIndex();
+            Categoria categoria = controladorCategoria.obtenerCategoria(codCategoria);
             
-        } else {
+            BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
+            String image_string = encodeImageToString(img);
             
-            Item nuevoItem = new Item(nombre, descripcion, precio, null, categoria);
-            
-            if(operacion.equalsIgnoreCase("Registro")){
+            if (nombre.equals("") || precio == 0 || descripcion.equals("") || cbCategoria.getSelectedIndex() == 0) {
                 
-                controladorItem.crearItem(nuevoItem);
-                JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                limpiarCampos();
+                JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos solicitados", "Mensaje", JOptionPane.WARNING_MESSAGE);
                 
-            }else if(operacion.equalsIgnoreCase("Modificacion")){
+            } else {
                 
-                nuevoItem.setCodigo(itemAModificar.getCodigo());
-                controladorItem.editarItem(nuevoItem);
-                JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                limpiarCampos();
+                Item nuevoItem = new Item(nombre, descripcion, precio, image_string, categoria);
                 
-                VentanaGestionItems ventanaItems = (VentanaGestionItems)ventanaAnterior;
-                ventanaItems.llenarTablaItems();
-                ventanaItems.setVisible(true);
-                this.setVisible(false);
-                        
+                if(operacion.equalsIgnoreCase("Registro")){
+                    
+                    controladorItem.crearItem(nuevoItem);
+                    JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+                    
+                }else if(operacion.equalsIgnoreCase("Modificacion")){
+                    
+                    nuevoItem.setCodigo(itemAModificar.getCodigo());
+                    controladorItem.editarItem(nuevoItem);
+                    JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+                    
+                    VentanaGestionItems ventanaItems = (VentanaGestionItems)ventanaAnterior;
+                    ventanaItems.llenarTablaItems();
+                    ventanaItems.setVisible(true);
+                    this.setVisible(false);
+                    
+                }
+                
+                defaultImage();
+                
             }
-            
-            
-            
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_bFinalizarActionPerformed
@@ -330,6 +362,26 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         validacion.validarNumeros(evt);
     }//GEN-LAST:event_tfPrecioKeyTyped
 
+    private void bCambiarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCambiarImagenActionPerformed
+        
+        JFileChooser file = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.jpg", "jpg");
+        file.setFileFilter(filtro);
+
+        int seleccion = file.showOpenDialog(new JPanel());
+        
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            
+            //Seleccionamos el fichero
+            ficheroImagen = file.getSelectedFile();
+            ImageIcon icon = new ImageIcon(ficheroImagen.toString());
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lImagenItem.getWidth(), lImagenItem.getHeight(), Image.SCALE_DEFAULT));
+            lImagenItem.setIcon(icono);
+
+        }
+        
+    }//GEN-LAST:event_bCambiarImagenActionPerformed
+
     public void modificacionItem(Item item){
         
         itemAModificar = item;
@@ -338,6 +390,11 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         tfPrecio.setText(""+itemAModificar.getPrecioActual());
         taDescripcion.setText(itemAModificar.getDescripcion());
         cbCategoria.setSelectedItem(itemAModificar.getCategoria().getNombre());
+        
+        BufferedImage img = decodeToImage(itemAModificar.getFotografia());
+        ImageIcon icon = new ImageIcon(img);
+        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lImagenItem.getWidth(), lImagenItem.getHeight(), Image.SCALE_DEFAULT));
+        lImagenItem.setIcon(icono);
         
     }
     
@@ -348,6 +405,58 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         taDescripcion.setText("");
         cbCategoria.setSelectedIndex(0);
         
+    }
+    
+    public void defaultImage(){
+        try {
+            ficheroImagen = new File(getClass().getResource("/images/imagenPizzaDefault.jpg").toURI());
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+        public String encodeImageToString(BufferedImage image) {
+        
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try {
+            
+            ImageIO.write(image, "jpg", bos);
+            byte[] imageBytes = bos.toByteArray();
+            imageString = Base64.getEncoder().encodeToString(imageBytes);
+
+            bos.close();
+            
+        } catch (IOException e) {
+            
+            System.out.println("No se pudo codificar la imagen");
+            
+        }
+        return imageString;
+    }
+    
+    
+    public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        
+        try {
+            
+            imageByte = Base64.getDecoder().decode(imageString);
+            ByteArrayInputStream bis;
+            bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            
+            bis.close();
+            
+        } catch (Exception e) {
+            
+            System.out.println("No se pudo decodificar la imagen");
+            
+        }
+        return image;
     }
     
     
@@ -389,15 +498,15 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
+    private javax.swing.JButton bCambiarImagen;
     private javax.swing.JButton bFinalizar;
-    private javax.swing.JButton bFinalizar2;
-    private javax.swing.JButton bFinalizar3;
     private javax.swing.JButton bLimpiar;
     public javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lCategoria;
     private javax.swing.JLabel lDescription;
     private javax.swing.JLabel lImagen;
+    private javax.swing.JLabel lImagenItem;
     private javax.swing.JLabel lLogo;
     private javax.swing.JLabel lNombre;
     private javax.swing.JLabel lPrecio;

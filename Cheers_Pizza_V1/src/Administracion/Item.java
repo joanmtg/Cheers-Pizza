@@ -58,7 +58,8 @@ public class Item implements Serializable {
     @Column(name = "precio")
     private double precioActual;
     
-    @Column(name = "foto")
+    @Column(name = "foto", columnDefinition = "TEXT")
+    
     private String fotografia;
     
     @ManyToOne
