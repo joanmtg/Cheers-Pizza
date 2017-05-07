@@ -11,35 +11,35 @@ import java.io.Serializable;
  *
  * @author Jhonier Andrés
  */
-public class FacturaItemPK implements Serializable {
+public class PedidoItemPK implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    private Long numeroFactura;
+    private Long numeroPedido;
     
     private Long codigoItem;
 
     //Constructor N°1
 
-    public FacturaItemPK() {
+    public PedidoItemPK() {
     }
     
     //Constructor N°2
 
-    public FacturaItemPK(Long numeroFactura, Long codigoItem) {
-        this.numeroFactura = numeroFactura;
+    public PedidoItemPK(Long numeroFactura, Long codigoItem) {
+        this.numeroPedido = numeroFactura;
         this.codigoItem = codigoItem;
     }
     
     
     // Getters and Setters
     
-    public Long getNumeroFactura() {
-        return numeroFactura;
+    public Long getNumeroPedido() {
+        return numeroPedido;
     }
 
-    public void setNumeroFactura(Long numeroFactura) {
-        this.numeroFactura = numeroFactura;
+    public void setNumeroPedido(Long numeroPedido) {
+        this.numeroPedido = numeroPedido;
     }
 
     public Long getCodigoItem() {
@@ -54,19 +54,19 @@ public class FacturaItemPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (numeroFactura != null ? numeroFactura.hashCode() : 0);
-        hash += (codigoItem != null ? numeroFactura.hashCode() : 0);
+        hash += (numeroPedido != null ? numeroPedido.hashCode() : 0);
+        hash += (codigoItem != null ? numeroPedido.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FacturaItemPK)) {
+        if (!(object instanceof PedidoItemPK)) {
             return false;
         }
-        FacturaItemPK other = (FacturaItemPK) object;
-        if ((this.numeroFactura == null && other.numeroFactura != null) || (this.numeroFactura != null && !this.numeroFactura.equals(other.numeroFactura))) {
+        PedidoItemPK other = (PedidoItemPK) object;
+        if ((this.numeroPedido == null && other.numeroPedido != null) || (this.numeroPedido != null && !this.numeroPedido.equals(other.numeroPedido))) {
             return false;
         }
         

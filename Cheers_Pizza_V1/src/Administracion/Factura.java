@@ -63,11 +63,12 @@ public class Factura implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "id_empleado")
-    private Empleado empleado;
+    private Empleado cajero;
     
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
+    @JoinColumn(name = "numero_pedido")
+    private Pedido pedido;
+    
     
     //Constructor N°1
     
@@ -76,15 +77,19 @@ public class Factura implements Serializable {
 
     //Constructor N°2
 
-    public Factura(String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, Empleado empleado, Cliente cliente) {
+    public Factura(Long numero, String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, Empleado cajero, Pedido pedido) {
+        this.numero = numero;
         this.tipoPago = tipoPago;
         this.horaPago = horaPago;
         this.impuestos = impuestos;
         this.propina = propina;
         this.descuento = descuento;
-        this.empleado = empleado;
-        this.cliente = cliente;
+        this.cajero = cajero;
+        this.pedido = pedido;
     }
+
+    
+
     
     
     //Setters & Getters
@@ -137,21 +142,23 @@ public class Factura implements Serializable {
         this.descuento = descuento;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public Empleado getCajero() {
+        return cajero;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setCajero(Empleado cajero) {
+        this.cajero = cajero;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
+
+    
 
     @Override
     public int hashCode() {
@@ -175,8 +182,12 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", empleado=" + empleado + ", cliente=" + cliente + '}';
+        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", cajero=" + cajero + ", pedido=" + pedido + '}';
     }
+
+    
+    
+    
     
     
     

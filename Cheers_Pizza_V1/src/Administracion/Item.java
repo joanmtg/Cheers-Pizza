@@ -19,6 +19,9 @@
 package Administracion;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +29,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -60,6 +64,11 @@ public class Item implements Serializable {
     @ManyToOne
     @JoinColumn(name = "cod_categoria")
     private Categoria categoria;
+    
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<Pedido_Item> pedidosItem = new ArrayList<>();
+    
+    
     //Constructor N°1
 
     public Item() {
@@ -126,6 +135,17 @@ public class Item implements Serializable {
         this.categoria = categoria;
     }
 
+    public List<Pedido_Item> getPedidosItem() {
+        return pedidosItem;
+    }
+
+    public void setPedidosItem(List<Pedido_Item> pedidosItem) {
+        this.pedidosItem = pedidosItem;
+    }
+    
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -148,8 +168,11 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Item{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", fotografia=" + fotografia + ", categoria=" + categoria + '}';
+        return "Item{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", fotografia=" + fotografia + ", categoria=" + categoria + ", pedidosItem=" + pedidosItem + '}';
     }
+
+    
+    
 
        
     

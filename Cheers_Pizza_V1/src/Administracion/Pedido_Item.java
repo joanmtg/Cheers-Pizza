@@ -19,24 +19,24 @@ import javax.persistence.Table;
  * @author Jhonier Andrés
  */
 @Entity
-@Table(name = "Factura_Item")
-@IdClass(FacturaItemPK.class)
+@Table(name = "Pedido_Item")
+@IdClass(PedidoItemPK.class)
 
-public class Factura_Item implements Serializable {
+public class Pedido_Item implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "numero_factura")
-    private Long numeroFactura;
+    @Column(name = "numero_pedido")
+    private Long numeroPedido;
 
     @Id
     @Column(name = "codigo_item")
     private Long codigoItem;
     
     @ManyToOne
-    @JoinColumn(name = "numero_factura", insertable = false, updatable = false)
-    private Factura factura;
+    @JoinColumn(name = "numero_pedido", insertable = false, updatable = false)
+    private Pedido pedido;
     
     @ManyToOne
     @JoinColumn(name = "codigo_item", insertable = false, updatable = false)
@@ -44,25 +44,28 @@ public class Factura_Item implements Serializable {
     
     //Constructor N°1
 
-    public Factura_Item() {
+    public Pedido_Item() {
     }
+
+    
     
     //Constructor N°2
 
-    public Factura_Item(Long numeroFactura, Long codigoItem) {
-        this.numeroFactura = numeroFactura;
+    public Pedido_Item(Long numeroPedido, Long codigoItem) {
+        this.numeroPedido = numeroPedido;
         this.codigoItem = codigoItem;
     }
-    
+
     //Setters & Getters
 
-    public Long getNumeroFactura() {
-        return numeroFactura;
+    public Long getNumeroPedido() {
+        return numeroPedido;
     }
 
-    public void setNumeroFactura(Long numeroFactura) {
-        this.numeroFactura = numeroFactura;
+    public void setNumeroPedido(Long numeroPedido) {
+        this.numeroPedido = numeroPedido;
     }
+    
 
     public Long getCodigoItem() {
         return codigoItem;
@@ -72,13 +75,15 @@ public class Factura_Item implements Serializable {
         this.codigoItem = codigoItem;
     }
 
-    public Factura getFactura() {
-        return factura;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setFactura(Factura factura) {
-        this.factura = factura;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
+
+    
 
     public Item getItem() {
         return item;
@@ -92,19 +97,19 @@ public class Factura_Item implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (numeroFactura != null ? numeroFactura.hashCode() : 0);
-        hash += (codigoItem != null ? numeroFactura.hashCode() : 0);
+        hash += (numeroPedido != null ? numeroPedido.hashCode() : 0);
+        hash += (codigoItem != null ? numeroPedido.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Factura_Item)) {
+        if (!(object instanceof Pedido_Item)) {
             return false;
         }
-        Factura_Item other = (Factura_Item) object;
-        if ((this.numeroFactura == null && other.numeroFactura != null) || (this.numeroFactura != null && !this.numeroFactura.equals(other.numeroFactura))) {
+        Pedido_Item other = (Pedido_Item) object;
+        if ((this.numeroPedido == null && other.numeroPedido != null) || (this.numeroPedido != null && !this.numeroPedido.equals(other.numeroPedido))) {
             return false;
         }
         
@@ -117,8 +122,12 @@ public class Factura_Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura_Item{" + "numeroFactura=" + numeroFactura + ", codigoItem=" + codigoItem + ", factura=" + factura + ", item=" + item + '}';
+        return "Pedido_Item{" + "numeroPedido=" + numeroPedido + ", codigoItem=" + codigoItem + ", pedido=" + pedido + ", item=" + item + '}';
     }
+
+    
+
+    
 
     
     

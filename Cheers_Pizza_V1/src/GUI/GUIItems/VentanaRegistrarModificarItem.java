@@ -113,20 +113,14 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         lNombre.setForeground(new java.awt.Color(255, 255, 255));
         lNombre.setText("Nombre:");
 
-        tfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tfNombreKeyPressed(evt);
-            }
-        });
-
         lPrecio.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lPrecio.setForeground(new java.awt.Color(255, 255, 255));
         lPrecio.setText("Precio:");
 
         tfPrecio.setText("0");
         tfPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tfPrecioKeyPressed(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfPrecioKeyTyped(evt);
             }
         });
 
@@ -328,17 +322,13 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bFinalizarActionPerformed
 
-    private void tfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNombreKeyPressed
-        validacion.validarLetras(evt);
-    }//GEN-LAST:event_tfNombreKeyPressed
-
-    private void tfPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPrecioKeyPressed
-        validacion.validarNumeros(evt);
-    }//GEN-LAST:event_tfPrecioKeyPressed
-
     private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_bLimpiarActionPerformed
+
+    private void tfPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPrecioKeyTyped
+        validacion.validarNumeros(evt);
+    }//GEN-LAST:event_tfPrecioKeyTyped
 
     public void modificacionItem(Item item){
         

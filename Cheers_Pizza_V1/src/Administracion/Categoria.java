@@ -6,11 +6,15 @@
 package Administracion;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,6 +35,9 @@ public class Categoria implements Serializable {
 
     @Column(name = "nombre", length = 50)
     private String nombre;
+    
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<Item> items = new ArrayList<>();
     
     //Constructor N°1
 
@@ -60,6 +67,16 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    
+    
     
     @Override
     public int hashCode() {
@@ -83,8 +100,14 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "Categoria{" + "codigo=" + codigo + ", nombre=" + nombre + '}';
+        return "Categoria{" + "codigo=" + codigo + ", nombre=" + nombre + ", items=" + items + '}';
     }
+
+    
+
+    
+
+    
 
     
     
