@@ -11,6 +11,7 @@ import GUI.VentanaLogin;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -23,19 +24,26 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
      */
     JFrame ventanaAnterior;
     AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
+    TableRowSorter trsFiltro;
+    
     public VentanaGestionSucursales(JFrame anterior) {
         initComponents();
         ventanaAnterior = anterior;
         setLocationRelativeTo(null);
         
         llenarTablaSucursales();
+        
+        trsFiltro = new TableRowSorter(tablaSucursales.getModel());
+        tablaSucursales.setRowSorter(trsFiltro);
+        
     }
     
     public void llenarTablaSucursales(){
         
         DefaultTableModel modelo = (DefaultTableModel) tablaSucursales.getModel();
+        modelo.setRowCount(0);
         
-        for(int i = 0; i < tablaSucursales.getRowCount(); i++){
+        for(int i = 0; i < modelo.getRowCount(); i++){
             modelo.removeRow(i);
             i -= 1;
         }
@@ -143,6 +151,18 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         lFiltroCodigo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo.setText("Filtrar por:      Código:");
+
+        tfFiltroNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroNombreKeyReleased(evt);
+            }
+        });
+
+        tfFiltroCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroCodigoKeyReleased(evt);
+            }
+        });
 
         lFiltroCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo1.setForeground(new java.awt.Color(255, 255, 255));
@@ -264,7 +284,12 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         if(filasSeleccionadas == 1){
             
             int filaSeleccionada = tablaSucursales.getSelectedRow();
-            Long codigoSucursal = (Long) tablaSucursales.getValueAt(filaSeleccionada, 0);
+            
+            DefaultTableModel modelo = (DefaultTableModel) tablaSucursales.getModel();
+            
+            filaSeleccionada = tablaSucursales.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+            
+            Long codigoSucursal = (Long) modelo.getValueAt(filaSeleccionada, 0);
             
             Sucursal sucursalSeleccionada = controladorSucursal.obtenerSucursal(codigoSucursal);
             
@@ -293,7 +318,11 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
             
             int filaSeleccionada = tablaSucursales.getSelectedRow();
             
-            Long codigoSucursal = (Long) tablaSucursales.getValueAt(filaSeleccionada, 0);
+            DefaultTableModel modelo = (DefaultTableModel) tablaSucursales.getModel();
+            
+            filaSeleccionada = tablaSucursales.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+            
+            Long codigoSucursal = (Long) modelo.getValueAt(filaSeleccionada, 0);
             Sucursal sucursalAEliminar = controladorSucursal.obtenerSucursal(codigoSucursal);
             
             int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la sucursal "+ sucursalAEliminar.getNombre() + " con código " + sucursalAEliminar.getCodigo() + "?");
@@ -314,6 +343,22 @@ public class VentanaGestionSucursales extends javax.swing.JFrame {
         }        
 
     }//GEN-LAST:event_bEliminarActionPerformed
+
+    private void tfFiltroCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroCodigoKeyReleased
+        
+        int columna = 0;
+        
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroCodigo.getText(), columna));
+        
+    }//GEN-LAST:event_tfFiltroCodigoKeyReleased
+
+    private void tfFiltroNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroNombreKeyReleased
+       
+        int columna = 1;
+        
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroNombre.getText(), columna));
+        
+    }//GEN-LAST:event_tfFiltroNombreKeyReleased
 
     /**
      * @param args the command line arguments

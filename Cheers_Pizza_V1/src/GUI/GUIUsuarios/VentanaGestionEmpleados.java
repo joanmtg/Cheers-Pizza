@@ -5,8 +5,14 @@
  */
 package GUI.GUIUsuarios;
 
+import AccesoDatosORM.AdaptadorEmpleadoControlador;
 import Administracion.Empleado;
+import Administracion.Item;
+import GUI.GUIItems.VentanaRegistrarModificarItem;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,8 +23,10 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     /**
      * Creates new form VentanaGestionUsuarios
      */
+    AdaptadorEmpleadoControlador controladorEmpleados = new AdaptadorEmpleadoControlador();
     
     JFrame ventanaAnterior;
+    TableRowSorter trsFiltro;
     
     public VentanaGestionEmpleados(JFrame anterior) {
         super("Gestión de Usuarios");
@@ -26,8 +34,53 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         
         this.ventanaAnterior = anterior;
         this.setLocationRelativeTo(null);
+        
+        llenarTablaEmpleados();
+        
+        trsFiltro = new TableRowSorter(tablaEmpleados.getModel());
+        tablaEmpleados.setRowSorter(trsFiltro);
+        
     }
 
+    
+    public void llenarTablaEmpleados() {
+        
+        DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+        modelo.setRowCount(0);
+        
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+        
+        ArrayList<Empleado> empleados = controladorEmpleados.obtenerTodosEmpleados();
+        
+        if (empleados != null) {
+            
+            for (int i = 0; i < empleados.size(); i++) {
+                
+                Object[] fila = new Object[7];
+                
+                fila[0] = empleados.get(i).getId();
+                fila[1] = empleados.get(i).getNombre();
+                fila[2] = empleados.get(i).getApellidos();
+                fila[3] = empleados.get(i).getTelefono();
+                fila[4] = empleados.get(i).getDireccion();
+                fila[5] = empleados.get(i).getCargo();
+                fila[6] = empleados.get(i).getSucursal().getNombre();
+                
+                modelo.addRow(fila);
+            }
+            
+            tablaEmpleados.setModel(modelo);
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "No hay empleados registrados", "Warning", JOptionPane.WARNING_MESSAGE);
+            
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,13 +94,13 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaItems = new javax.swing.JTable();
+        tablaEmpleados = new javax.swing.JTable();
         bRegistrar = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
         lFiltroCodigo = new javax.swing.JLabel();
         tfFiltro = new javax.swing.JTextField();
-        cbColumnaFiltro = new javax.swing.JComboBox<>();
+        cbColumnaFiltro = new javax.swing.JComboBox<String>();
         bVerFoto = new javax.swing.JButton();
         lLogo = new javax.swing.JLabel();
 
@@ -67,7 +120,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
             }
         });
 
-        tablaItems.setModel(new javax.swing.table.DefaultTableModel(
+        tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -86,7 +139,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tablaItems);
+        jScrollPane1.setViewportView(tablaEmpleados);
 
         bRegistrar.setText("Registrar");
         bRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +166,13 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo.setText("Filtrar por:");
 
-        cbColumnaFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nombre", "Apellidos", "Cargo", "Sucursal" }));
+        tfFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroKeyReleased(evt);
+            }
+        });
+
+        cbColumnaFiltro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Nombre", "Apellidos", "Cargo", "Sucursal" }));
 
         bVerFoto.setText("Ver Foto");
         bVerFoto.addActionListener(new java.awt.event.ActionListener() {
@@ -157,8 +216,8 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lFiltroCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbColumnaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbColumnaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -234,20 +293,29 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
 
-        int filaSeleccionada = tablaItems.getSelectedRow();
+        //Validar que se seleccione un elemento de la tabla
+        int filasSeleccionadas = tablaEmpleados.getSelectedRowCount();
         
-        if(filaSeleccionada != -1){                  
+        if (filasSeleccionadas == 1) {
             
-            String idEmpleado = (String)tablaItems.getModel().getValueAt(filaSeleccionada, 0);
-            //Traer el empleado a modificar de la BD o crearlo con los campos de la tabla
-            Empleado empleado = new Empleado();            
+            int filaSeleccionada = tablaEmpleados.getSelectedRow();
             
-            VentanaRegistrarModificarEmpleado vModificacion = new VentanaRegistrarModificarEmpleado(this, "Modificación", empleado);
-            vModificacion.setVisible(true);
+            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+            
+            filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+            
+            String idEmpleado = (String) modelo.getValueAt(filaSeleccionada, 0);
+            
+            Empleado empleadoSeleccionado = controladorEmpleados.obtenerEmpleado(idEmpleado);
+            
+            VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Modificacion", empleadoSeleccionado);
+            ventanaRegistro.setVisible(true);
             this.setVisible(false);
             
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario a modificar", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del empleado a modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            
         }
 
         
@@ -255,21 +323,38 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
 
-        int filaSeleccionada = tablaItems.getSelectedRow();
+        //Validar que se seleccione un elemento de la tabla
+        int filasSeleccionadas = tablaEmpleados.getSelectedRowCount();
         
-        if(filaSeleccionada != -1){                  
+        if (filasSeleccionadas == 1) {
             
-            String idEmpleado = (String)tablaItems.getModel().getValueAt(filaSeleccionada, 0);                     
+            int filaSeleccionada = tablaEmpleados.getSelectedRow();
             
-            int opcion = JOptionPane.showConfirmDialog(null, "Se eliminará el empleado con ID no." + idEmpleado);
+            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
             
-            if(opcion == JOptionPane.YES_OPTION){
-                //Eliminar el empleados
-                JOptionPane.showMessageDialog(null, "Se ha eliminado el empleado con ID no. " + idEmpleado, "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);                
-            }            
+            filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
             
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario a modificar", "Error", JOptionPane.ERROR_MESSAGE);
+            String idEmpleado = (String) modelo.getValueAt(filaSeleccionada, 0);
+            Empleado empleadoAEliminar = controladorEmpleados.obtenerEmpleado(idEmpleado);
+            
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el empleado " + empleadoAEliminar.getNombre() + " con identificación " + empleadoAEliminar.getId() + "?");
+            
+            if (opcion == JOptionPane.YES_OPTION) {
+
+                //Eliminar Empleado
+                controladorEmpleados.eliminarEmpleado(empleadoAEliminar);
+
+                //Actualizar tabla
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el empleado " + empleadoAEliminar.getNombre() + " con identificacion " + empleadoAEliminar.getId(), "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
+                
+                llenarTablaEmpleados();
+                
+            }
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del empleado que desea eliminar", "Warning", JOptionPane.WARNING_MESSAGE);
+            
         }
         
     }//GEN-LAST:event_bEliminarActionPerformed
@@ -277,6 +362,35 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     private void bVerFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerFotoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bVerFotoActionPerformed
+
+    private void tfFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroKeyReleased
+        
+        String filtro = (String) cbColumnaFiltro.getSelectedItem();
+        int columna = 0;
+        
+        switch (filtro) {
+            
+            case "Código":
+                columna = 0;
+                break;
+            case "Nombre":
+                columna = 1;
+                break;
+            case "Apellidos":
+                columna = 2;
+                break;
+            case "Cargo":
+                columna = 5;
+                break;
+            case "Sucursal":
+                columna = 6;
+                break;
+            
+        }
+        
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltro.getText(), columna)); 
+        
+    }//GEN-LAST:event_tfFiltroKeyReleased
 
     /**
      * @param args the command line arguments
@@ -326,7 +440,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     private javax.swing.JLabel lLogo;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JTable tablaItems;
+    private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
 }

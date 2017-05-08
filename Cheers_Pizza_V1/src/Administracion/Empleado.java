@@ -43,7 +43,7 @@ public class Empleado implements Serializable {
     @Id
     private String id;
     
-    @Column(name = "tipo_id", length = 2)
+    @Column(name = "tipo_id", length = 30)
     private String tipoId;
     
     @Column(name = "nombre", length = 80)
@@ -70,7 +70,7 @@ public class Empleado implements Serializable {
     @Column(name = "hora_fin")
     private LocalTime horaFin;
     
-    @Column(name = "foto", length = 100)
+    @Column(name = "foto", columnDefinition = "TEXT")
     private String fotoURL;
     
     @ManyToOne

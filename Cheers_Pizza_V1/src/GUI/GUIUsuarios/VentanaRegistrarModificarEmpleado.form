@@ -24,12 +24,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelPrincipal" min="-2" max="-2" attributes="0"/>
+          <Component id="panelPrincipal" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelPrincipal" alignment="0" max="32767" attributes="0"/>
+          <Component id="panelPrincipal" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -46,16 +46,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="335" max="-2" attributes="0"/>
+                          <Component id="lLogo" min="-2" pref="86" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="335" max="-2" attributes="0"/>
-                          <Component id="lLogo" min="-2" pref="86" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -66,7 +66,7 @@
                   <Component id="lLogo" min="-2" pref="89" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -94,142 +94,178 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="LTipoID" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lNombre" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lTelefono" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lCargo" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lTelefono1" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
+                                  <Component id="LTipoID" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
+                                  <Component id="cbTipoID" min="-2" pref="186" max="-2" attributes="0"/>
+                                  <EmptySpace min="43" pref="43" max="-2" attributes="0"/>
+                                  <Component id="lIdentificacion" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                  <Component id="tfIdentificacion" min="-2" pref="174" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Component id="lApellidos" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="43" pref="43" max="-2" attributes="0"/>
+                                  <Component id="lNombre" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
+                                  <Component id="tfNombre" min="-2" pref="186" max="-2" attributes="0"/>
+                                  <EmptySpace min="71" pref="71" max="-2" attributes="0"/>
+                                  <Component id="lApellidos" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
+                                  <Component id="tfApellidos" min="-2" pref="174" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="58" pref="58" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lCargo" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="tfNombre" alignment="0" pref="186" max="32767" attributes="0"/>
-                                              <Component id="tfTelefono" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
-                                              <Component id="cbCargo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="cbTipoID" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="lTelefono1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                                                  <Component id="lIdentificacion" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="lCargo1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="lSucursal" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
+                                              <Component id="lFoto" min="-2" pref="205" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="bFinalizar1" min="-2" pref="98" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="bFinalizar" min="-2" pref="97" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="bFinalizar2" min="-2" pref="98" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="lTurno" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                          <Component id="lInicio" min="-2" pref="44" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="spHoraInicio" min="-2" pref="49" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="lFin" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="spHoraFin" min="-2" pref="49" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="lFin" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="spHoraFin" min="-2" pref="49" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="bFinalizar3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="bFinalizar" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
+                                      <Component id="bCambiarFoto" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lPassword" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="tfPassword" min="-2" pref="172" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lTurno" min="-2" max="-2" attributes="0"/>
-                                  <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <Component id="lTelefono" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="bFinalizar1" min="-2" pref="98" max="-2" attributes="0"/>
-                                  <Component id="lInicio" min="-2" pref="44" max="-2" attributes="0"/>
+                                  <Component id="tfTelefono" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
+                                  <Component id="cbCargo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lCargo1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
+                                      <Component id="tfDireccion" min="-2" pref="174" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lSucursal" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cbSucursales" min="-2" pref="174" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbSucursales" min="-2" pref="141" max="-2" attributes="0"/>
-                          <Component id="tfDireccion" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="tfApellidos" alignment="1" min="-2" pref="174" max="-2" attributes="0"/>
-                              <Component id="tfIdentificacion" min="-2" pref="137" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                      <EmptySpace pref="21" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="cbTipoID" alignment="3" pref="30" max="32767" attributes="0"/>
-                              <Component id="tfIdentificacion" alignment="3" pref="30" max="32767" attributes="0"/>
-                              <Component id="lIdentificacion" alignment="3" max="32767" attributes="0"/>
+                          <Component id="LTipoID" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="cbTipoID" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Component id="lIdentificacion" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="LTipoID" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfIdentificacion" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lNombre" alignment="3" max="32767" attributes="0"/>
-                              <Component id="tfNombre" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Component id="lNombre" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="tfApellidos" max="32767" attributes="0"/>
-                          <Component id="lApellidos" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfNombre" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="lApellidos" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="tfApellidos" min="-2" pref="30" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="tfTelefono" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="tfDireccion" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lTelefono" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lCargo1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cbSucursales" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="lSucursal" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lCargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbCargo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lTelefono" alignment="3" max="32767" attributes="0"/>
-                          <Component id="tfTelefono" alignment="3" pref="30" max="32767" attributes="0"/>
-                          <Component id="lCargo1" alignment="3" max="32767" attributes="0"/>
-                          <Component id="tfDireccion" alignment="3" pref="30" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfPassword" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lTurno" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lInicio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spHoraInicio" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="lFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spHoraFin" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                              <Component id="bCambiarFoto" min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lFoto" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                                  <Component id="lTelefono1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="bFinalizar1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="bFinalizar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lCargo" alignment="3" max="32767" attributes="0"/>
-                          <Component id="cbCargo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="lSucursal" alignment="3" max="32767" attributes="0"/>
-                          <Component id="cbSucursales" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lTelefono1" alignment="3" max="32767" attributes="0"/>
-                          <Component id="bFinalizar2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="bFinalizar3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lTurno" alignment="3" pref="18" max="32767" attributes="0"/>
-                          <Component id="lInicio" alignment="3" pref="30" max="32767" attributes="0"/>
-                          <Component id="lFin" alignment="3" pref="30" max="32767" attributes="0"/>
-                          <Component id="spHoraInicio" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="spHoraFin" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="bAtras" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="bFinalizar1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="bFinalizar" alignment="1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -294,6 +330,9 @@
                     <StringItem index="2" value="NIT"/>
                   </StringArray>
                 </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[127, 30]"/>
+                </Property>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -311,6 +350,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfIdentificacion">
+              <Properties>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[6, 30]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfIdentificacionKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lApellidos">
               <Properties>
@@ -396,18 +443,19 @@
             <Component class="javax.swing.JTextField" name="tfApellidos">
             </Component>
             <Component class="javax.swing.JTextField" name="tfTelefono">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfTelefonoKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfDireccion">
             </Component>
-            <Component class="javax.swing.JButton" name="bFinalizar2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ver Foto"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="bFinalizar3">
+            <Component class="javax.swing.JButton" name="bCambiarFoto">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cambiar Foto"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bCambiarFotoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lSucursal">
               <Properties>
@@ -467,6 +515,26 @@
                   <SpinnerModel initial="0" maximum="24" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lFoto">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/imageUser.jpg"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lPassword">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Eras Demi ITC" size="14" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Password:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JPasswordField" name="tfPassword">
             </Component>
           </SubComponents>
         </Container>

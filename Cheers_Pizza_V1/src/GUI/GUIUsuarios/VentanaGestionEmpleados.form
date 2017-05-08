@@ -131,8 +131,8 @@
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lFiltroCodigo" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="tfFiltro" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="cbColumnaFiltro" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfFiltro" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="cbColumnaFiltro" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="297" max="32767" attributes="0"/>
@@ -170,7 +170,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tablaItems">
+                <Component class="javax.swing.JTable" name="tablaEmpleados">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="4">
@@ -223,6 +223,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfFiltro">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfFiltroKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbColumnaFiltro">
               <Properties>

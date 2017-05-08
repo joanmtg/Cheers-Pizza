@@ -18,6 +18,7 @@
 package AccesoDatosORM;
 
 import Administracion.Empleado;
+import java.util.List;
 
 /**
  *
@@ -49,6 +50,11 @@ public class EmpleadoJpaController{
     public Empleado find(String id){
         Empleado empleado = fachada.find(id);
         return empleado;
+    }
+    
+    public List<Empleado> findAll(){
+        List<Empleado> empleados = fachada.findAll();
+        return empleados;
     }
     
 
