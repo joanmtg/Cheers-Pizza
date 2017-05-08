@@ -58,6 +58,12 @@ public class Pedido implements Serializable {
     
     @Column(name = "hora_entrega")
     private LocalTime horaEntrega;
+    
+    @Column(name = "entregado")
+    private boolean entregado;
+    
+    @Column(name = "total")
+    private double total;
    
     @ManyToOne
     @JoinColumn(name = "numero_mesa")
@@ -85,27 +91,31 @@ public class Pedido implements Serializable {
 
     //Constructor N°2
 
-    public Pedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, Cliente cliente, Empleado empleado, Sucursal sucursal) {
+    public Pedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, boolean entregado, double total, Mesa mesa, Cliente cliente, Empleado mesero, Sucursal sucursalPedido) {
         this.tipoPedido = tipoPedido;
         this.horaInicio = horaInicio;
         this.horaEntrega = horaEntrega;
+        this.entregado = entregado;
+        this.total = total;
         this.mesa = mesa;
         this.cliente = cliente;
-        this.mesero = empleado;
-        this.sucursalPedido = sucursal;
+        this.mesero = mesero;
+        this.sucursalPedido = sucursalPedido;
     }
+
     
     //Constructor N°3
 
-    public Pedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Cliente cliente, Sucursal sucursal) {
+    public Pedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, boolean entregado, double total, Cliente cliente, Sucursal sucursalPedido) {
         this.tipoPedido = tipoPedido;
         this.horaInicio = horaInicio;
         this.horaEntrega = horaEntrega;
+        this.entregado = entregado;
+        this.total = total;
         this.cliente = cliente;
-        this.sucursalPedido = sucursal;
+        this.sucursalPedido = sucursalPedido;
     }
-    
-       
+ 
     
     //Setters & Getters
 
@@ -181,9 +191,22 @@ public class Pedido implements Serializable {
         this.pedidoItems = pedidoItems;
     }
 
-    
-    
-    
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public boolean isEntregado() {
+        return entregado;
+    }
+
+    public void setEntregado(boolean entregado) {
+        this.entregado = entregado;
+    }
+
     
     @Override
     public int hashCode() {
@@ -207,8 +230,14 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido{" + "numero=" + numero + ", tipoPedido=" + tipoPedido + ", horaInicio=" + horaInicio + ", horaEntrega=" + horaEntrega + ", mesa=" + mesa + ", cliente=" + cliente + ", mesero=" + mesero + ", sucursalPedido=" + sucursalPedido + ", pedidoItems=" + pedidoItems + '}';
+        return "Pedido{" + "numero=" + numero + ", tipoPedido=" + tipoPedido + ", horaInicio=" + horaInicio + ", horaEntrega=" + horaEntrega + ", entregado=" + entregado + ", total=" + total + ", mesa=" + mesa + ", cliente=" + cliente + ", mesero=" + mesero + ", sucursalPedido=" + sucursalPedido + ", pedidoItems=" + pedidoItems + '}';
     }
+
+    
+    
+
+    
+    
 
     
     

@@ -29,7 +29,7 @@ public class FabricaPedidos {
     }
     
         
-    public Pedido crearPedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, Empleado mesero, Cliente cliente, Sucursal sucursal){
+    public Pedido crearPedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, Empleado mesero, Cliente cliente, Sucursal sucursal, double total, boolean entregado){
         
         Pedido pedidoGenerado = null;
         
@@ -38,11 +38,11 @@ public class FabricaPedidos {
         }
         
         else if(tipoPedido.equalsIgnoreCase("En mesa")){
-            pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, mesa, cliente, mesero, sucursal);
+            pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, entregado, total, mesa, cliente, mesero, sucursal);
         }
         
         else if(tipoPedido.equalsIgnoreCase("A domicilio")){
-            pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, cliente, sucursal);
+            pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, entregado, total, cliente, sucursal);
         }
         
         return pedidoGenerado;
