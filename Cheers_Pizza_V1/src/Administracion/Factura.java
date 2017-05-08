@@ -61,6 +61,9 @@ public class Factura implements Serializable {
     @Column(name = "descuento")
     private double descuento;
     
+    @Column(name = "totalPago")
+    private double totalPago;
+    
     @ManyToOne
     @JoinColumn(name = "id_empleado")
     private Empleado cajero;
@@ -77,15 +80,16 @@ public class Factura implements Serializable {
 
     //Constructor N°2
 
-    public Factura(Long numero, String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, Empleado cajero, Pedido pedido) {
+    public Factura(Long numero, String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, double totalPago, Empleado cajero, Pedido pedido) {
         this.numero = numero;
         this.tipoPago = tipoPago;
         this.horaPago = horaPago;
         this.impuestos = impuestos;
         this.propina = propina;
         this.descuento = descuento;
+        this.totalPago = totalPago;
         this.cajero = cajero;
-        this.pedido = pedido;
+        this.pedido = pedido;        
     }
 
     
@@ -142,6 +146,16 @@ public class Factura implements Serializable {
         this.descuento = descuento;
     }
 
+    public double getTotalPago() {
+        return totalPago;
+    }
+
+    public void setTotalPago(double totalPago) {
+        this.totalPago = totalPago;
+    }
+    
+    
+
     public Empleado getCajero() {
         return cajero;
     }
@@ -182,15 +196,7 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", cajero=" + cajero + ", pedido=" + pedido + '}';
-    }
-
-    
-    
-    
-    
-    
-    
-    
+        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", totalPago=" + totalPago + ", cajero=" + cajero + ", pedido=" + pedido + '}';
+    }    
     
 }
