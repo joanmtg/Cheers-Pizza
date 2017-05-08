@@ -42,6 +42,12 @@ public class Pedido_Item implements Serializable {
     @JoinColumn(name = "codigo_item", insertable = false, updatable = false)
     private Item item;
     
+    @Column(name = "cantidad")
+    private int cantidad;
+    
+    @Column(name = "entregado")
+    private boolean entregado;
+    
     //Constructor N°1
 
     public Pedido_Item() {
@@ -50,14 +56,14 @@ public class Pedido_Item implements Serializable {
     
     
     //Constructor N°2
-
-    public Pedido_Item(Long numeroPedido, Long codigoItem) {
+    public Pedido_Item(Long numeroPedido, Long codigoItem, int cantidad, boolean entregado) {    
         this.numeroPedido = numeroPedido;
         this.codigoItem = codigoItem;
+        this.cantidad = cantidad;
+        this.entregado = entregado;
     }
 
     //Setters & Getters
-
     public Long getNumeroPedido() {
         return numeroPedido;
     }
@@ -84,7 +90,6 @@ public class Pedido_Item implements Serializable {
     }
 
     
-
     public Item getItem() {
         return item;
     }
@@ -93,6 +98,24 @@ public class Pedido_Item implements Serializable {
         this.item = item;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public boolean isEntregado() {
+        return entregado;
+    }
+
+    public void setEntregado(boolean entregado) {
+        this.entregado = entregado;
+    }
+
+    
+    
 
     @Override
     public int hashCode() {
@@ -122,8 +145,11 @@ public class Pedido_Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido_Item{" + "numeroPedido=" + numeroPedido + ", codigoItem=" + codigoItem + ", pedido=" + pedido + ", item=" + item + '}';
+        return "Pedido_Item{" + "numeroPedido=" + numeroPedido + ", codigoItem=" + codigoItem + ", pedido=" + pedido + ", item=" + item + ", cantidad=" + cantidad + ", entregado=" + entregado + '}';
     }
+
+    
+    
 
     
 
