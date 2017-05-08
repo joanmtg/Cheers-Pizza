@@ -5,8 +5,10 @@
  */
 package GUI;
 
+import GUI.GUIFacturacionYPagos.VentanaPedidosAPagar;
 import GUI.GUIItems.VentanaGestionItems;
 import GUI.GUIMesas.VentanaGestionMesas;
+import GUI.GUIPedidos.VentanaGestionPedidos;
 import GUI.GUISucursales.VentanaGestionSucursales;
 import GUI.GUIUsuarios.VentanaGestionEmpleados;
 import javax.swing.*;
@@ -86,6 +88,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         bPedidos.setText("Pedidos");
+        bPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPedidosActionPerformed(evt);
+            }
+        });
 
         bMesas.setText("Mesas");
         bMesas.addActionListener(new java.awt.event.ActionListener() {
@@ -97,6 +104,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         bReportes.setText("Reportes");
 
         bPagos.setText("Pagos");
+        bPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPagosActionPerformed(evt);
+            }
+        });
 
         bAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtras.png"))); // NOI18N
         bAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtrasPR.png"))); // NOI18N
@@ -280,6 +292,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_bEmpleadosActionPerformed
+
+    private void bPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPedidosActionPerformed
+        
+        VentanaGestionPedidos vPedidos = new VentanaGestionPedidos(this);
+        vPedidos.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_bPedidosActionPerformed
+
+    private void bPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPagosActionPerformed
+        
+        VentanaPedidosAPagar vPedidosPagar = new VentanaPedidosAPagar(this);
+        vPedidosPagar.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_bPagosActionPerformed
 
     /**
      * @param args the command line arguments
