@@ -423,6 +423,9 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     public void defaultImage() {
         try {
             ficheroImagen = new File(getClass().getResource("/images/imagenPizzaDefault.jpg").toURI());
+            ImageIcon icon = new ImageIcon(ficheroImagen.toString());
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lImagenItem.getWidth(), lImagenItem.getHeight(), Image.SCALE_DEFAULT));
+            lImagenItem.setIcon(icono);
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
         }

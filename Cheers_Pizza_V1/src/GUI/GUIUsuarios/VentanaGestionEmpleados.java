@@ -8,7 +8,9 @@ package GUI.GUIUsuarios;
 import AccesoDatosORM.AdaptadorEmpleadoControlador;
 import Administracion.Empleado;
 import Administracion.Item;
-import GUI.GUIItems.VentanaRegistrarModificarItem;
+import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -360,7 +362,47 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_bEliminarActionPerformed
 
     private void bVerFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerFotoActionPerformed
-        // TODO add your handling code here:
+        
+        //Validar que se seleccione un elemento de la tabla
+        int filasSeleccionadas = tablaEmpleados.getSelectedRowCount();
+
+        if (filasSeleccionadas == 1) {
+
+            int filaSeleccionada = tablaEmpleados.getSelectedRow();
+
+            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+
+            filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+
+            String idUsuario = (String) modelo.getValueAt(filaSeleccionada, 0);
+            Empleado usuarioAVisualizar = controladorEmpleados.obtenerEmpleado(idUsuario);
+
+            JFrame frameFoto = new JFrame();
+            frameFoto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frameFoto.setSize(205, 210);
+            frameFoto.setLocationRelativeTo(null);
+
+            JPanel panelFoto = new JPanel();
+            panelFoto.setSize(253, 163);
+            
+            JLabel labelFoto = new JLabel();
+            labelFoto.setSize(253, 163);
+            panelFoto.add(labelFoto);
+
+            BufferedImage img = decodeToImage(usuarioAVisualizar.getFotoURL());
+            ImageIcon icon = new ImageIcon(img);
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_DEFAULT));
+            labelFoto.setIcon(icono);
+
+            frameFoto.getContentPane().add(panelFoto);
+            frameFoto.setVisible(true);
+
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del empleado que desea visualizar", "Warning", JOptionPane.WARNING_MESSAGE);
+
+        }
+        
     }//GEN-LAST:event_bVerFotoActionPerformed
 
     private void tfFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroKeyReleased
