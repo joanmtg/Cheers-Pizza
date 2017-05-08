@@ -7,6 +7,7 @@ package GUI.GUISucursales;
 
 import AccesoDatosORM.AdaptadorSucursalControlador;
 import Administracion.Sucursal;
+import Validaciones.Validaciones;
 import javax.swing.*;
 
 /**
@@ -17,6 +18,7 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
     
     AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
     Sucursal sucursalAModificar = new Sucursal();
+    Validaciones validacion = new Validaciones();
     
     String operacion; //"Registro" o "Modificación"
     JFrame ventanaAnterior;
@@ -94,6 +96,12 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
         lCodigo5.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lCodigo5.setForeground(new java.awt.Color(255, 255, 255));
         lCodigo5.setText("Telefono:");
+
+        tfTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfTelefonoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
@@ -221,14 +229,14 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
             if(operacion.equalsIgnoreCase("Registro")){
             
                 controladorSucursal.crearSucursal(sucursal);
-                JOptionPane.showMessageDialog(null, "La sucursal "+ sucursal.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La sucursal "+ sucursal.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
                 
             }else if(operacion.equalsIgnoreCase("Modificacion")){
                 
                 sucursal.setCodigo(sucursalAModificar.getCodigo());
                 controladorSucursal.editarSucursal(sucursal);
-                JOptionPane.showMessageDialog(null, "La sucursal " + sucursal.getNombre() + " fue modificada con éxito", "Éxito", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La sucursal " + sucursal.getNombre() + " fue modificada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
                 
                 VentanaGestionSucursales ventanaSucursales = (VentanaGestionSucursales) ventanaAnterior;
@@ -243,6 +251,10 @@ public class VentanaRegistrarModificarSucursal extends javax.swing.JFrame {
         // TODO add your handling code here:
         limpiarCampos();
     }//GEN-LAST:event_bLimpiarActionPerformed
+
+    private void tfTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefonoKeyTyped
+        validacion.validarNumeros(evt);
+    }//GEN-LAST:event_tfTelefonoKeyTyped
 
     public void modificacionSucursal(Sucursal sucursal){
         

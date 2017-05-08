@@ -252,8 +252,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfFiltroNombre">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfFiltroNombreKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfFiltroCodigo">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfFiltroCodigoKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lFiltroCodigo1">
               <Properties>

@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Empleado;
+import java.util.ArrayList;
 
 /**
  *
@@ -51,6 +52,11 @@ public class AdaptadorEmpleadoControlador {
     public Empleado obtenerEmpleado(String idEmpleado){
         Empleado empleado = controlador.find(idEmpleado);
         return empleado;
+    }
+    
+    public ArrayList<Empleado> obtenerTodosEmpleados(){
+        ArrayList<Empleado> empleados = (ArrayList) controlador.findAll();
+        return empleados;
     }
     
 }

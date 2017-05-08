@@ -34,13 +34,13 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     Validaciones validacion = new Validaciones();
     AdaptadorCategoriaControlador controladorCategoria = new AdaptadorCategoriaControlador();
     AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
-    
+
     Item itemAModificar = new Item();
     File ficheroImagen;
     /**
      * Creates new form VentanaRegistrarItem
      */
-    
+
     String operacion; //"Registro" o "Modificación"
     JFrame ventanaAnterior;
 
@@ -50,18 +50,18 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
         this.operacion = operacion;
         this.ventanaAnterior = anterior;
-        
+
         setLocationRelativeTo(null);
-        
+
         ArrayList<Categoria> categorias = controladorCategoria.obtenerTodasCategorias();
-        
-        for(int i = 0; i < categorias.size(); i++){
+
+        for (int i = 0; i < categorias.size(); i++) {
             String categoria = categorias.get(i).getNombre();
             cbCategoria.addItem(categoria);
         }
-        
+
         defaultImage();
-        
+
     }
 
     /**
@@ -134,6 +134,11 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         lPrecio.setText("Precio:");
 
         tfPrecio.setText("0");
+        tfPrecio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfPrecioFocusGained(evt);
+            }
+        });
         tfPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tfPrecioKeyTyped(evt);
@@ -294,64 +299,64 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la operación actual?");
 
         if (opcion == JOptionPane.YES_OPTION) {
-            
+
             this.dispose();
-            VentanaGestionItems ventanaItems = (VentanaGestionItems)ventanaAnterior;
+            VentanaGestionItems ventanaItems = (VentanaGestionItems) ventanaAnterior;
             ventanaItems.llenarTablaItems();
             ventanaItems.setVisible(true);
-            
+
         }
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
 
         try {
-            // Obteniendo los campos
-            String nombre = tfNombre.getText();
-            double precio = Double.parseDouble(tfPrecio.getText());
-            String descripcion = taDescripcion.getText();
-            
-            Long codCategoria = (long)cbCategoria.getSelectedIndex();
-            Categoria categoria = controladorCategoria.obtenerCategoria(codCategoria);
-            
-            BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
-            String image_string = encodeImageToString(img);
-            
-            if (nombre.equals("") || precio == 0 || descripcion.equals("") || cbCategoria.getSelectedIndex() == 0) {
-                
+
+            if (tfNombre.getText().equals("") || tfPrecio.getText().equals("0") || taDescripcion.getText().equals("") || cbCategoria.getSelectedIndex() == 0) {
+
                 JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos solicitados", "Mensaje", JOptionPane.WARNING_MESSAGE);
-                
+
             } else {
-                
+
+                // Obteniendo los campos
+                String nombre = tfNombre.getText();
+                double precio = Double.parseDouble(tfPrecio.getText());
+                String descripcion = taDescripcion.getText();
+
+                Long codCategoria = (long) cbCategoria.getSelectedIndex();
+                Categoria categoria = controladorCategoria.obtenerCategoria(codCategoria);
+
+                BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
+                String image_string = encodeImageToString(img);
+
                 Item nuevoItem = new Item(nombre, descripcion, precio, image_string, categoria);
-                
-                if(operacion.equalsIgnoreCase("Registro")){
-                    
+
+                if (operacion.equalsIgnoreCase("Registro")) {
+
                     controladorItem.crearItem(nuevoItem);
-                    JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El item " + nuevoItem.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     limpiarCampos();
-                    
-                }else if(operacion.equalsIgnoreCase("Modificacion")){
-                    
+
+                } else if (operacion.equalsIgnoreCase("Modificacion")) {
+
                     nuevoItem.setCodigo(itemAModificar.getCodigo());
                     controladorItem.editarItem(nuevoItem);
-                    JOptionPane.showMessageDialog(null, "El item "+nuevoItem.getNombre()+" fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "El item " + nuevoItem.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     limpiarCampos();
-                    
-                    VentanaGestionItems ventanaItems = (VentanaGestionItems)ventanaAnterior;
+
+                    VentanaGestionItems ventanaItems = (VentanaGestionItems) ventanaAnterior;
                     ventanaItems.llenarTablaItems();
                     ventanaItems.setVisible(true);
                     this.setVisible(false);
-                    
+
                 }
-                
-                defaultImage();
-                
+
+
             }
         } catch (IOException ex) {
             Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_bFinalizarActionPerformed
 
     private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
@@ -363,15 +368,15 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     }//GEN-LAST:event_tfPrecioKeyTyped
 
     private void bCambiarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCambiarImagenActionPerformed
-        
+
         JFileChooser file = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.jpg", "jpg");
         file.setFileFilter(filtro);
 
         int seleccion = file.showOpenDialog(new JPanel());
-        
+
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-            
+
             //Seleccionamos el fichero
             ficheroImagen = file.getSelectedFile();
             ImageIcon icon = new ImageIcon(ficheroImagen.toString());
@@ -379,87 +384,93 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
             lImagenItem.setIcon(icono);
 
         }
-        
+
     }//GEN-LAST:event_bCambiarImagenActionPerformed
 
-    public void modificacionItem(Item item){
-        
+    private void tfPrecioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfPrecioFocusGained
+        if (operacion.equals("Registro")) {
+            tfPrecio.setText("");
+        }
+    }//GEN-LAST:event_tfPrecioFocusGained
+
+    public void modificacionItem(Item item) {
+
         itemAModificar = item;
-        
+
         tfNombre.setText(itemAModificar.getNombre());
-        tfPrecio.setText(""+itemAModificar.getPrecioActual());
+        tfPrecio.setText("" + itemAModificar.getPrecioActual());
         taDescripcion.setText(itemAModificar.getDescripcion());
         cbCategoria.setSelectedItem(itemAModificar.getCategoria().getNombre());
-        
+
         BufferedImage img = decodeToImage(itemAModificar.getFotografia());
         ImageIcon icon = new ImageIcon(img);
         Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lImagenItem.getWidth(), lImagenItem.getHeight(), Image.SCALE_DEFAULT));
         lImagenItem.setIcon(icono);
-        
+
     }
-    
-    public void limpiarCampos(){
-        
+
+    public void limpiarCampos() {
+
         tfNombre.setText("");
-        tfPrecio.setText(""+0);
+        tfPrecio.setText("" + 0);
         taDescripcion.setText("");
         cbCategoria.setSelectedIndex(0);
+
+        defaultImage();
         
     }
-    
-    public void defaultImage(){
+
+    public void defaultImage() {
         try {
             ficheroImagen = new File(getClass().getResource("/images/imagenPizzaDefault.jpg").toURI());
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-        public String encodeImageToString(BufferedImage image) {
-        
+
+    public String encodeImageToString(BufferedImage image) {
+
         String imageString = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         try {
-            
+
             ImageIO.write(image, "jpg", bos);
             byte[] imageBytes = bos.toByteArray();
             imageString = Base64.getEncoder().encodeToString(imageBytes);
 
             bos.close();
-            
+
         } catch (IOException e) {
-            
+
             System.out.println("No se pudo codificar la imagen");
-            
+
         }
         return imageString;
     }
-    
-    
+
     public static BufferedImage decodeToImage(String imageString) {
 
         BufferedImage image = null;
         byte[] imageByte;
-        
+
         try {
-            
+
             imageByte = Base64.getDecoder().decode(imageString);
             ByteArrayInputStream bis;
             bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
-            
+
             bis.close();
-            
+
         } catch (Exception e) {
-            
+
             System.out.println("No se pudo decodificar la imagen");
-            
+
         }
         return image;
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */

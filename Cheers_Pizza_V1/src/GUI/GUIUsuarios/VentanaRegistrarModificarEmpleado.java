@@ -5,8 +5,27 @@
  */
 package GUI.GUIUsuarios;
 
+import AccesoDatosORM.AdaptadorEmpleadoControlador;
+import AccesoDatosORM.AdaptadorSucursalControlador;
 import Administracion.Empleado;
+import Administracion.Sucursal;
+import GUI.GUIItems.VentanaRegistrarModificarItem;
+import Validaciones.Validaciones;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -17,25 +36,59 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form VentanaRegistrarModificarUsuario
      */
-    
+    AdaptadorEmpleadoControlador controladorEmpleado = new AdaptadorEmpleadoControlador();
+    AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
+    Validaciones validacion = new Validaciones();
+    File ficheroImagen;
+
     JFrame ventanaAnterior;
     String operacion; //"Registro" o "Modificación"
     Empleado empleado;
-    
+
     public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) {
-        super(operacion + " de Empleado");       
+        super(operacion + " de Empleado");
         initComponents();
-        
+
         setLocationRelativeTo(null);
-        
+
         this.ventanaAnterior = anterior;
         this.operacion = operacion;
         this.empleado = empleado;
-        
-        if(operacion.equals("Modificación")){
-            //Llenar campos con la info
+
+        ArrayList<Sucursal> sucursales = controladorSucursal.obtenerTodasLasSucursales();
+
+        for (int i = 0; i < sucursales.size(); i++) {
+            String categoria = sucursales.get(i).getNombre();
+            cbSucursales.addItem(categoria);
         }
-        
+
+        defaultImage();
+
+        if (operacion.equals("Modificacion")) {
+
+            cbTipoID.setSelectedItem(empleado.getTipoId());
+            tfIdentificacion.setText(empleado.getId());
+            tfIdentificacion.setEditable(false);
+            
+            tfNombre.setText(empleado.getNombre());
+            tfApellidos.setText(empleado.getApellidos());
+            tfTelefono.setText(empleado.getTelefono());
+            tfDireccion.setText(empleado.getDireccion());
+            cbCargo.setSelectedItem(empleado.getCargo());
+            cbSucursales.setSelectedItem(empleado.getSucursal().getNombre());
+
+            spHoraInicio.setValue(empleado.getHoraInicio().getHour());
+            spHoraFin.setValue(empleado.getHoraFin().getHour());
+
+            tfPassword.setText(empleado.getPassword());
+
+            BufferedImage img = decodeToImage(empleado.getFotoURL());
+            ImageIcon icon = new ImageIcon(img);
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
+            lFoto.setIcon(icono);
+
+        }
+
     }
 
     /**
@@ -55,11 +108,11 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lNombre = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
         LTipoID = new javax.swing.JLabel();
-        cbTipoID = new javax.swing.JComboBox<>();
+        cbTipoID = new javax.swing.JComboBox<String>();
         lIdentificacion = new javax.swing.JLabel();
         tfIdentificacion = new javax.swing.JTextField();
         lApellidos = new javax.swing.JLabel();
-        cbCargo = new javax.swing.JComboBox<>();
+        cbCargo = new javax.swing.JComboBox<String>();
         lCargo = new javax.swing.JLabel();
         lCargo1 = new javax.swing.JLabel();
         lTelefono = new javax.swing.JLabel();
@@ -68,14 +121,16 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         tfApellidos = new javax.swing.JTextField();
         tfTelefono = new javax.swing.JTextField();
         tfDireccion = new javax.swing.JTextField();
-        bFinalizar2 = new javax.swing.JButton();
-        bFinalizar3 = new javax.swing.JButton();
+        bCambiarFoto = new javax.swing.JButton();
         lSucursal = new javax.swing.JLabel();
-        cbSucursales = new javax.swing.JComboBox<>();
+        cbSucursales = new javax.swing.JComboBox<String>();
         lInicio = new javax.swing.JLabel();
         lFin = new javax.swing.JLabel();
         spHoraInicio = new javax.swing.JSpinner();
         spHoraFin = new javax.swing.JSpinner();
+        lFoto = new javax.swing.JLabel();
+        lPassword = new javax.swing.JLabel();
+        tfPassword = new javax.swing.JPasswordField();
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -111,17 +166,25 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         LTipoID.setForeground(new java.awt.Color(255, 255, 255));
         LTipoID.setText("Tipo de ID:");
 
-        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
+        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
+        cbTipoID.setPreferredSize(new java.awt.Dimension(127, 30));
 
         lIdentificacion.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lIdentificacion.setForeground(new java.awt.Color(255, 255, 255));
         lIdentificacion.setText("Identificación:");
 
+        tfIdentificacion.setPreferredSize(new java.awt.Dimension(6, 30));
+        tfIdentificacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfIdentificacionKeyTyped(evt);
+            }
+        });
+
         lApellidos.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lApellidos.setForeground(new java.awt.Color(255, 255, 255));
         lApellidos.setText("Apellidos:");
 
-        cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
+        cbCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
 
         lCargo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lCargo.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,15 +206,24 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lTurno.setForeground(new java.awt.Color(255, 255, 255));
         lTurno.setText("Turno:");
 
-        bFinalizar2.setText("Ver Foto");
+        tfTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfTelefonoKeyTyped(evt);
+            }
+        });
 
-        bFinalizar3.setText("Cambiar Foto");
+        bCambiarFoto.setText("Cambiar Foto");
+        bCambiarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCambiarFotoActionPerformed(evt);
+            }
+        });
 
         lSucursal.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lSucursal.setForeground(new java.awt.Color(255, 255, 255));
         lSucursal.setText("Sucursal:");
 
-        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una sucursal" }));
+        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una sucursal" }));
 
         lInicio.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lInicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -165,116 +237,151 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
         spHoraFin.setModel(new javax.swing.SpinnerNumberModel(0, 0, 24, 1));
 
+        lFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imageUser.jpg"))); // NOI18N
+
+        lPassword.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lPassword.setText("Password:");
+
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
         panelInferiorLayout.setHorizontalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInferiorLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInferiorLayout.createSequentialGroup()
+                            .addGap(28, 28, 28)
                             .addComponent(LTipoID)
-                            .addComponent(lNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lTelefono, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lCargo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lTelefono1, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(32, 32, 32)
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lApellidos)
+                            .addGap(32, 32, 32)
+                            .addComponent(cbTipoID, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(43, 43, 43)
+                            .addComponent(lIdentificacion)
+                            .addGap(26, 26, 26)
+                            .addComponent(tfIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelInferiorLayout.createSequentialGroup()
+                            .addGap(43, 43, 43)
+                            .addComponent(lNombre)
+                            .addGap(32, 32, 32)
+                            .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(71, 71, 71)
+                            .addComponent(lApellidos)
+                            .addGap(26, 26, 26)
+                            .addComponent(tfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelInferiorLayout.createSequentialGroup()
+                            .addGap(58, 58, 58)
+                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lCargo)
                                 .addGroup(panelInferiorLayout.createSequentialGroup()
-                                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                        .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbTipoID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lTelefono1)
+                                        .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(36, 36, 36)
                                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(panelInferiorLayout.createSequentialGroup()
-                                            .addGap(43, 43, 43)
-                                            .addComponent(lIdentificacion))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInferiorLayout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lCargo1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(lSucursal, javax.swing.GroupLayout.Alignment.TRAILING))))))
-                            .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(bFinalizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInferiorLayout.createSequentialGroup()
-                                        .addComponent(lFin)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(spHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(bFinalizar3)
-                                    .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGap(57, 57, 57)
+                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelInferiorLayout.createSequentialGroup()
+                                    .addComponent(lTurno)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(lInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(spHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(lFin)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(spHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(bCambiarFoto)
+                                .addGroup(panelInferiorLayout.createSequentialGroup()
+                                    .addComponent(lPassword)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lTurno)
-                            .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addComponent(lTelefono)
                         .addGap(32, 32, 32)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(26, 26, 26)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(tfApellidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tfIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                            .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(120, 120, 120)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelInferiorLayout.createSequentialGroup()
+                                .addComponent(lCargo1)
+                                .addGap(26, 26, 26)
+                                .addComponent(tfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelInferiorLayout.createSequentialGroup()
+                                .addComponent(lSucursal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         panelInferiorLayout.setVerticalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInferiorLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbTipoID, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addComponent(tfIdentificacion, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addComponent(lIdentificacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(LTipoID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(LTipoID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTipoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lIdentificacion))
+                    .addComponent(tfIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tfApellidos)
-                    .addComponent(lApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(lCargo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addGap(34, 34, 34)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lCargo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lSucursal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lTelefono1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bFinalizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bFinalizar3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lNombre))
+                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
-                    .addComponent(lInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(lFin, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(spHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(bAtras, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bFinalizar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(13, 13, 13))
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lTelefono)
+                            .addComponent(lCargo1))))
+                .addGap(32, 32, 32)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lSucursal))
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lCargo)
+                        .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lPassword)
+                            .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lTurno)
+                            .addComponent(lInicio)
+                            .addComponent(spHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lFin)
+                            .addComponent(spHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addComponent(bCambiarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lTelefono1))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         lLogo.setBackground(new java.awt.Color(89, 30, 27));
@@ -290,12 +397,12 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGap(335, 335, 335)
-                        .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,34 +411,190 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
-        
+
         this.dispose();
-        ventanaAnterior.setVisible(true);
-        
+        VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
+        ventanaEmpleados.llenarTablaEmpleados();
+        ventanaEmpleados.setVisible(true);
+
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
 
-        
+        try {
+
+            if (cbTipoID.getSelectedIndex() == 0 || tfIdentificacion.getText().equals("") || tfApellidos.getText().equals("")
+                    || tfTelefono.getText().equals("") || tfDireccion.getText().equals("") || cbCargo.getSelectedIndex() == 0
+                    || cbSucursales.getSelectedIndex() == 0) {
+
+                JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos solicitados", "Mensaje", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+
+                // Obteniendo los campos
+                String tipoDocumento = (String) cbTipoID.getSelectedItem();
+                String identificacion = tfIdentificacion.getText();
+                String nombre = tfNombre.getText();
+                String apellidos = tfApellidos.getText();
+                String telefono = tfTelefono.getText();
+                String direccion = tfDireccion.getText();
+                String cargo = (String) cbCargo.getSelectedItem();
+                String password = tfPassword.getText();
+
+                LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
+                LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
+
+                Long codSucursal = (long) cbSucursales.getSelectedIndex();
+                Sucursal sucursal = controladorSucursal.obtenerSucursal(codSucursal);
+
+                BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
+                String image_string = encodeImageToString(img);
+
+                Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, password, horaInicio, horaFin, image_string, sucursal);
+
+                if (operacion.equalsIgnoreCase("Registro")) {
+
+                    controladorEmpleado.crearEmpleado(nuevoEmpleado);
+                    JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+
+                } else if (operacion.equalsIgnoreCase("Modificacion")) {
+
+                    controladorEmpleado.editarEmpleado(nuevoEmpleado);
+                    JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+
+                    VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
+                    ventanaEmpleados.llenarTablaEmpleados();
+                    ventanaEmpleados.setVisible(true);
+                    this.setVisible(false);
+
+                }
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_bFinalizarActionPerformed
+
+    private void bCambiarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCambiarFotoActionPerformed
+        
+        JFileChooser file = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.jpg", "jpg", "png");
+        file.setFileFilter(filtro);
+
+        int seleccion = file.showOpenDialog(new JPanel());
+
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+
+            //Seleccionamos el fichero
+            ficheroImagen = file.getSelectedFile();
+            ImageIcon icon = new ImageIcon(ficheroImagen.toString());
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
+            lFoto.setIcon(icono);
+
+        }
+        
+    }//GEN-LAST:event_bCambiarFotoActionPerformed
+
+    private void tfIdentificacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfIdentificacionKeyTyped
+        validacion.validarNumeros(evt);
+    }//GEN-LAST:event_tfIdentificacionKeyTyped
+
+    private void tfTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefonoKeyTyped
+        validacion.validarNumeros(evt);
+    }//GEN-LAST:event_tfTelefonoKeyTyped
+
+    public void limpiarCampos() {
+
+        cbTipoID.setSelectedIndex(0);
+        tfIdentificacion.setText("");
+        tfNombre.setText("");
+        tfApellidos.setText("");
+        tfTelefono.setText("");
+        tfDireccion.setText("");
+        cbCargo.setSelectedIndex(0);
+        cbSucursales.setSelectedIndex(0);
+        tfPassword.setText("");
+        spHoraInicio.setValue(0);
+        spHoraFin.setValue(0);
+
+        defaultImage();
+
+    }
+
+    public void defaultImage() {
+        try {
+            ficheroImagen = new File(getClass().getResource("/images/imageUser.jpg").toURI());
+            ImageIcon icon = new ImageIcon(ficheroImagen.toString());
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
+            lFoto.setIcon(icono);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String encodeImageToString(BufferedImage image) {
+
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try {
+
+            ImageIO.write(image, "jpg", bos);
+            byte[] imageBytes = bos.toByteArray();
+            imageString = Base64.getEncoder().encodeToString(imageBytes);
+
+            bos.close();
+
+        } catch (IOException e) {
+
+            System.out.println("No se pudo codificar la imagen");
+
+        }
+        return imageString;
+    }
+
+    public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+
+        try {
+
+            imageByte = Base64.getDecoder().decode(imageString);
+            ByteArrayInputStream bis;
+            bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+
+            bis.close();
+
+        } catch (Exception e) {
+
+            System.out.println("No se pudo decodificar la imagen");
+
+        }
+        return image;
+    }
 
     /**
      * @param args the command line arguments
@@ -372,10 +635,9 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LTipoID;
     private javax.swing.JButton bAtras;
+    private javax.swing.JButton bCambiarFoto;
     private javax.swing.JButton bFinalizar;
     private javax.swing.JButton bFinalizar1;
-    private javax.swing.JButton bFinalizar2;
-    private javax.swing.JButton bFinalizar3;
     private javax.swing.JComboBox<String> cbCargo;
     private javax.swing.JComboBox<String> cbSucursales;
     private javax.swing.JComboBox<String> cbTipoID;
@@ -383,10 +645,12 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel lCargo;
     private javax.swing.JLabel lCargo1;
     private javax.swing.JLabel lFin;
+    private javax.swing.JLabel lFoto;
     private javax.swing.JLabel lIdentificacion;
     private javax.swing.JLabel lInicio;
     private javax.swing.JLabel lLogo;
     private javax.swing.JLabel lNombre;
+    private javax.swing.JLabel lPassword;
     private javax.swing.JLabel lSucursal;
     private javax.swing.JLabel lTelefono;
     private javax.swing.JLabel lTelefono1;
@@ -399,6 +663,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     private javax.swing.JTextField tfDireccion;
     private javax.swing.JTextField tfIdentificacion;
     private javax.swing.JTextField tfNombre;
+    private javax.swing.JPasswordField tfPassword;
     private javax.swing.JTextField tfTelefono;
     // End of variables declaration//GEN-END:variables
 }

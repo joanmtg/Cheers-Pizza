@@ -7,10 +7,10 @@ package GUI.GUIItems;
 
 import AccesoDatosORM.AdaptadorItemControlador;
 import Administracion.Item;
-import GUI.VentanaLogin;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -23,41 +23,55 @@ public class VentanaGestionItems extends javax.swing.JFrame {
      */
     JFrame ventanaAnterior;
     AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
-
+    TableRowSorter trsFiltro;
+    
     public VentanaGestionItems(JFrame anterior) {
         super("Gestión de Items");
         initComponents();
-
+        
         ventanaAnterior = anterior;
         setLocationRelativeTo(null);
-
+        
         llenarTablaItems();
+        
+        trsFiltro = new TableRowSorter(tablaItems.getModel());
+        tablaItems.setRowSorter(trsFiltro);
+        
     }
-
+    
     public void llenarTablaItems() {
-
+        
         DefaultTableModel modelo = (DefaultTableModel) tablaItems.getModel();
-
-        for (int i = 0; i < tablaItems.getRowCount(); i++) {
+        modelo.setRowCount(0);
+        
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
             i -= 1;
         }
-
+        
         ArrayList<Item> items = controladorItem.obtenerTodosItems();
-
-        for (int i = 0; i < items.size(); i++) {
-            System.out.println("" + items.get(i).getPrecioActual());
-            Object[] fila = new Object[3];
-
-            fila[0] = items.get(i).getCodigo();
-            fila[1] = items.get(i).getNombre();
-            fila[2] = items.get(i).getPrecioActual();
-
-            modelo.addRow(fila);
+        
+        if (items != null) {
+            
+            for (int i = 0; i < items.size(); i++) {
+                
+                Object[] fila = new Object[3];
+                
+                fila[0] = items.get(i).getCodigo();
+                fila[1] = items.get(i).getNombre();
+                fila[2] = items.get(i).getPrecioActual();
+                
+                modelo.addRow(fila);
+            }
+            
+            tablaItems.setModel(modelo);
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "No hay items registrados", "Warning", JOptionPane.WARNING_MESSAGE);
+            
         }
-
-        tablaItems.setModel(modelo);
-
+        
     }
 
     /**
@@ -149,6 +163,18 @@ public class VentanaGestionItems extends javax.swing.JFrame {
         lFiltroCodigo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo.setText("Filtrar por:      Código:");
+
+        tfFiltroNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroNombreKeyReleased(evt);
+            }
+        });
+
+        tfFiltroCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroCodigoKeyReleased(evt);
+            }
+        });
 
         lFiltroCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo1.setForeground(new java.awt.Color(255, 255, 255));
@@ -251,14 +277,14 @@ public class VentanaGestionItems extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
-
+        
         this.dispose();
         ventanaAnterior.setVisible(true);
 
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
-
+        
         VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Registro");
         ventanaRegistro.setVisible(true);
         this.setVisible(false);
@@ -269,23 +295,28 @@ public class VentanaGestionItems extends javax.swing.JFrame {
 
         //Validar que se seleccione un elemento de la tabla
         int filasSeleccionadas = tablaItems.getSelectedRowCount();
-
+        
         if (filasSeleccionadas == 1) {
-
+            
             int filaSeleccionada = tablaItems.getSelectedRow();
-            Long codigoItem = (Long) tablaItems.getValueAt(filaSeleccionada, 0);
-
+            
+            DefaultTableModel modelo = (DefaultTableModel) tablaItems.getModel();
+            
+            filaSeleccionada = tablaItems.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+            
+            Long codigoItem = (Long) modelo.getValueAt(filaSeleccionada, 0);
+            
             Item itemSeleccionado = controladorItem.obtenerItem(codigoItem);
-
+            
             VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Modificacion");
             ventanaRegistro.setVisible(true);
             ventanaRegistro.modificacionItem(itemSeleccionado);
             this.setVisible(false);
-
+            
         } else {
-
+            
             JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item a modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
-
+            
         }
 
     }//GEN-LAST:event_bModificarActionPerformed
@@ -294,34 +325,38 @@ public class VentanaGestionItems extends javax.swing.JFrame {
 
         //Validar que se seleccione un elemento de la tabla
         int filasSeleccionadas = tablaItems.getSelectedRowCount();
-
+        
         if (filasSeleccionadas == 1) {
             
             int filaSeleccionada = tablaItems.getSelectedRow();
             
-            Long codigoItem = (Long) tablaItems.getValueAt(filaSeleccionada, 0);
+            DefaultTableModel modelo = (DefaultTableModel) tablaItems.getModel();
+            
+            filaSeleccionada = tablaItems.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+            
+            Long codigoItem = (Long) modelo.getValueAt(filaSeleccionada, 0);
             Item itemAEliminar = controladorItem.obtenerItem(codigoItem);
             
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el ítem " +itemAEliminar.getNombre()+ " con código " +itemAEliminar.getCodigo()+ "?");
-
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el ítem " + itemAEliminar.getNombre() + " con código " + itemAEliminar.getCodigo() + "?");
+            
             if (opcion == JOptionPane.YES_OPTION) {
-                
+
                 //Eliminar item 
                 controladorItem.eliminarItem(itemAEliminar);
-                
+
                 //Actualizar tabla
-                JOptionPane.showMessageDialog(null, "Se ha eliminado el ítem " +itemAEliminar.getNombre()+ " con codigo " +itemAEliminar.getCodigo(), "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
-            
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el ítem " + itemAEliminar.getNombre() + " con codigo " + itemAEliminar.getCodigo(), "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
+                
                 llenarTablaItems();
                 
             }
             
-        }else{
+        } else {
             
             JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item que desea eliminar", "Warning", JOptionPane.WARNING_MESSAGE);
             
         }
-
+        
 
     }//GEN-LAST:event_bEliminarActionPerformed
 
@@ -330,6 +365,22 @@ public class VentanaGestionItems extends javax.swing.JFrame {
         // Mostrar foto del item
 
     }//GEN-LAST:event_bVerItemActionPerformed
+
+    private void tfFiltroCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroCodigoKeyReleased
+        
+        int columna = 0;
+        
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroCodigo.getText(), columna));        
+        
+    }//GEN-LAST:event_tfFiltroCodigoKeyReleased
+
+    private void tfFiltroNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroNombreKeyReleased
+        
+        int columna = 1;
+        
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroNombre.getText(), columna));        
+        
+    }//GEN-LAST:event_tfFiltroNombreKeyReleased
 
     /**
      * @param args the command line arguments
