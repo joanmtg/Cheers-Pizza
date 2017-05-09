@@ -18,18 +18,24 @@
 package Administracion;
 
 import java.time.LocalTime;
+import AccesoDatosORM.*;
 
 /**
  *
  * @author invitado
  */
+
+
 public class FabricaPedidos {
+    
+    AdaptadorPedidoControlador adaptadorPedido = new AdaptadorPedidoControlador();
 
     public FabricaPedidos() {
     }
     
         
-    public Pedido crearPedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, Empleado mesero, Cliente cliente, Sucursal sucursal, double total, boolean entregado){
+    public void crearPedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, 
+            Empleado mesero, Cliente cliente, Sucursal sucursal, double total, boolean entregado){
         
         Pedido pedidoGenerado = null;
         
@@ -37,15 +43,19 @@ public class FabricaPedidos {
             pedidoGenerado = null;
         }
         
-        else if(tipoPedido.equalsIgnoreCase("En mesa")){
+        else if(tipoPedido.equalsIgnoreCase("A la Mesa")){
             pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, entregado, total, mesa, cliente, mesero, sucursal);
+            adaptadorPedido.crearPedido(pedidoGenerado);
+            System.out.println("Registré pedido en mesa");
         }
         
-        else if(tipoPedido.equalsIgnoreCase("A domicilio")){
+        else if(tipoPedido.equalsIgnoreCase("Para llevar")){
             pedidoGenerado = new Pedido(tipoPedido, horaInicio, horaEntrega, entregado, total, cliente, sucursal);
+            adaptadorPedido.crearPedido(pedidoGenerado);
+            System.out.println("Registré pedido para llevar");
         }
         
-        return pedidoGenerado;
+        //return pedidoGenerado;
     }
     
 }

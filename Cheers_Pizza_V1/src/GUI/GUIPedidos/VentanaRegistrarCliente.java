@@ -6,6 +6,10 @@
 package GUI.GUIPedidos;
 
 import javax.swing.JFrame;
+import AccesoDatosORM.AdaptadorClienteControlador;
+import Administracion.Cliente;
+import Validaciones.Validaciones;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,13 +20,16 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
     /**
      * Creates new form VentanaRegistrarCliente
      */
-    
-    JFrame ventanaAnterior;    
-    
-    public VentanaRegistrarCliente(JFrame anterior) {
+    JFrame ventanaAnterior;
+    AdaptadorClienteControlador adaptadorCliente = new AdaptadorClienteControlador();
+    Validaciones validador = new Validaciones();
+    String idCliente;
+
+    public VentanaRegistrarCliente(JFrame anterior, String idCliente) {
         super("Registro de Cliente");
         initComponents();
-        
+        this.idCliente = idCliente;
+        tfIdentificacion.setText(idCliente);
         this.ventanaAnterior = anterior;
         setLocationRelativeTo(null);
     }
@@ -51,9 +58,10 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
         tfTelefono = new javax.swing.JTextField();
         tfDireccion = new javax.swing.JTextField();
         lTelefono1 = new javax.swing.JLabel();
-        tfTelefono1 = new javax.swing.JTextField();
+        tfCelular = new javax.swing.JTextField();
         lTelefono2 = new javax.swing.JLabel();
-        tfTelefono2 = new javax.swing.JTextField();
+        tfEmail = new javax.swing.JTextField();
+        bAtras = new javax.swing.JButton();
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,6 +79,11 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
         });
 
         bFinalizar1.setText("Limpiar");
+        bFinalizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bFinalizar1ActionPerformed(evt);
+            }
+        });
 
         lNombre.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -102,6 +115,14 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
         lTelefono2.setForeground(new java.awt.Color(255, 255, 255));
         lTelefono2.setText("Email:");
 
+        bAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtras.png"))); // NOI18N
+        bAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtrasPR.png"))); // NOI18N
+        bAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAtrasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
         panelInferiorLayout.setHorizontalGroup(
@@ -111,9 +132,11 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelInferiorLayout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lTelefono)
                             .addComponent(lNombre)
-                            .addComponent(lTelefono1))
+                            .addComponent(lTelefono1)
+                            .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lTelefono)))
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lTelefono2, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -124,19 +147,20 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
                         .addComponent(lIdentificacion)
                         .addGap(18, 18, 18)
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(46, 46, 46)
-                                .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 76, Short.MAX_VALUE)))
+                            .addComponent(tfCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelInferiorLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60)
+                                .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 48, Short.MAX_VALUE)))
                 .addGap(25, 25, 25)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tfApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                    .addComponent(tfTelefono2)
+                    .addComponent(tfEmail)
                     .addComponent(tfDireccion))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -163,13 +187,15 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lTelefono1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfTelefono1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(tfCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(lTelefono2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfTelefono2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(tfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(40, 40, 40)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
 
@@ -218,13 +244,55 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
 
-        
-        
-        
-        this.dispose();        
-        ventanaAnterior.setVisible(true);
-        
+        String id = tfIdentificacion.getText();
+        String nombre = tfNombre.getText();
+        String apellidos = tfApellidos.getText();
+        String telefono = tfTelefono.getText();
+        String direccion = tfDireccion.getText();
+        String celular = tfCelular.getText();
+        String email = tfEmail.getText();
+
+        //En caso de que falten los campos obligatorios
+        if (id.equals("") || nombre.equals("") || apellidos.equals("") || direccion.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos obligatorios", "Mensaje", JOptionPane.WARNING_MESSAGE);
+        } 
+        else{
+            
+            Cliente nuevoCliente = new Cliente(id, nombre, apellidos, direccion, telefono, celular, email);
+            adaptadorCliente.crearCliente(nuevoCliente);
+            JOptionPane.showMessageDialog(null, "El cliente " + nombre + " " + apellidos + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+            this.dispose();
+            VentanaRegistrarModificarPedido  vRegiModf = (VentanaRegistrarModificarPedido)ventanaAnterior;
+            vRegiModf.setVisible(true);
+            vRegiModf.bVerificarIDCliente.doClick();
+
+        }
+
+
     }//GEN-LAST:event_bFinalizarActionPerformed
+
+    private void bFinalizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizar1ActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_bFinalizar1ActionPerformed
+
+    private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
+
+        this.dispose();
+        ventanaAnterior.setVisible(true);
+    }//GEN-LAST:event_bAtrasActionPerformed
+
+    public void limpiarCampos() {
+
+        tfApellidos.setText("");
+        tfCelular.setText("");
+        tfDireccion.setText("");
+        tfEmail.setText("");
+        tfNombre.setText("");
+        tfTelefono.setText("");
+
+    }
 
     /**
      * @param args the command line arguments
@@ -256,12 +324,13 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarCliente(null).setVisible(true);
+                new VentanaRegistrarCliente(null, "").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAtras;
     private javax.swing.JButton bFinalizar;
     private javax.swing.JButton bFinalizar1;
     private javax.swing.JLabel lApellidos;
@@ -275,11 +344,11 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JTextField tfApellidos;
+    private javax.swing.JTextField tfCelular;
     private javax.swing.JTextField tfDireccion;
+    private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfIdentificacion;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfTelefono;
-    private javax.swing.JTextField tfTelefono1;
-    private javax.swing.JTextField tfTelefono2;
     // End of variables declaration//GEN-END:variables
 }

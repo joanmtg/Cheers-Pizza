@@ -4,8 +4,13 @@
  * and open the template in the editor.
  */
 package GUI.GUIMesas;
+
+import AccesoDatosORM.AdaptadorMesaControlador;
+import Administracion.Mesa;
 import GUI.VentanaLogin;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,10 +22,15 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
      * Creates new form VentanaGestionRecursos
      */
     JFrame ventanaAnterior;
+    AdaptadorMesaControlador adaptadorMesa = new AdaptadorMesaControlador();
+
     public VentanaGestionMesas(JFrame anterior) {
+        super("Gestión de Mesas");
         initComponents();
         ventanaAnterior = anterior;
         setLocationRelativeTo(null);
+
+        llenarTablaMesas();
     }
 
     /**
@@ -36,7 +46,7 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaItems = new javax.swing.JTable();
+        tablaMesas = new javax.swing.JTable();
         bRegistrar = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
@@ -59,7 +69,7 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
             }
         });
 
-        tablaItems.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -70,7 +80,7 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
                 "Número", "Capacidad"
             }
         ));
-        jScrollPane1.setViewportView(tablaItems);
+        jScrollPane1.setViewportView(tablaMesas);
 
         bRegistrar.setText("Registrar");
         bRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -201,24 +211,76 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
 
         //Validar que se seleccione un elemento de la tabla
+        int filasSeleccionadas = tablaMesas.getSelectedRowCount();
 
-        VentanaRegistrarModificarMesas ventanaModificar = new VentanaRegistrarModificarMesas(this, "Modificación");
-        ventanaModificar.setVisible(true);
-        this.setVisible(false);
+        if (filasSeleccionadas == 1) {
+
+            int filaSeleccionada = tablaMesas.getSelectedRow();
+            Long numMesa = (Long) tablaMesas.getValueAt(filaSeleccionada, 0);
+            Mesa mesaSelected = adaptadorMesa.obtenerMesa(numMesa);
+            VentanaRegistrarModificarMesas ventanaModificar = new VentanaRegistrarModificarMesas(this, "Modificación");
+            ventanaModificar.setVisible(true);
+            ventanaModificar.modificacionMesa(mesaSelected);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila de la mesa a modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_bModificarActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
 
         //Validar que se seleccione un elemento de la tabla
+        int filasSeleccionadas = tablaMesas.getSelectedRowCount();
 
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la sucursal <tal> con código <tal>?");
+        if (filasSeleccionadas == 1) {
 
-        if(opcion == JOptionPane.YES_OPTION){
-            //Eliminar item
-            //Actualizar tabla
-            JOptionPane.showMessageDialog(null, "Se ha eliminado la sucursal <tal> con codigo <tal>", "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
+            int filaSeleccionada = tablaMesas.getSelectedRow();
+            Long numMesa = (Long) tablaMesas.getValueAt(filaSeleccionada, 0);
+            Mesa mesaSelected = adaptadorMesa.obtenerMesa(numMesa);
+
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la mesa " + mesaSelected.getNumero() + "?");
+            if (opcion == JOptionPane.YES_OPTION) {
+                //Eliminar item
+                adaptadorMesa.eliminarMesa(mesaSelected);
+                
+                //Actualizar tabla
+                llenarTablaMesas();
+                JOptionPane.showMessageDialog(null, "Se ha eliminado la mesa " + mesaSelected.getNumero(), "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila de la mesa a modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
+
+
     }//GEN-LAST:event_bEliminarActionPerformed
+
+    public void llenarTablaMesas() {
+
+        //Llena la tabla con las mesas que estén en la BD
+        DefaultTableModel modelo = (DefaultTableModel) tablaMesas.getModel();
+
+        for (int i = 0; i < tablaMesas.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+
+        ArrayList<Mesa> mesas = adaptadorMesa.obtenerTodasMesas();
+
+        for (int i = 0; i < mesas.size(); i++) {
+            Object[] fila = new Object[2];
+
+            fila[0] = mesas.get(i).getNumero();
+            fila[1] = mesas.get(i).getCantidadPersonas();
+
+            modelo.addRow(fila);
+        }
+
+        tablaMesas.setModel(modelo);
+
+    }
 
     /**
      * @param args the command line arguments
@@ -266,7 +328,7 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
     private javax.swing.JLabel lLogo;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JTable tablaItems;
+    private javax.swing.JTable tablaMesas;
     private javax.swing.JTextField tfFiltroNumero;
     // End of variables declaration//GEN-END:variables
 }

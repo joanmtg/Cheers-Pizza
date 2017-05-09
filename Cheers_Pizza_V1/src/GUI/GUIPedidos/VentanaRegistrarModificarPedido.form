@@ -47,12 +47,12 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="381" max="-2" attributes="0"/>
-                          <Component id="lLogo" min="-2" pref="86" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="417" max="-2" attributes="0"/>
+                          <Component id="lLogo" min="-2" pref="86" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
@@ -105,7 +105,7 @@
                           <Component id="lTipoPedido" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="lSucursal" min="-2" max="-2" attributes="0"/>
                           <Component id="lSucursal1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lSucursal2" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
+                          <Component id="lbTotal" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -121,9 +121,9 @@
                                   <Component id="lIDCliente" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="tfIDMesero" min="-2" pref="137" max="-2" attributes="0"/>
-                                  <Component id="tfIDCliente" min="-2" pref="137" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="tfIDMesero" pref="160" max="32767" attributes="0"/>
+                                  <Component id="tfIDCliente" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -131,7 +131,7 @@
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="bFinalizar" min="-2" pref="97" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lSucursal3" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
+                          <Component id="lbValorTotal" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" alignment="0" min="-2" pref="519" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="42" max="32767" attributes="0"/>
@@ -142,6 +142,7 @@
                               <Component id="bAgregarItem" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <Component id="bVerificarIDCliente" min="-2" pref="87" max="-2" attributes="0"/>
+                          <Component id="bVerificarIDMesero" min="-2" pref="87" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
@@ -163,7 +164,8 @@
                           <Component id="lMesa" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbMesa" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="lIDMesero" alignment="3" max="32767" attributes="0"/>
-                          <Component id="tfIDMesero" alignment="3" pref="31" max="32767" attributes="0"/>
+                          <Component id="tfIDMesero" alignment="3" pref="32" max="32767" attributes="0"/>
+                          <Component id="bVerificarIDMesero" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -186,8 +188,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lSucursal2" alignment="3" max="32767" attributes="0"/>
-                          <Component id="lSucursal3" alignment="3" max="32767" attributes="0"/>
+                          <Component id="lbTotal" alignment="3" max="32767" attributes="0"/>
+                          <Component id="lbValorTotal" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -226,6 +228,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpiar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLimpiarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lTipoPedido">
               <Properties>
@@ -248,6 +253,9 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbTipoActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -302,11 +310,8 @@
             <Component class="javax.swing.JComboBox" name="cbMesa">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
+                  <StringArray count="1">
                     <StringItem index="0" value="Seleccione una mesa"/>
-                    <StringItem index="1" value="1"/>
-                    <StringItem index="2" value="2"/>
-                    <StringItem index="3" value="3"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -348,7 +353,7 @@
                 <Component class="javax.swing.JTable" name="tablaItemsPedido">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="4">
+                      <Table columnCount="5" rowCount="0">
                         <Column editable="false" title="C&#xf3;digo" type="java.lang.Object"/>
                         <Column editable="false" title="Nombre" type="java.lang.Object"/>
                         <Column editable="false" title="Precio Unitario" type="java.lang.Object"/>
@@ -363,7 +368,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="lSucursal2">
+            <Component class="javax.swing.JLabel" name="lbTotal">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Eras Demi ITC" size="18" style="0"/>
@@ -374,7 +379,7 @@
                 <Property name="text" type="java.lang.String" value="Total:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lSucursal3">
+            <Component class="javax.swing.JLabel" name="lbValorTotal">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Eras Demi ITC" size="18" style="0"/>
@@ -415,6 +420,17 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVerificarIDClienteActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="bVerificarIDMesero">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Verificar ID"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVerificarIDMeseroActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

@@ -94,9 +94,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lTelefono" min="-2" max="-2" attributes="0"/>
                                   <Component id="lNombre" min="-2" max="-2" attributes="0"/>
                                   <Component id="lTelefono1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                      <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="lTelefono" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace type="separate" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -110,23 +113,24 @@
                               <Component id="lIdentificacion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="bFinalizar1" min="-2" pref="98" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                                      <Component id="bFinalizar" min="-2" pref="97" max="-2" attributes="0"/>
-                                  </Group>
                                   <Component id="tfNombre" min="-2" pref="186" max="-2" attributes="0"/>
                                   <Component id="tfIdentificacion" min="-2" pref="150" max="-2" attributes="0"/>
                                   <Component id="tfTelefono" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
-                                  <Component id="tfTelefono1" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
+                                  <Component id="tfCelular" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                      <Component id="bFinalizar1" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                      <Component id="bFinalizar" min="-2" pref="97" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="0" pref="76" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="48" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="tfApellidos" pref="174" max="32767" attributes="0"/>
-                          <Component id="tfTelefono2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfEmail" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfDireccion" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -160,14 +164,17 @@
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lTelefono1" alignment="3" max="32767" attributes="0"/>
-                          <Component id="tfTelefono1" alignment="3" pref="30" max="32767" attributes="0"/>
+                          <Component id="tfCelular" alignment="3" pref="30" max="32767" attributes="0"/>
                           <Component id="lTelefono2" alignment="3" max="32767" attributes="0"/>
-                          <Component id="tfTelefono2" alignment="3" pref="30" max="32767" attributes="0"/>
+                          <Component id="tfEmail" alignment="3" pref="30" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="bFinalizar1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="bFinalizar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="bFinalizar1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="bFinalizar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
@@ -187,6 +194,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpiar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFinalizar1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lNombre">
               <Properties>
@@ -267,7 +277,7 @@
                 <Property name="text" type="java.lang.String" value="Celular:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tfTelefono1">
+            <Component class="javax.swing.JTextField" name="tfCelular">
             </Component>
             <Component class="javax.swing.JLabel" name="lTelefono2">
               <Properties>
@@ -280,7 +290,20 @@
                 <Property name="text" type="java.lang.String" value="Email:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tfTelefono2">
+            <Component class="javax.swing.JTextField" name="tfEmail">
+            </Component>
+            <Component class="javax.swing.JButton" name="bAtras">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bAtras.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bAtrasPR.png"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bAtrasActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
