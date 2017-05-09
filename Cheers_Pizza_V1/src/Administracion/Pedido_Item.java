@@ -121,7 +121,7 @@ public class Pedido_Item implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (numeroPedido != null ? numeroPedido.hashCode() : 0);
-        hash += (codigoItem != null ? numeroPedido.hashCode() : 0);
+        hash += (codigoItem != null ? codigoItem.hashCode() : 0);
         return hash;
     }
 
