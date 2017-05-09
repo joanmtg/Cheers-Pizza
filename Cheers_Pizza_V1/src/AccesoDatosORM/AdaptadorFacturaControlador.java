@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Factura;
+import java.util.ArrayList;
 
 /**
  *
@@ -51,6 +52,11 @@ public class AdaptadorFacturaControlador {
     public Factura obtenerFactura(String numeroFactura){
         Factura factura = controlador.find(numeroFactura);
         return factura;
+    }
+    
+    public ArrayList<Factura> obtenerTodasFacturas(){
+        ArrayList<Factura> facturas = (ArrayList)controlador.findAll();
+        return facturas;
     }
     
 }

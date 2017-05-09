@@ -18,6 +18,7 @@
 package AccesoDatosORM;
 
 import Administracion.Factura;
+import java.util.List;
 
 /**
  *
@@ -51,5 +52,9 @@ public class FacturaJpaController{
         return factura;
     }
     
-
+    public List<Factura> findAll(){
+        List<Factura> facturas = fachada.findAll();
+        return facturas;
+    }
+    
 }
