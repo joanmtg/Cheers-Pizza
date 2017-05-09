@@ -288,7 +288,9 @@ public class VentanaGestionItems extends javax.swing.JFrame {
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
 
-        VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Registro");
+        Item item = new Item();
+        
+        VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Registro", item);
         ventanaRegistro.setVisible(true);
         this.setVisible(false);
 
@@ -311,9 +313,8 @@ public class VentanaGestionItems extends javax.swing.JFrame {
 
             Item itemSeleccionado = controladorItem.obtenerItem(codigoItem);
 
-            VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Modificacion");
+            VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Modificacion", itemSeleccionado);
             ventanaRegistro.setVisible(true);
-            ventanaRegistro.modificacionItem(itemSeleccionado);
             this.setVisible(false);
 
         } else {
@@ -379,25 +380,9 @@ public class VentanaGestionItems extends javax.swing.JFrame {
             Long codigoItem = (Long) modelo.getValueAt(filaSeleccionada, 0);
             Item itemAVisualizar = controladorItem.obtenerItem(codigoItem);
 
-            JFrame frameImagen = new JFrame();
-            frameImagen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frameImagen.setSize(253, 163);
-            frameImagen.setLocationRelativeTo(null);
-
-            JPanel panelImagen = new JPanel();
-            panelImagen.setSize(253, 163);
-            
-            JLabel labelFoto = new JLabel();
-            labelFoto.setSize(253, 163);
-            panelImagen.add(labelFoto);
-
-            BufferedImage img = decodeToImage(itemAVisualizar.getFotografia());
-            ImageIcon icon = new ImageIcon(img);
-            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_DEFAULT));
-            labelFoto.setIcon(icono);
-
-            frameImagen.getContentPane().add(panelImagen);
-            frameImagen.setVisible(true);
+            VentanaRegistrarModificarItem ventanaRegistro = new VentanaRegistrarModificarItem(this, "Visualizacion", itemAVisualizar);
+            ventanaRegistro.setVisible(true);
+            this.setVisible(false);
 
         } else {
 

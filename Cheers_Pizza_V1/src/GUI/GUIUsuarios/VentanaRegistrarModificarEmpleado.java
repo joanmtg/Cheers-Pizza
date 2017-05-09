@@ -87,6 +87,41 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
 
+        }else if(operacion.equals("Visualizacion")){
+            
+            cbTipoID.setEnabled(false);
+            tfIdentificacion.setEditable(false);
+            tfNombre.setEditable(false);
+            tfApellidos.setEditable(false);
+            cbCargo.setEnabled(false);
+            cbSucursales.setEnabled(false);
+            spHoraInicio.setEnabled(false);
+            spHoraFin.setEnabled(false);
+            tfPassword.setEditable(false);
+            bCambiarFoto.setEnabled(false);
+            bLimpiar.setEnabled(false);
+            bFinalizar.setEnabled(false);
+            
+            cbTipoID.setSelectedItem(empleado.getTipoId());
+            tfIdentificacion.setText(empleado.getId());
+            
+            tfNombre.setText(empleado.getNombre());
+            tfApellidos.setText(empleado.getApellidos());
+            tfTelefono.setText(empleado.getTelefono());
+            tfDireccion.setText(empleado.getDireccion());
+            cbCargo.setSelectedItem(empleado.getCargo());
+            cbSucursales.setSelectedItem(empleado.getSucursal().getNombre());
+
+            spHoraInicio.setValue(empleado.getHoraInicio().getHour());
+            spHoraFin.setValue(empleado.getHoraFin().getHour());
+
+            tfPassword.setText(empleado.getPassword());
+
+            BufferedImage img = decodeToImage(empleado.getFotoURL());
+            ImageIcon icon = new ImageIcon(img);
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
+            lFoto.setIcon(icono);
+            
         }
 
     }
@@ -104,15 +139,15 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         bFinalizar = new javax.swing.JButton();
-        bFinalizar1 = new javax.swing.JButton();
+        bLimpiar = new javax.swing.JButton();
         lNombre = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
         LTipoID = new javax.swing.JLabel();
-        cbTipoID = new javax.swing.JComboBox<String>();
+        cbTipoID = new javax.swing.JComboBox<>();
         lIdentificacion = new javax.swing.JLabel();
         tfIdentificacion = new javax.swing.JTextField();
         lApellidos = new javax.swing.JLabel();
-        cbCargo = new javax.swing.JComboBox<String>();
+        cbCargo = new javax.swing.JComboBox<>();
         lCargo = new javax.swing.JLabel();
         lCargo1 = new javax.swing.JLabel();
         lTelefono = new javax.swing.JLabel();
@@ -123,7 +158,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         tfDireccion = new javax.swing.JTextField();
         bCambiarFoto = new javax.swing.JButton();
         lSucursal = new javax.swing.JLabel();
-        cbSucursales = new javax.swing.JComboBox<String>();
+        cbSucursales = new javax.swing.JComboBox<>();
         lInicio = new javax.swing.JLabel();
         lFin = new javax.swing.JLabel();
         spHoraInicio = new javax.swing.JSpinner();
@@ -156,7 +191,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             }
         });
 
-        bFinalizar1.setText("Limpiar");
+        bLimpiar.setText("Limpiar");
 
         lNombre.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -166,7 +201,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         LTipoID.setForeground(new java.awt.Color(255, 255, 255));
         LTipoID.setText("Tipo de ID:");
 
-        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
+        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
         cbTipoID.setPreferredSize(new java.awt.Dimension(127, 30));
 
         lIdentificacion.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
@@ -184,7 +219,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lApellidos.setForeground(new java.awt.Color(255, 255, 255));
         lApellidos.setText("Apellidos:");
 
-        cbCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
+        cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
 
         lCargo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lCargo.setForeground(new java.awt.Color(255, 255, 255));
@@ -223,7 +258,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lSucursal.setForeground(new java.awt.Color(255, 255, 255));
         lSucursal.setText("Sucursal:");
 
-        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una sucursal" }));
+        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una sucursal" }));
 
         lInicio.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lInicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -280,7 +315,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(lFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(panelInferiorLayout.createSequentialGroup()
-                                            .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGap(57, 57, 57)
@@ -379,7 +414,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -637,7 +672,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     private javax.swing.JButton bAtras;
     private javax.swing.JButton bCambiarFoto;
     private javax.swing.JButton bFinalizar;
-    private javax.swing.JButton bFinalizar1;
+    private javax.swing.JButton bLimpiar;
     private javax.swing.JComboBox<String> cbCargo;
     private javax.swing.JComboBox<String> cbSucursales;
     private javax.swing.JComboBox<String> cbTipoID;

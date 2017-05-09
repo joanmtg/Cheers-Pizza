@@ -102,7 +102,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         bEliminar = new javax.swing.JButton();
         lFiltroCodigo = new javax.swing.JLabel();
         tfFiltro = new javax.swing.JTextField();
-        cbColumnaFiltro = new javax.swing.JComboBox<String>();
+        cbColumnaFiltro = new javax.swing.JComboBox<>();
         bVerFoto = new javax.swing.JButton();
         lLogo = new javax.swing.JLabel();
 
@@ -174,9 +174,9 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
             }
         });
 
-        cbColumnaFiltro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Nombre", "Apellidos", "Cargo", "Sucursal" }));
+        cbColumnaFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nombre", "Apellidos", "Cargo", "Sucursal" }));
 
-        bVerFoto.setText("Ver Foto");
+        bVerFoto.setText("Información");
         bVerFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bVerFotoActionPerformed(evt);
@@ -377,25 +377,9 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
             String idUsuario = (String) modelo.getValueAt(filaSeleccionada, 0);
             Empleado usuarioAVisualizar = controladorEmpleados.obtenerEmpleado(idUsuario);
 
-            JFrame frameFoto = new JFrame();
-            frameFoto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frameFoto.setSize(205, 210);
-            frameFoto.setLocationRelativeTo(null);
-
-            JPanel panelFoto = new JPanel();
-            panelFoto.setSize(253, 163);
-            
-            JLabel labelFoto = new JLabel();
-            labelFoto.setSize(253, 163);
-            panelFoto.add(labelFoto);
-
-            BufferedImage img = decodeToImage(usuarioAVisualizar.getFotoURL());
-            ImageIcon icon = new ImageIcon(img);
-            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_DEFAULT));
-            labelFoto.setIcon(icono);
-
-            frameFoto.getContentPane().add(panelFoto);
-            frameFoto.setVisible(true);
+            VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Visualizacion", usuarioAVisualizar);
+            ventanaRegistro.setVisible(true);
+            this.setVisible(false);
 
         } else {
 
