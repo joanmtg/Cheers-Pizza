@@ -20,6 +20,9 @@ package Administracion;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +30,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -71,6 +75,9 @@ public class Factura implements Serializable {
     @ManyToOne
     @JoinColumn(name = "numero_pedido")
     private Pedido pedido;
+    
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    private List<Factura_FormaPago> facturaFormasPago = new ArrayList<>();
     
     
     //Constructor N°1
@@ -152,9 +159,7 @@ public class Factura implements Serializable {
 
     public void setTotalPago(double totalPago) {
         this.totalPago = totalPago;
-    }
-    
-    
+    }   
 
     public Empleado getCajero() {
         return cajero;
@@ -171,6 +176,16 @@ public class Factura implements Serializable {
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
+
+    public List<Factura_FormaPago> getFacturaFormasPago() {
+        return facturaFormasPago;
+    }
+
+    public void setFacturaFormasPago(List<Factura_FormaPago> facturaFormasPago) {
+        this.facturaFormasPago = facturaFormasPago;
+    }
+    
+    
 
     
 
@@ -196,7 +211,7 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", totalPago=" + totalPago + ", cajero=" + cajero + ", pedido=" + pedido + '}';
+        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", totalPago=" + totalPago + ", cajero=" + cajero + ", pedido=" + pedido + ", facturaFormasPago=" + facturaFormasPago + '}';
     }    
     
 }
