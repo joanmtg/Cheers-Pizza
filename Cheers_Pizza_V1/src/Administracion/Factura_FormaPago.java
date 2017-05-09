@@ -34,11 +34,11 @@ public class Factura_FormaPago implements Serializable{
     private Long codigoFormaPago;
     
     @ManyToOne
-    @JoinColumn(name = "factura_numero")
+    @JoinColumn(name = "factura_numero", insertable = false, updatable = false)
     private Factura factura;
     
     @ManyToOne
-    @JoinColumn(name = "formaPago_codigo")
+    @JoinColumn(name = "formaPago_codigo", insertable = false, updatable = false)
     private FormaPago formaPago;
     
     @Column(name = "monto")
