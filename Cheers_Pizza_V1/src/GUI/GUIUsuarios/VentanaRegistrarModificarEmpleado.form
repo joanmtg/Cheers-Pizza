@@ -129,7 +129,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="lFoto" min="-2" pref="205" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="bFinalizar1" min="-2" pref="98" max="-2" attributes="0"/>
+                                                  <Component id="bLimpiar" min="-2" pref="98" max="-2" attributes="0"/>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                   <Component id="bFinalizar" min="-2" pref="97" max="-2" attributes="0"/>
                                               </Group>
@@ -259,7 +259,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="bFinalizar1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="bLimpiar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="bFinalizar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -292,7 +292,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFinalizarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="bFinalizar1">
+            <Component class="javax.swing.JButton" name="bLimpiar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpiar"/>
               </Properties>

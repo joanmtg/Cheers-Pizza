@@ -5,7 +5,7 @@
  */
 package GUI.GUIFacturacionYPagos;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  *
@@ -36,21 +36,182 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelPrincipal = new javax.swing.JPanel();
+        panelInferior = new javax.swing.JPanel();
+        bAtras = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaItems = new javax.swing.JTable();
+        bVerFactura = new javax.swing.JButton();
+        lFiltroCodigo = new javax.swing.JLabel();
+        tfFiltroNumeroFactura = new javax.swing.JTextField();
+        lFiltroCodigo1 = new javax.swing.JLabel();
+        lFiltroCodigo2 = new javax.swing.JLabel();
+        tfFIltroCodPedido = new javax.swing.JTextField();
+        lLogo = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelPrincipal.setBackground(new java.awt.Color(89, 30, 27));
+
+        panelInferior.setBackground(new java.awt.Color(89, 30, 27));
+        panelInferior.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Gestión de Facturas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Eras Medium ITC", 0, 16), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        bAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtras.png"))); // NOI18N
+        bAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtrasPR.png"))); // NOI18N
+        bAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAtrasActionPerformed(evt);
+            }
+        });
+
+        tablaItems.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Número", "Tipo", "Hora Pago", "Impuestos", "Propina", "Descuento", "Total Pago", "ID Cajero", "Cod. Pedido"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaItems);
+
+        bVerFactura.setText("Ver Factura");
+        bVerFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVerFacturaActionPerformed(evt);
+            }
+        });
+
+        lFiltroCodigo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        lFiltroCodigo.setText("Filtrar por:");
+
+        lFiltroCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lFiltroCodigo1.setForeground(new java.awt.Color(255, 255, 255));
+        lFiltroCodigo1.setText("Número Factura:");
+
+        lFiltroCodigo2.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
+        lFiltroCodigo2.setForeground(new java.awt.Color(255, 255, 255));
+        lFiltroCodigo2.setText("Cod. Pedido:");
+
+        javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
+        panelInferior.setLayout(panelInferiorLayout);
+        panelInferiorLayout.setHorizontalGroup(
+            panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInferiorLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addComponent(lFiltroCodigo)
+                        .addGap(18, 18, 18)
+                        .addComponent(lFiltroCodigo1)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfFiltroNumeroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(lFiltroCodigo2)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfFIltroCodPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelInferiorLayout.createSequentialGroup()
+                                .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bVerFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
+                        .addGap(25, 25, 25))))
+        );
+        panelInferiorLayout.setVerticalGroup(
+            panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInferiorLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfFIltroCodPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lFiltroCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lFiltroCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfFiltroNumeroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lFiltroCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bVerFactura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
+        );
+
+        lLogo.setBackground(new java.awt.Color(89, 30, 27));
+        lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoPequeno.png"))); // NOI18N
+        lLogo.setMaximumSize(new java.awt.Dimension(140, 140));
+        lLogo.setMinimumSize(new java.awt.Dimension(140, 140));
+        lLogo.setPreferredSize(new java.awt.Dimension(140, 140));
+
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGap(425, 425, 425)
+                        .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
+
+        this.dispose();
+        ventanaAnterior.setVisible(true);
+    }//GEN-LAST:event_bAtrasActionPerformed
+
+    private void bVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerFacturaActionPerformed
+
+        int filaSeleccionada = tablaItems.getSelectedRow();
+
+        if(filaSeleccionada != -1){
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un pedido a modificar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_bVerFacturaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,5 +249,17 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAtras;
+    private javax.swing.JButton bVerFactura;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lFiltroCodigo;
+    private javax.swing.JLabel lFiltroCodigo1;
+    private javax.swing.JLabel lFiltroCodigo2;
+    private javax.swing.JLabel lLogo;
+    private javax.swing.JPanel panelInferior;
+    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JTable tablaItems;
+    private javax.swing.JTextField tfFIltroCodPedido;
+    private javax.swing.JTextField tfFiltroNumeroFactura;
     // End of variables declaration//GEN-END:variables
 }

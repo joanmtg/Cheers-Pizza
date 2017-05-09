@@ -35,7 +35,6 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
     AdaptadorCategoriaControlador controladorCategoria = new AdaptadorCategoriaControlador();
     AdaptadorItemControlador controladorItem = new AdaptadorItemControlador();
 
-    Item itemAModificar = new Item();
     File ficheroImagen;
     /**
      * Creates new form VentanaRegistrarItem
@@ -43,13 +42,15 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
     String operacion; //"Registro" o "Modificación"
     JFrame ventanaAnterior;
+    Item item = new Item();
 
-    public VentanaRegistrarModificarItem(JFrame anterior, String operacion) {
+    public VentanaRegistrarModificarItem(JFrame anterior, String operacion, Item item) {
         super(operacion + " de Item");
         initComponents();
 
         this.operacion = operacion;
         this.ventanaAnterior = anterior;
+        this.item = item;
 
         setLocationRelativeTo(null);
 
@@ -61,6 +62,40 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         }
 
         defaultImage();
+
+        if (operacion.equals("Modificacion")) {
+
+            tfNombre.setText(item.getNombre());
+            tfPrecio.setText("" + item.getPrecioActual());
+            taDescripcion.setText(item.getDescripcion());
+            cbCategoria.setSelectedItem(item.getCategoria().getNombre());
+
+            BufferedImage img = decodeToImage(item.getFotografia());
+            ImageIcon icon = new ImageIcon(img);
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lImagenItem.getWidth(), lImagenItem.getHeight(), Image.SCALE_DEFAULT));
+            lImagenItem.setIcon(icono);
+
+        } else if (operacion.equals("Visualizacion")) {
+
+            tfNombre.setEditable(false);
+            tfPrecio.setEditable(false);
+            taDescripcion.setEditable(false);
+            cbCategoria.setEnabled(false);
+            bCambiarImagen.setEnabled(false);
+            bFinalizar.setEnabled(false);
+            bLimpiar.setEnabled(false);
+
+            tfNombre.setText(item.getNombre());
+            tfPrecio.setText("" + item.getPrecioActual());
+            taDescripcion.setText(item.getDescripcion());
+            cbCategoria.setSelectedItem(item.getCategoria().getNombre());
+
+            BufferedImage img = decodeToImage(item.getFotografia());
+            ImageIcon icon = new ImageIcon(img);
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lImagenItem.getWidth(), lImagenItem.getHeight(), Image.SCALE_DEFAULT));
+            lImagenItem.setIcon(icono);
+
+        }
 
     }
 
@@ -339,7 +374,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
                 } else if (operacion.equalsIgnoreCase("Modificacion")) {
 
-                    nuevoItem.setCodigo(itemAModificar.getCodigo());
+                    nuevoItem.setCodigo(item.getCodigo());
                     controladorItem.editarItem(nuevoItem);
                     JOptionPane.showMessageDialog(null, "El item " + nuevoItem.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     limpiarCampos();
@@ -350,7 +385,6 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
                     this.setVisible(false);
 
                 }
-
 
             }
         } catch (IOException ex) {
@@ -393,22 +427,6 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tfPrecioFocusGained
 
-    public void modificacionItem(Item item) {
-
-        itemAModificar = item;
-
-        tfNombre.setText(itemAModificar.getNombre());
-        tfPrecio.setText("" + itemAModificar.getPrecioActual());
-        taDescripcion.setText(itemAModificar.getDescripcion());
-        cbCategoria.setSelectedItem(itemAModificar.getCategoria().getNombre());
-
-        BufferedImage img = decodeToImage(itemAModificar.getFotografia());
-        ImageIcon icon = new ImageIcon(img);
-        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lImagenItem.getWidth(), lImagenItem.getHeight(), Image.SCALE_DEFAULT));
-        lImagenItem.setIcon(icono);
-
-    }
-
     public void limpiarCampos() {
 
         tfNombre.setText("");
@@ -417,7 +435,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         cbCategoria.setSelectedIndex(0);
 
         defaultImage();
-        
+
     }
 
     public void defaultImage() {
@@ -505,7 +523,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarModificarItem(null, null).setVisible(true);
+                new VentanaRegistrarModificarItem(null, null, null).setVisible(true);
             }
         });
     }
