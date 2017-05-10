@@ -25,11 +25,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -41,8 +40,8 @@ public class Sucursal implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "suc_gen")
-    @SequenceGenerator(name = "suc_gen", sequenceName = "SUCURSAL_SEQ")
+    @GenericGenerator(name = "suc_gen", strategy = "increment")
+    @GeneratedValue(generator = "suc_gen")
     private Long codigo;
     
     @Column(name = "nombre")

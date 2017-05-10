@@ -33,6 +33,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -46,8 +47,8 @@ public class Factura implements Serializable {
     private static final long serialVersionUID = 5L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "fac_gen")
-    @SequenceGenerator(name = "fac_gen", sequenceName = "FACTURA_SEQ")
+    @GenericGenerator(name = "fac_gen", strategy = "increment")
+    @GeneratedValue(generator = "fac_gen")
     private Long numero;
     
     @Column(name = "tipo_pago")

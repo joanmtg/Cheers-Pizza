@@ -331,15 +331,24 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la operación actual?");
-
-        if (opcion == JOptionPane.YES_OPTION) {
+        if (operacion.equals("Visualizacion")) {
 
             this.dispose();
             VentanaGestionItems ventanaItems = (VentanaGestionItems) ventanaAnterior;
             ventanaItems.llenarTablaItems();
             ventanaItems.setVisible(true);
 
+        } else {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la operación actual?");
+
+            if (opcion == JOptionPane.YES_OPTION) {
+
+                this.dispose();
+                VentanaGestionItems ventanaItems = (VentanaGestionItems) ventanaAnterior;
+                ventanaItems.llenarTablaItems();
+                ventanaItems.setVisible(true);
+
+            }
         }
     }//GEN-LAST:event_bAtrasActionPerformed
 

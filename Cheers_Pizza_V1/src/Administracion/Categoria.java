@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -29,8 +30,8 @@ public class Categoria implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cat_gen")
-    @SequenceGenerator(name = "cat_gen", sequenceName = "CATEGORIA_SEQ")
+    @GenericGenerator(name = "cat_gen", strategy = "increment")
+    @GeneratedValue(generator = "cat_gen")
     private Long codigo;
 
     @Column(name = "nombre", length = 50)

@@ -33,6 +33,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -46,8 +47,8 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = 5L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "ped_gen")
-    @SequenceGenerator(name = "ped_gen", sequenceName = "PEDIDO_SEQ")
+    @GenericGenerator(name = "pedido_gen", strategy = "increment")
+    @GeneratedValue(generator = "pedido_gen")
     private Long numero;
     
     @Column(name = "tipo_pedido")
