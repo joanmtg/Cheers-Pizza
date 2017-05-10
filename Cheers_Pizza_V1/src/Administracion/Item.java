@@ -25,13 +25,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -45,8 +44,8 @@ public class Item implements Serializable {
     private static final long serialVersionUID = 4L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "item_gen")
-    @SequenceGenerator(name = "item_gen", sequenceName = "ITEM_SEQ")
+    @GenericGenerator(name = "item_gen", strategy = "increment")
+    @GeneratedValue(generator = "item_gen")
     private Long codigo;
     
     @Column(name = "nombre")
