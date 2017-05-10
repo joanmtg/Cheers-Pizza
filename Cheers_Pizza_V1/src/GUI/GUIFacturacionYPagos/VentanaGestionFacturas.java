@@ -5,7 +5,12 @@
  */
 package GUI.GUIFacturacionYPagos;
 
+import AccesoDatosORM.AdaptadorFacturaControlador;
+import Administracion.Factura;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -18,6 +23,9 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
      */
     
     JFrame ventanaAnterior;
+    AdaptadorFacturaControlador controladorFactura = new AdaptadorFacturaControlador();
+    TableRowSorter trsFiltro;
+    
     
     public VentanaGestionFacturas(JFrame anterior) {
         super("Gestión de Facturas");
@@ -25,7 +33,44 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         
         this.ventanaAnterior = anterior;
         setLocationRelativeTo(null);
+        
+        llenarTablaFacturas();
     }
+    
+    public void llenarTablaFacturas(){    
+        
+        DefaultTableModel modelo = (DefaultTableModel)tablaFacturas.getModel();
+        modelo.setRowCount(0);        
+        
+        ArrayList<Factura> facturas = controladorFactura.obtenerTodasFacturas();
+                
+        if(facturas != null){
+            
+            
+            for (int i = 0; i < facturas.size(); i++) {
+                Factura factura = facturas.get(i);
+                
+                Object[] fila = new Object[9];
+                
+                fila[0] = factura.getNumero();
+                fila[1] = factura.getTipoPago();
+                fila[2] = factura.getHoraPago();
+                fila[3] = factura.getImpuestos();
+                fila[4] = factura.getPropina();
+                fila[5] = factura.getDescuento();
+                fila[6] = factura.getTotalPago();
+                fila[7] = factura.getCajero().getId();
+                fila[8] = factura.getPedido().getNumero(); 
+                
+                modelo.addRow(fila);                
+            }                       
+
+            tablaFacturas.setModel(modelo);
+            
+        }else {
+            JOptionPane.showMessageDialog(null, "No hay facturas registradas", "Warning", JOptionPane.WARNING_MESSAGE);
+        }        
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +85,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaItems = new javax.swing.JTable();
+        tablaFacturas = new javax.swing.JTable();
         bVerFactura = new javax.swing.JButton();
         lFiltroCodigo = new javax.swing.JLabel();
         tfFiltroNumeroFactura = new javax.swing.JTextField();
@@ -64,7 +109,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
             }
         });
 
-        tablaItems.setModel(new javax.swing.table.DefaultTableModel(
+        tablaFacturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -83,7 +128,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tablaItems);
+        jScrollPane1.setViewportView(tablaFacturas);
 
         bVerFactura.setText("Ver Factura");
         bVerFactura.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +249,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
 
     private void bVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerFacturaActionPerformed
 
-        int filaSeleccionada = tablaItems.getSelectedRow();
+        int filaSeleccionada = tablaFacturas.getSelectedRow();
 
         if(filaSeleccionada != -1){
 
@@ -258,7 +303,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
     private javax.swing.JLabel lLogo;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JTable tablaItems;
+    private javax.swing.JTable tablaFacturas;
     private javax.swing.JTextField tfFIltroCodPedido;
     private javax.swing.JTextField tfFiltroNumeroFactura;
     // End of variables declaration//GEN-END:variables
