@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Pedido;
+import java.util.ArrayList;
 
 /**
  *
@@ -48,9 +49,21 @@ public class AdaptadorPedidoControlador {
         System.out.println("Editando el pedido "+ pedido.getNumero());
     }
     
-    public Pedido obtenerPedido(String numeroPedido){
+    public Pedido obtenerPedido(Long numeroPedido){
         Pedido pedido = controlador.find(numeroPedido);
         return pedido;
+    }
+    
+    public ArrayList<Pedido> obtenerTodosPedidos(){
+        ArrayList<Pedido> pedidos = (ArrayList)controlador.findAll();
+        return pedidos;
+    }
+    
+    public ArrayList<Long> obtenerPedidosNoPagos(){
+        
+        ArrayList<Long> pedidosNoPagos = (ArrayList) controlador.joinExcept();
+        return pedidosNoPagos;
+        
     }
     
 }

@@ -5,7 +5,11 @@
  */
 package GUI.GUIPedidos;
 
+import AccesoDatosORM.AdaptadorItemControlador;
+import Administracion.Item;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,6 +22,7 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
      */
     
     JFrame ventanaAnterior;
+    AdaptadorItemControlador adaptadorItem = new AdaptadorItemControlador();
     
     public VentanaAgregarItem(JFrame anterior) {        
         super("Agregar Ítem a un Pedido");        
@@ -25,6 +30,9 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
         
         this.ventanaAnterior = anterior;
         setLocationRelativeTo(null);
+        
+        //Llenamos la tabla con los Items registrados en la BD
+        llenarTablaItems();
                 
     }
 
@@ -41,7 +49,7 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
         panelInferior = new javax.swing.JPanel();
         bAtras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        bCancelar = new javax.swing.JTable();
+        tablaAgregarItem = new javax.swing.JTable();
         bAgregarItem = new javax.swing.JButton();
         lFiltroCodigo = new javax.swing.JLabel();
         tfFiltroNombre = new javax.swing.JTextField();
@@ -65,7 +73,7 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
             }
         });
 
-        bCancelar.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAgregarItem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -81,7 +89,7 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(bCancelar);
+        jScrollPane1.setViewportView(tablaAgregarItem);
 
         bAgregarItem.setText("Agregar Ítem");
         bAgregarItem.addActionListener(new java.awt.event.ActionListener() {
@@ -195,23 +203,68 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bAgregarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarItemActionPerformed
-
+        
         //Validar que se seleccione un elemento de la tabla
-        int filasSeleccionadas = bCancelar.getSelectedRowCount();
+        int filasSeleccionadas = tablaAgregarItem.getSelectedRowCount();
 
         if (filasSeleccionadas == 1) {
-
-            int filaSeleccionada = bCancelar.getSelectedRow();
+            int filaSeleccionada = tablaAgregarItem.getSelectedRow();
+            Long codigoItem = (Long) tablaAgregarItem.getValueAt(filaSeleccionada, 0);
+            //Se obtiene el item
+            Item itemSelected = adaptadorItem.obtenerItem(codigoItem);
+            VentanaRegistrarModificarPedido vRegistro = (VentanaRegistrarModificarPedido)ventanaAnterior;
             
-            //VentanaRegistroPedido vRegistro = (VentanaRegistrarPedido)ventanaAnterior;
-            //ventanaAnterior.agregarItem(  );  //Pasar el Item seleccionado
+            //En caso de que ya se hubiera agregado el Item
+            if(vRegistro.agregarItem(itemSelected)){
+               JOptionPane.showMessageDialog(null, "El item " + itemSelected.getNombre() + " fue agregado al pedido", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El item '"+ itemSelected.getNombre() + "' ya se agregó al pedido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
             
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item que desea eliminar", "Warning", JOptionPane.WARNING_MESSAGE);
+        }  
+        else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item a agregar", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-
+        
     }//GEN-LAST:event_bAgregarItemActionPerformed
 
+    public void llenarTablaItems() {
+        
+        DefaultTableModel modelo = (DefaultTableModel) tablaAgregarItem.getModel();
+        modelo.setRowCount(0);
+        
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+        
+        ArrayList<Item> items = adaptadorItem.obtenerTodosItems();
+        
+        if (items != null) {
+            
+            for (int i = 0; i < items.size(); i++) {
+                
+                Object[] fila = new Object[4];
+                
+                fila[0] = items.get(i).getCodigo();
+                fila[1] = items.get(i).getNombre();
+                fila[2] = items.get(i).getPrecioActual();
+                fila[3] = 0;
+                
+                modelo.addRow(fila);
+            }
+            
+            tablaAgregarItem.setModel(modelo);
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "No hay items registrados", "Warning", JOptionPane.WARNING_MESSAGE);
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -250,13 +303,13 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAgregarItem;
     private javax.swing.JButton bAtras;
-    private javax.swing.JTable bCancelar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lFiltroCodigo;
     private javax.swing.JLabel lFiltroNombre;
     private javax.swing.JLabel lLogo;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JTable tablaAgregarItem;
     private javax.swing.JTextField tfFiltroCodigo;
     private javax.swing.JTextField tfFiltroNombre;
     // End of variables declaration//GEN-END:variables

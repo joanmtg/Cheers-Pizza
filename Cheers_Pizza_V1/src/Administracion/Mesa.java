@@ -42,8 +42,8 @@ public class Mesa implements Serializable {
     private static final long serialVersionUID = 7L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "mesa_gen")
-    @SequenceGenerator(name = "mesa_gen", sequenceName = "MESA_SEQ")
+    //@GeneratedValue(strategy = GenerationType.AUTO, generator = "mesa_gen")
+    //@SequenceGenerator(name = "mesa_gen", sequenceName = "MESA_SEQ")
     private Long numero;
     
     @Column(name = "capacidad")
