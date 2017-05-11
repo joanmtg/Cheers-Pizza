@@ -130,7 +130,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Apellidos", "Dirección", "Teléfono", "Cargo", "Sucursal"
+                "ID", "Nombre", "Apellidos", "Teléfono", "Dirección", "Cargo", "Sucursal"
             }
         ) {
             boolean[] canEdit = new boolean [] {

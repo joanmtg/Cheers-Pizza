@@ -57,8 +57,8 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
                 fila[2] = factura.getImpuestos();
                 fila[3] = factura.getPropina();
                 fila[4] = factura.getDescuento();
-                fila[5] = factura.getTotalPago();
-                fila[6] = factura.getCajero().getId();
+                fila[5] = factura.getTotalPago();                
+                fila[6] = "123457";
                 fila[7] = factura.getPedido().getNumero(); 
                 
                 modelo.addRow(fila);                

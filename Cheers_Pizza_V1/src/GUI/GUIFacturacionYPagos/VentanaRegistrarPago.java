@@ -63,6 +63,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
 
         lPrecioNeto.setText("" + precioNeto);
         lTotal.setText("" + total);
+        lIDCliente.setText(pedido.getCliente().getId());
     }
 
     public void llenarTablaItems() {
