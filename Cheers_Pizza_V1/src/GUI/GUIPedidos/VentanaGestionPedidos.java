@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -25,6 +26,7 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
     JFrame ventanaAnterior;
     AdaptadorPedidoControlador adaptadorPedido = new AdaptadorPedidoControlador();
     AdaptadorPedidoItemControlador adaptadorPedidoItem = new AdaptadorPedidoItemControlador();
+    TableRowSorter trsFiltro = new TableRowSorter();
 
     public VentanaGestionPedidos(JFrame anterior) {
         super("Gestión de Pedidos");
@@ -34,6 +36,9 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         llenarTablaPedidos();
+        
+        trsFiltro = new TableRowSorter(tablaPedidos.getModel());
+        tablaPedidos.setRowSorter(trsFiltro);
     }
 
     /**
@@ -57,6 +62,7 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         lFiltroCodigo1 = new javax.swing.JLabel();
         lFiltroCodigo2 = new javax.swing.JLabel();
         tfFiltroIDCliente = new javax.swing.JTextField();
+        bEliminar = new javax.swing.JButton();
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,6 +120,12 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo.setText("Filtrar por:");
 
+        tfFiltroCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroCodigoKeyReleased(evt);
+            }
+        });
+
         lFiltroCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo1.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo1.setText("Código:");
@@ -121,6 +133,19 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         lFiltroCodigo2.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo2.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo2.setText("ID Cliente:");
+
+        tfFiltroIDCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroIDClienteKeyReleased(evt);
+            }
+        });
+
+        bEliminar.setText("Eliminar");
+        bEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
@@ -146,8 +171,10 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                                 .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(bRegistrar)
-                                .addGap(35, 35, 35)
-                                .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(bModificar)
+                                .addGap(21, 21, 21)
+                                .addComponent(bEliminar))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
                         .addGap(25, 25, 25))))
         );
@@ -168,8 +195,10 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bRegistrar)))
                 .addGap(21, 21, 21))
         );
 
@@ -255,6 +284,60 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_bModificarActionPerformed
+
+    private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
+        
+        //Validar que se seleccione un elemento de la tabla
+        int filasSeleccionadas = tablaPedidos.getSelectedRowCount();
+
+        if (filasSeleccionadas == 1) {
+
+            int filaSeleccionada = tablaPedidos.getSelectedRow();
+
+            DefaultTableModel modelo = (DefaultTableModel) tablaPedidos.getModel();
+
+            filaSeleccionada = tablaPedidos.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+
+            Long numeroPedido = (Long) modelo.getValueAt(filaSeleccionada, 0);
+            Pedido pedidoAEliminar = adaptadorPedido.obtenerPedido(numeroPedido);
+
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el pedido con código " + pedidoAEliminar.getNumero()+ "?");
+
+            if (opcion == JOptionPane.YES_OPTION) {
+
+                //Eliminar item 
+                adaptadorPedido.eliminarPedido(pedidoAEliminar);
+
+                //Actualizar tabla
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el ítem con codigo " + pedidoAEliminar.getNumero(), "Eliminación realizada", JOptionPane.INFORMATION_MESSAGE);
+
+                llenarTablaPedidos();
+
+            }
+
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item que desea eliminar", "Warning", JOptionPane.WARNING_MESSAGE);
+
+        }
+        
+    }//GEN-LAST:event_bEliminarActionPerformed
+
+    private void tfFiltroCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroCodigoKeyReleased
+        
+        int columna = 0;
+
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroCodigo.getText(), columna));
+        
+    }//GEN-LAST:event_tfFiltroCodigoKeyReleased
+
+    private void tfFiltroIDClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroIDClienteKeyReleased
+        
+        int columna = 5;
+
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroIDCliente.getText(), columna));
+        
+    }//GEN-LAST:event_tfFiltroIDClienteKeyReleased
 
     //Llena la tabla con los pedidos realizados
     public void llenarTablaPedidos() {
@@ -361,6 +444,7 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
+    private javax.swing.JButton bEliminar;
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bRegistrar;
     private javax.swing.JScrollPane jScrollPane1;

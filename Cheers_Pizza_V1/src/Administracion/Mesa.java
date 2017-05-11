@@ -45,7 +45,7 @@ public class Mesa implements Serializable {
     @GeneratedValue(generator = "mesa_gen")
     private Long numero;
     
-    @Column(name = "capacidad")
+    @Column(name = "capacidad", nullable = false)
     private int cantidadPersonas;
     
     @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL)

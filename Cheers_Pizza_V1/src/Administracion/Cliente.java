@@ -42,13 +42,13 @@ public class Cliente implements Serializable {
     @Id
     private String id;
     
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
     
-    @Column(name = "apellidos")
+    @Column(name = "apellidos", nullable = false)
     private String apellidos;
     
-    @Column(name = "direccion")
+    @Column(name = "direccion", nullable = false)
     private String direccion;
     
     @Column(name = "telefono")

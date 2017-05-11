@@ -44,13 +44,13 @@ public class Sucursal implements Serializable {
     @GeneratedValue(generator = "suc_gen")
     private Long codigo;
     
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
     
-    @Column(name = "direccion")
+    @Column(name = "direccion", nullable = false)
     private String direccion;
     
-    @Column(name = "telefono")
+    @Column(name = "telefono", nullable = false)
     private String telefono;
 
     @OneToMany(mappedBy = "sucursal", cascade = CascadeType.ALL)
