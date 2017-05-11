@@ -26,12 +26,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -51,19 +49,19 @@ public class Pedido implements Serializable {
     @GeneratedValue(generator = "pedido_gen")
     private Long numero;
     
-    @Column(name = "tipo_pedido")
+    @Column(name = "tipo_pedido", nullable = false)
     private String tipoPedido;
     
-    @Column(name = "hora_inicio")
+    @Column(name = "hora_inicio", nullable = false)
     private LocalTime horaInicio;
     
     @Column(name = "hora_entrega")
     private LocalTime horaEntrega;
     
-    @Column(name = "entregado")
+    @Column(name = "entregado", nullable = false)
     private boolean entregado;
     
-    @Column(name = "total")
+    @Column(name = "total", nullable = false)
     private double total;
    
     @ManyToOne
@@ -71,7 +69,7 @@ public class Pedido implements Serializable {
     private Mesa mesa;
     
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
+    @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
     
     @ManyToOne
@@ -79,7 +77,7 @@ public class Pedido implements Serializable {
     private Empleado mesero;
     
     @ManyToOne
-    @JoinColumn(name = "cod_sucursal")
+    @JoinColumn(name = "cod_sucursal", nullable = false)
     private Sucursal sucursalPedido;
     
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)

@@ -43,38 +43,38 @@ public class Empleado implements Serializable {
     @Id
     private String id;
     
-    @Column(name = "tipo_id", length = 30)
+    @Column(name = "tipo_id", length = 30, nullable = false)
     private String tipoId;
     
-    @Column(name = "nombre", length = 80)
+    @Column(name = "nombre", length = 80, nullable = false)
     private String nombre;
     
-    @Column(name = "apellidos", length = 80)
+    @Column(name = "apellidos", length = 80, nullable = false)
     private String apellidos;
     
     @Column(name = "direccion", length = 100)
     private String direccion; 
     
-    @Column(name = "telefono", length = 10)
+    @Column(name = "telefono", length = 10, nullable = false)
     private String telefono;
     
-    @Column(name = "cargo", length = 30)
+    @Column(name = "cargo", length = 30, nullable = false)
     private String cargo;
     
-    @Column(name = "password", length = 50)
+    @Column(name = "password", length = 50, nullable = false)
     private String password;
     
-    @Column(name = "hora_inicio")
+    @Column(name = "hora_inicio", nullable = false)
     private LocalTime horaInicio;
     
-    @Column(name = "hora_fin")
+    @Column(name = "hora_fin", nullable = false)
     private LocalTime horaFin;
     
     @Column(name = "foto", columnDefinition = "TEXT")
     private String fotoURL;
     
     @ManyToOne
-    @JoinColumn(name = "cod_sucursal")
+    @JoinColumn(name = "cod_sucursal", nullable = false)
     private Sucursal sucursal;
     
     @OneToMany(mappedBy = "mesero", cascade = CascadeType.ALL)

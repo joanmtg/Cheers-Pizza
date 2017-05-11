@@ -34,7 +34,7 @@ public class Categoria implements Serializable {
     @GeneratedValue(generator = "cat_gen")
     private Long codigo;
 
-    @Column(name = "nombre", length = 50)
+    @Column(name = "nombre", length = 50, nullable = false)
     private String nombre;
     
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)

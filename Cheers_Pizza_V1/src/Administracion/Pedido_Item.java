@@ -33,17 +33,17 @@ public class Pedido_Item implements Serializable {
     private Long codigo;
     
     @ManyToOne
-    @JoinColumn(name = "numero_pedido")
+    @JoinColumn(name = "numero_pedido", nullable = false)
     private Pedido pedido;
     
     @ManyToOne
-    @JoinColumn(name = "codigo_item")
+    @JoinColumn(name = "codigo_item", nullable = false)
     private Item item;
     
-    @Column(name = "cantidad")
+    @Column(name = "cantidad", nullable = false)
     private int cantidad;
     
-    @Column(name = "entregado")
+    @Column(name = "entregado", nullable = false)
     private boolean entregado;
     
     //Constructor N°1

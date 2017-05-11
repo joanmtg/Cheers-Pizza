@@ -48,13 +48,13 @@ public class Item implements Serializable {
     @GeneratedValue(generator = "item_gen")
     private Long codigo;
     
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
     
     @Column(name = "descripcion")
     private String descripcion;
     
-    @Column(name = "precio")
+    @Column(name = "precio", nullable = false)
     private double precioActual;
     
     @Column(name = "foto", columnDefinition = "TEXT")
@@ -62,7 +62,7 @@ public class Item implements Serializable {
     private String fotografia;
     
     @ManyToOne
-    @JoinColumn(name = "cod_categoria")
+    @JoinColumn(name = "cod_categoria", nullable = false)
     private Categoria categoria;
     
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
