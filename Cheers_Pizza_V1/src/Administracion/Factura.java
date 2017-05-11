@@ -49,10 +49,7 @@ public class Factura implements Serializable {
     @Id
     @GenericGenerator(name = "fac_gen", strategy = "increment")
     @GeneratedValue(generator = "fac_gen")
-    private Long numero;
-    
-    @Column(name = "tipo_pago")
-    private String tipoPago;
+    private Long numero;    
     
     @Column(name = "horaPago")
     private LocalTime horaPago;
@@ -88,9 +85,7 @@ public class Factura implements Serializable {
 
     //Constructor N°2
 
-    public Factura(Long numero, String tipoPago, LocalTime horaPago, double impuestos, double propina, double descuento, double totalPago, Empleado cajero, Pedido pedido) {
-        this.numero = numero;
-        this.tipoPago = tipoPago;
+    public Factura(LocalTime horaPago, double impuestos, double propina, double descuento, double totalPago, Empleado cajero, Pedido pedido) {
         this.horaPago = horaPago;
         this.impuestos = impuestos;
         this.propina = propina;
@@ -112,14 +107,6 @@ public class Factura implements Serializable {
 
     public void setNumero(Long numero) {
         this.numero = numero;
-    }
-
-    public String getTipoPago() {
-        return tipoPago;
-    }
-
-    public void setTipoPago(String tipoPago) {
-        this.tipoPago = tipoPago;
     }
 
     public LocalTime getHoraPago() {
@@ -212,7 +199,10 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "numero=" + numero + ", tipoPago=" + tipoPago + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", totalPago=" + totalPago + ", cajero=" + cajero + ", pedido=" + pedido + ", facturaFormasPago=" + facturaFormasPago + '}';
-    }    
+        return "Factura{" + "numero=" + numero + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", totalPago=" + totalPago + ", cajero=" + cajero + ", pedido=" + pedido + ", facturaFormasPago=" + facturaFormasPago + '}';
+    }
+    
+    
+    
     
 }

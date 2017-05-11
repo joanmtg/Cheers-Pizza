@@ -5,7 +5,22 @@
  */
 package GUI.GUIFacturacionYPagos;
 
+import AccesoDatosORM.AdaptadorEmpleadoControlador;
+import AccesoDatosORM.AdaptadorFacturaControlador;
+import AccesoDatosORM.AdaptadorFacturaFormaPagoControlador;
 import javax.swing.JFrame;
+import java.util.ArrayList;
+import java.time.LocalTime;
+import Administracion.Pedido;
+import Administracion.Pedido_Item;
+import Administracion.Item;
+import AccesoDatosORM.AdaptadorPedidoItemControlador;
+import Administracion.Empleado;
+import Administracion.Factura;
+import Administracion.Factura_FormaPago;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,25 +31,75 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
     /**
      * Creates new form VentanaRegistrarPago
      */
-    
     JFrame ventanaAnterior;
-    
-    public VentanaRegistrarPago(JFrame anterior) {
+    Pedido pedido = new Pedido();
+    AdaptadorPedidoItemControlador controladorPedidoItem = new AdaptadorPedidoItemControlador();
+    AdaptadorEmpleadoControlador controladorEmpleado = new AdaptadorEmpleadoControlador();
+    AdaptadorFacturaControlador controladorFactura = new AdaptadorFacturaControlador();
+    AdaptadorFacturaFormaPagoControlador controladorFacturaFormaPago = new AdaptadorFacturaFormaPagoControlador();
+    double precioNeto;
+    double total;
+    double descuento;
+    double impuesto;
+    double propina;
+
+    public VentanaRegistrarPago(JFrame anterior, Pedido pedido) {
         super("Registro de Pago");
         initComponents();
 
         this.ventanaAnterior = anterior;
+        this.pedido = pedido;
+        this.precioNeto = pedido.getTotal();
+        this.total = pedido.getTotal();
+        this.descuento = 0;
+        this.impuesto = 0;
+        this.propina = 0;
         setLocationRelativeTo(null);
-        
-        cbOpcion2.setVisible(false);
+
+        cbTipoPago2.setVisible(false);
         tfOpcion2.setVisible(false);
-        
-        
+
+        llenarTablaItems();
+
+        lPrecioNeto.setText("" + precioNeto);
+        lTotal.setText("" + total);
     }
-    
-    
-    
-    
+
+    public void llenarTablaItems() {
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
+        modelo.setRowCount(0);
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+
+            modelo.removeRow(i);
+            i -= 1;
+        }
+
+        List<Pedido_Item> pedidoItems = pedido.getPedidoItems();
+
+        if (pedidoItems != null) {
+
+            for (int i = 0; i < pedidoItems.size(); i++) {
+
+                Object[] fila = new Object[5];
+
+                fila[0] = pedidoItems.get(i).getItem().getCodigo();
+                fila[1] = pedidoItems.get(i).getItem().getNombre();
+                fila[2] = pedidoItems.get(i).getItem().getPrecioActual();
+                fila[3] = pedidoItems.get(i).getCantidad();
+                fila[4] = pedidoItems.get(i).getItem().getPrecioActual() * pedidoItems.get(i).getCantidad();
+
+                modelo.addRow(fila);
+
+            }
+        } else {
+
+            JOptionPane.showMessageDialog(null, "No hay items registrados", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,9 +124,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         lInfo3 = new javax.swing.JLabel();
         lInfo4 = new javax.swing.JLabel();
         lPrecioNeto = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jSpinner3 = new javax.swing.JSpinner();
+        spDescuento = new javax.swing.JSpinner();
+        spImpuesto = new javax.swing.JSpinner();
+        spPropina = new javax.swing.JSpinner();
         lPorc1 = new javax.swing.JLabel();
         lPorc2 = new javax.swing.JLabel();
         lPorc3 = new javax.swing.JLabel();
@@ -69,13 +134,13 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         lImpuesto = new javax.swing.JLabel();
         lPropina = new javax.swing.JLabel();
         lInfo5 = new javax.swing.JLabel();
-        lSucursal3 = new javax.swing.JLabel();
+        lTotal = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lInfo6 = new javax.swing.JLabel();
         cbFormaPago = new javax.swing.JComboBox<>();
         tfOpcion1 = new javax.swing.JTextField();
-        cbOpcion1 = new javax.swing.JComboBox<>();
-        cbOpcion2 = new javax.swing.JComboBox<>();
+        cbTipoPago1 = new javax.swing.JComboBox<>();
+        cbTipoPago2 = new javax.swing.JComboBox<>();
         tfOpcion2 = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         lLogo = new javax.swing.JLabel();
@@ -158,7 +223,33 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
 
         lPrecioNeto.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lPrecioNeto.setForeground(new java.awt.Color(255, 255, 255));
-        lPrecioNeto.setText("$ 0");
+        lPrecioNeto.setText("0");
+
+        spDescuento.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        spDescuento.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spDescuentoStateChanged(evt);
+            }
+        });
+        spDescuento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spDescuentoMouseClicked(evt);
+            }
+        });
+
+        spImpuesto.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        spImpuesto.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spImpuestoStateChanged(evt);
+            }
+        });
+
+        spPropina.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        spPropina.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spPropinaStateChanged(evt);
+            }
+        });
 
         lPorc1.setFont(new java.awt.Font("Eras Demi ITC", 0, 16)); // NOI18N
         lPorc1.setForeground(new java.awt.Color(255, 255, 255));
@@ -174,23 +265,23 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
 
         lDescuento.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lDescuento.setForeground(new java.awt.Color(255, 255, 255));
-        lDescuento.setText("$ 0");
+        lDescuento.setText("0");
 
         lImpuesto.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lImpuesto.setForeground(new java.awt.Color(255, 255, 255));
-        lImpuesto.setText("$ 0");
+        lImpuesto.setText("0");
 
         lPropina.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lPropina.setForeground(new java.awt.Color(255, 255, 255));
-        lPropina.setText("$ 0");
+        lPropina.setText("0");
 
         lInfo5.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
         lInfo5.setForeground(new java.awt.Color(255, 255, 255));
         lInfo5.setText("Total:");
 
-        lSucursal3.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        lSucursal3.setForeground(new java.awt.Color(255, 255, 255));
-        lSucursal3.setText("$ 0");
+        lTotal.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
+        lTotal.setForeground(new java.awt.Color(255, 255, 255));
+        lTotal.setText("0");
 
         javax.swing.GroupLayout panelPrecioLayout = new javax.swing.GroupLayout(panelPrecio);
         panelPrecio.setLayout(panelPrecioLayout);
@@ -211,10 +302,10 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                                 .addComponent(lInfo3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(panelPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lSucursal3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelPrecioLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(spPropina, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)
                                 .addComponent(lPorc3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -230,8 +321,8 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                                 .addComponent(lInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addGroup(panelPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSpinner2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(spImpuesto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(9, 9, 9)
                                 .addGroup(panelPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lPorc1)
@@ -252,25 +343,25 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lPorc1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(lDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lInfo3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spImpuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lPorc2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lImpuesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panelPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lInfo4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spPropina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lPorc3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lPropina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(panelPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lInfo5)
-                    .addComponent(lSucursal3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -287,9 +378,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
             }
         });
 
-        cbOpcion1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Débito", "Crédito" }));
+        cbTipoPago1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Débito", "Crédito" }));
 
-        cbOpcion2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Débito", "Crédito" }));
+        cbTipoPago2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Débito", "Crédito" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -301,13 +392,13 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lInfo6)
-                            .addComponent(cbOpcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbTipoPago1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cbFormaPago, 0, 122, Short.MAX_VALUE)
                             .addComponent(tfOpcion1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbOpcion2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbTipoPago2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21)
                         .addComponent(tfOpcion2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -321,15 +412,14 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfOpcion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbOpcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTipoPago1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbOpcion2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTipoPago2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfOpcion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 40, Short.MAX_VALUE))
         );
 
-        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -439,13 +529,156 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
 
+        String formaPago = cbFormaPago.getSelectedItem().toString();
+        String tipoPago1;
+        String tipoPago2;
+        Factura factura;
+        Factura_FormaPago facturaFormaPago;
+        Empleado cajero = controladorEmpleado.obtenerEmpleado("12345");
+        //String idCajero = "12345";
+        double impuestos = Double.parseDouble(lImpuesto.getText());
+        double propinas = Double.parseDouble(lPropina.getText());
+        double descuentos = Double.parseDouble(lDescuento.getText());
+        double totalPago = Double.parseDouble(lTotal.getText());
+        double monto1;
+        double monto2;
+        LocalTime horaPago = LocalTime.now();
+        Long numeroPedido = pedido.getNumero();
+        int tipoPagoRegistro1;
+        int tipoPagoRegistro2;
+
+        if (formaPago.equals("Simple")) {
+
+            if (tfOpcion1.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor llene el campo del monto", "Aviso", JOptionPane.WARNING_MESSAGE);
+                
+            } else {
+
+                tipoPago1 = cbTipoPago1.getSelectedItem().toString();
+                monto1 = Double.parseDouble(tfOpcion1.getText());
+                
+                if(monto1 == totalPago){
+                
+                    if (tipoPago1.equals("Efectivo")) {
+
+                        tipoPagoRegistro1 = 1;
+                    
+                        factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
+                        controladorFactura.crearFactura(factura);
+                        facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
+                        controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                    
+                        JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                        VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
+                        ventanaPedidosPagar.llenarTablaPedidos();
+                        ventanaPedidosPagar.setVisible(true);
+                        this.setVisible(false);
+                    
+
+                    } else if (tipoPago1.equals("Crédito")) {
+
+                        tipoPagoRegistro1 = 2;
+                        factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
+                        controladorFactura.crearFactura(factura);
+                        facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
+                        controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                    
+                        JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                        VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
+                        ventanaPedidosPagar.llenarTablaPedidos();
+                        ventanaPedidosPagar.setVisible(true);
+                        this.setVisible(false);
+
+                    } else if (tipoPago1.equals("Débito")) {
+
+                        tipoPagoRegistro1 = 3;
+                        factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
+                        controladorFactura.crearFactura(factura);
+                        facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
+                        controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                    
+                        JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                        VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
+                        ventanaPedidosPagar.llenarTablaPedidos();
+                        ventanaPedidosPagar.setVisible(true);
+                        this.setVisible(false);
+                    }
+                }else{
+                    
+                    JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+        } else if (formaPago.equals("Mixto")) {
+
+            tipoPagoRegistro1 = 1;
+            tipoPago2 = cbTipoPago2.getSelectedItem().toString();            
+            
+            if(tfOpcion1.getText().equals("") || tfOpcion2.getText().equals("")){
+                
+                JOptionPane.showMessageDialog(null, "Por favor llene los campos del monto", "Aviso", JOptionPane.WARNING_MESSAGE);
+                
+            }else {
+                
+                monto1 = Double.parseDouble(tfOpcion1.getText());
+                monto2 = Double.parseDouble(tfOpcion2.getText());
+                
+                if(monto1 + monto2 == totalPago){
+
+                    if (tipoPago2.equals("Crédito")) {
+
+                        tipoPagoRegistro2 = 2;
+
+                        factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
+                        controladorFactura.crearFactura(factura);
+
+                        facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
+                        controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                        facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro2), monto2);
+                        controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                    
+                        JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                        VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
+                        ventanaPedidosPagar.llenarTablaPedidos();
+                        ventanaPedidosPagar.setVisible(true);
+                        this.setVisible(false);
+
+                    } else if (tipoPago2.equals("Débito")) {
+
+                        tipoPagoRegistro2 = 3;
+
+                        factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
+                        controladorFactura.crearFactura(factura);
+
+                        facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
+                        controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                        facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro2), monto2);
+                        controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                    
+                        JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                        VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
+                        ventanaPedidosPagar.llenarTablaPedidos();
+                        ventanaPedidosPagar.setVisible(true);
+                        this.setVisible(false);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Las cantidades ingresadas deben sumar un valor igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }        
+
     }//GEN-LAST:event_bFinalizarActionPerformed
 
     private void tablaItemsPedidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaItemsPedidoKeyReleased
 
         int columnaSeleccionada = tablaItemsPedido.getSelectedColumn();
 
-        if(columnaSeleccionada == 3){
+        if (columnaSeleccionada == 3) {
 
             System.out.println("Actualizar subtotales");
             //Actualizar subtotales
@@ -453,27 +686,77 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaItemsPedidoKeyReleased
 
     private void cbFormaPagoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFormaPagoItemStateChanged
-        
+
         int indiceSeleccionado = cbFormaPago.getSelectedIndex();
-        
-        switch(indiceSeleccionado){
-            
+
+        switch (indiceSeleccionado) {
+
             case 0: //Simple
-                cbOpcion1.setEnabled(true);
-                cbOpcion2.setVisible(false);
+                cbTipoPago1.setEnabled(true);
+                cbTipoPago2.setVisible(false);
                 tfOpcion2.setVisible(false);
-                
+
                 break;
             case 1: //Mixto
-                cbOpcion1.setSelectedItem("Efectivo");
-                cbOpcion1.setEnabled(false);
-                cbOpcion2.setVisible(true);
+                cbTipoPago1.setSelectedItem("Efectivo");
+                cbTipoPago1.setEnabled(false);
+                cbTipoPago2.setVisible(true);
                 tfOpcion2.setVisible(true);
-                
-                break;                        
+
+                break;
         }
-        
+
     }//GEN-LAST:event_cbFormaPagoItemStateChanged
+
+    private void spDescuentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spDescuentoMouseClicked
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_spDescuentoMouseClicked
+
+    private void spDescuentoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spDescuentoStateChanged
+        // TODO add your handling code here:
+        double totalProvisional = Double.parseDouble(lTotal.getText());
+        double descuento1 = ((Integer) spDescuento.getValue() * precioNeto) / 100;
+        if (descuento < descuento1) {
+            totalProvisional = totalProvisional - (descuento1 - descuento);
+        } else if (descuento > descuento1) {
+            totalProvisional = totalProvisional + (descuento - descuento1);
+        }
+
+        descuento = descuento1;
+        lDescuento.setText("" + descuento1);
+        lTotal.setText("" + totalProvisional);
+
+    }//GEN-LAST:event_spDescuentoStateChanged
+
+    private void spImpuestoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spImpuestoStateChanged
+        // TODO add your handling code here:double
+        double totalProvisional = Double.parseDouble(lTotal.getText());
+        double impuesto1 = ((Integer) spImpuesto.getValue() * precioNeto) / 100;
+
+        if (impuesto < impuesto1) {
+            totalProvisional = totalProvisional + (impuesto1 - impuesto);
+        } else if (impuesto > impuesto1) {
+            totalProvisional = totalProvisional - (impuesto - impuesto1);
+        }
+        impuesto = impuesto1;
+        lImpuesto.setText("" + impuesto);
+        lTotal.setText("" + totalProvisional);
+    }//GEN-LAST:event_spImpuestoStateChanged
+
+    private void spPropinaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spPropinaStateChanged
+        // TODO add your handling code here:
+        double totalProvisional = Double.parseDouble(lTotal.getText());
+        double propina1 = ((Integer) spPropina.getValue() * precioNeto) / 100;
+
+        if (propina < propina1) {
+            totalProvisional = totalProvisional + (propina1 - propina);
+        } else if (propina > propina1) {
+            totalProvisional = totalProvisional - (propina - propina1);
+        }
+        propina = propina1;
+        lPropina.setText("" + propina);
+        lTotal.setText("" + totalProvisional);
+    }//GEN-LAST:event_spPropinaStateChanged
 
     /**
      * @param args the command line arguments
@@ -505,7 +788,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarPago(null).setVisible(true);
+                new VentanaRegistrarPago(null, null).setVisible(true);
             }
         });
     }
@@ -515,14 +798,11 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
     private javax.swing.JButton bFinalizar;
     private javax.swing.JButton bLimpiar;
     private javax.swing.JComboBox<String> cbFormaPago;
-    private javax.swing.JComboBox<String> cbOpcion1;
-    private javax.swing.JComboBox<String> cbOpcion2;
+    private javax.swing.JComboBox<String> cbTipoPago1;
+    private javax.swing.JComboBox<String> cbTipoPago2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
     private javax.swing.JLabel lDescuento;
     private javax.swing.JLabel lIDCliente;
     private javax.swing.JLabel lImpuesto;
@@ -539,14 +819,13 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
     private javax.swing.JLabel lPorc3;
     private javax.swing.JLabel lPrecioNeto;
     private javax.swing.JLabel lPropina;
-    private javax.swing.JLabel lSucursal3;
-    private javax.swing.JLabel lTipoPedido4;
-    private javax.swing.JLabel lTipoPedido6;
+    private javax.swing.JLabel lTotal;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrecio;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JPanel panelTipoPago;
-    private javax.swing.JPanel panelTipoPago1;
+    private javax.swing.JSpinner spDescuento;
+    private javax.swing.JSpinner spImpuesto;
+    private javax.swing.JSpinner spPropina;
     private javax.swing.JTable tablaItemsPedido;
     private javax.swing.JTextField tfOpcion1;
     private javax.swing.JTextField tfOpcion2;

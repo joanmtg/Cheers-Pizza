@@ -41,9 +41,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public T find(Object id) {
-        getEntityManager().getTransaction().begin();
         T search = getEntityManager().find(entityClass, id);
-        getEntityManager().getTransaction().commit();
         return search;
         
     }

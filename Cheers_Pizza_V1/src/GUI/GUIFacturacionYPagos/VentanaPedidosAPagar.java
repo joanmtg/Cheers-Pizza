@@ -7,6 +7,13 @@ package GUI.GUIFacturacionYPagos;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import AccesoDatosORM.AdaptadorPedidoControlador;
+import Administracion.Pedido;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -19,14 +26,73 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
      */
     
     JFrame ventanaAnterior;
+    AdaptadorPedidoControlador controladorPedido = new AdaptadorPedidoControlador();
+    TableRowSorter trsFiltro;
     
     public VentanaPedidosAPagar(JFrame anterior) {
         super("Pago de pedidos");
         initComponents();
         
         this.ventanaAnterior = anterior;
-        setLocationRelativeTo(null);        
+        setLocationRelativeTo(null); 
+        
+        llenarTablaPedidos();
+        
+        trsFiltro = new TableRowSorter(tablaPedidos.getModel());
+        tablaPedidos.setRowSorter(trsFiltro);
 
+    }
+    
+    public ArrayList<Pedido> pedidosNoPagos(ArrayList<BigInteger> numeroPedidos){
+        
+        ArrayList<Pedido> pedidos = new ArrayList<>();
+        Pedido pedido = new Pedido();
+        
+        for(int i = 0; i < numeroPedidos.size(); i++){
+            
+            pedido = controladorPedido.obtenerPedido((Long) numeroPedidos.get(i).longValue());
+            pedidos.add(pedido);          
+        }
+        
+        return pedidos;
+                
+    }
+    
+    public void llenarTablaPedidos(){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tablaPedidos.getModel();
+        modelo.setRowCount(0);
+        
+        for(int i = 0; i < modelo.getRowCount(); i++){
+            
+            modelo.removeRow(i);
+            i -= 1;
+        }
+        
+        ArrayList<BigInteger> numeroPedidos = controladorPedido.obtenerPedidosNoPagos();
+        ArrayList<Pedido> pedidos = pedidosNoPagos(numeroPedidos);
+        
+        if(pedidos != null){
+        
+            for(int i = 0; i < pedidos.size(); i++){
+                
+                Object[] fila = new Object[3];
+                
+                fila[0] = pedidos.get(i).getNumero();
+                fila[1] = pedidos.get(i).getCliente().getId();
+                fila[2] = pedidos.get(i).getTotal();
+                
+                modelo.addRow(fila);
+            
+            }
+            
+            tablaPedidos.setModel(modelo);
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay pedidos por pagar", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        
+        
     }
 
     /**
@@ -102,9 +168,21 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
             }
         });
 
+        tfFiltroIDCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroIDClienteKeyReleased(evt);
+            }
+        });
+
         lIDCliente.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lIDCliente.setForeground(new java.awt.Color(255, 255, 255));
         lIDCliente.setText("ID Cliente:");
+
+        tfFiltroCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroCodigoKeyReleased(evt);
+            }
+        });
 
         lFiltroCodigo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
@@ -224,13 +302,23 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
     private void bPagarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPagarPedidoActionPerformed
 
         
-        int filaSeleccionada = tablaPedidos.getSelectedRow();        
+        int filasSeleccionadas = tablaPedidos.getSelectedRowCount();        
              
         
-        if(filaSeleccionada != -1){            
+        if(filasSeleccionadas == 1){            
         
             //Mandar información del pedido a esta ventana como parámetro
-            VentanaRegistrarPago ventanaPago = new VentanaRegistrarPago(this);
+            
+            int filaSeleccionada = tablaPedidos.getSelectedRow();
+            
+            DefaultTableModel modelo = (DefaultTableModel) tablaPedidos.getModel();
+            filaSeleccionada = tablaPedidos.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+            
+            Long numeroPedido = (Long) modelo.getValueAt(filaSeleccionada, 0);
+            
+            Pedido pedidoSeleccionado = controladorPedido.obtenerPedido(numeroPedido);
+            
+            VentanaRegistrarPago ventanaPago = new VentanaRegistrarPago(this, pedidoSeleccionado);
             ventanaPago.setVisible(true);
             this.setVisible(false);
             
@@ -242,6 +330,22 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bPagarPedidoActionPerformed
 
+    private void tfFiltroCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroCodigoKeyReleased
+        // TODO add your handling code here:
+        int columna = 0;
+        
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroCodigo.getText(), columna));
+    }//GEN-LAST:event_tfFiltroCodigoKeyReleased
+
+    private void tfFiltroIDClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroIDClienteKeyReleased
+        // TODO add your handling code here:
+        int columna = 1;
+        
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroIDCliente.getText(), columna));
+        
+    }//GEN-LAST:event_tfFiltroIDClienteKeyReleased
+
+    
     /**
      * @param args the command line arguments
      */
