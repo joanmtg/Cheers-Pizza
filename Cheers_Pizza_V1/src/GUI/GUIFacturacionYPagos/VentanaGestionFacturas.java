@@ -50,17 +50,16 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
             for (int i = 0; i < facturas.size(); i++) {
                 Factura factura = facturas.get(i);
                 
-                Object[] fila = new Object[9];
+                Object[] fila = new Object[8];
                 
                 fila[0] = factura.getNumero();
-                fila[1] = factura.getTipoPago();
-                fila[2] = factura.getHoraPago();
-                fila[3] = factura.getImpuestos();
-                fila[4] = factura.getPropina();
-                fila[5] = factura.getDescuento();
-                fila[6] = factura.getTotalPago();
-                fila[7] = factura.getCajero().getId();
-                fila[8] = factura.getPedido().getNumero(); 
+                fila[1] = factura.getHoraPago();
+                fila[2] = factura.getImpuestos();
+                fila[3] = factura.getPropina();
+                fila[4] = factura.getDescuento();
+                fila[5] = factura.getTotalPago();
+                fila[6] = factura.getCajero().getId();
+                fila[7] = factura.getPedido().getNumero(); 
                 
                 modelo.addRow(fila);                
             }                       
@@ -111,17 +110,17 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
 
         tablaFacturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Número", "Tipo", "Hora Pago", "Impuestos", "Propina", "Descuento", "Total Pago", "ID Cajero", "Cod. Pedido"
+                "Número", "Hora Pago", "Impuestos", "Propina", "Descuento", "Total Pago", "ID Cajero", "Cod. Pedido"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

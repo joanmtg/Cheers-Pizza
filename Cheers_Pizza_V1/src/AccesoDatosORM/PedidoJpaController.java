@@ -18,6 +18,7 @@
 package AccesoDatosORM;
 
 import Administracion.Pedido;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Query;
 
@@ -58,15 +59,15 @@ public class PedidoJpaController{
         return pedidos;
     }
     
-    public List<Long> joinExcept(){
+    public List<BigInteger> joinExcept(){
         
         fachada.getEntityManager().getTransaction().begin();
         String join = "SELECT numero FROM Pedido "
                     + "EXCEPT "
                     + "SELECT numero_pedido FROM Factura INNER JOIN Factura_FormaPago ON Factura.numero = Factura_FormaPago.factura_numero;";
         Query query = fachada.getEntityManager().createNativeQuery(join);
-        List<Long> pedidos = query.getResultList();
-        
+        List<BigInteger> pedidos = query.getResultList();
+        fachada.getEntityManager().getTransaction().commit();
         return pedidos;
    
     }
