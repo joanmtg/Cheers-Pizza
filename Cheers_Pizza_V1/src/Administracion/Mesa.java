@@ -24,9 +24,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -39,6 +41,8 @@ public class Mesa implements Serializable {
     private static final long serialVersionUID = 7L;
     
     @Id
+    @GenericGenerator(name = "mesa_gen", strategy = "increment")
+    @GeneratedValue(generator = "mesa_gen")
     private Long numero;
     
     @Column(name = "capacidad")
@@ -54,8 +58,7 @@ public class Mesa implements Serializable {
 
     //Constructor N°2
 
-    public Mesa(Long numero, int cantidadPersonas) {
-        this.numero = numero;
+    public Mesa( int cantidadPersonas) {
         this.cantidadPersonas = cantidadPersonas;
     }
     

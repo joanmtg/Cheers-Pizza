@@ -8,11 +8,13 @@ package Administracion;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -20,26 +22,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Pedido_Item")
-@IdClass(PedidoItemPK.class)
 
 public class Pedido_Item implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "numero_pedido")
-    private Long numeroPedido;
-
-    @Id
-    @Column(name = "codigo_item")
-    private Long codigoItem;
+    @GenericGenerator(name = "ped_item_gen", strategy = "increment")
+    @GeneratedValue(generator = "ped_item_gen")
+    private Long codigo;
     
     @ManyToOne
-    @JoinColumn(name = "numero_pedido", insertable = false, updatable = false)
+    @JoinColumn(name = "numero_pedido")
     private Pedido pedido;
     
     @ManyToOne
-    @JoinColumn(name = "codigo_item", insertable = false, updatable = false)
+    @JoinColumn(name = "codigo_item")
     private Item item;
     
     @Column(name = "cantidad")
@@ -56,29 +54,21 @@ public class Pedido_Item implements Serializable {
     
     
     //Constructor N°2
-    public Pedido_Item(Long numeroPedido, Long codigoItem, int cantidad, boolean entregado) {    
-        this.numeroPedido = numeroPedido;
-        this.codigoItem = codigoItem;
+    public Pedido_Item(Pedido pedido, Item item, int cantidad, boolean entregado) {    
+        this.pedido = pedido;
+        this.item = item;
         this.cantidad = cantidad;
         this.entregado = entregado;
     }
 
     //Setters & Getters
-    public Long getNumeroPedido() {
-        return numeroPedido;
+
+    public Long getCodigo() {
+        return codigo;
     }
 
-    public void setNumeroPedido(Long numeroPedido) {
-        this.numeroPedido = numeroPedido;
-    }
-    
-
-    public Long getCodigoItem() {
-        return codigoItem;
-    }
-
-    public void setCodigoItem(Long codigoItem) {
-        this.codigoItem = codigoItem;
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
     }
 
     public Pedido getPedido() {
@@ -89,7 +79,6 @@ public class Pedido_Item implements Serializable {
         this.pedido = pedido;
     }
 
-    
     public Item getItem() {
         return item;
     }
@@ -113,15 +102,14 @@ public class Pedido_Item implements Serializable {
     public void setEntregado(boolean entregado) {
         this.entregado = entregado;
     }
-
     
     
 
+    
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (numeroPedido != null ? numeroPedido.hashCode() : 0);
-        hash += (codigoItem != null ? codigoItem.hashCode() : 0);
+        hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
 
@@ -132,11 +120,7 @@ public class Pedido_Item implements Serializable {
             return false;
         }
         Pedido_Item other = (Pedido_Item) object;
-        if ((this.numeroPedido == null && other.numeroPedido != null) || (this.numeroPedido != null && !this.numeroPedido.equals(other.numeroPedido))) {
-            return false;
-        }
-        
-        if ((this.codigoItem == null && other.codigoItem != null) || (this.codigoItem != null && !this.codigoItem.equals(other.codigoItem))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         
@@ -145,8 +129,10 @@ public class Pedido_Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido_Item{" + "numeroPedido=" + numeroPedido + ", codigoItem=" + codigoItem + ", pedido=" + pedido + ", item=" + item + ", cantidad=" + cantidad + ", entregado=" + entregado + '}';
+        return "Pedido_Item{" + "codigo=" + codigo + ", pedido=" + pedido + ", item=" + item + ", cantidad=" + cantidad + ", entregado=" + entregado + '}';
     }
+
+    
 
     
     

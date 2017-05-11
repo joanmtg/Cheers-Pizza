@@ -17,6 +17,8 @@
 package AccesoDatosORM;
 
 import Administracion.Pedido_Item;
+import java.math.BigInteger;
+import java.util.ArrayList;
 
 /**
  *
@@ -35,22 +37,53 @@ public class AdaptadorPedidoItemControlador {
 
     public void eliminarPedidoItem(Pedido_Item pedidoItem) {
         controlador.delete(pedidoItem);
-        System.out.println("Eliminando el item " + pedidoItem.getCodigoItem() + " en el pedido " + pedidoItem.getNumeroPedido());
+        System.out.println("Eliminando el item " + pedidoItem.getItem().getCodigo()+ " en el pedido " + pedidoItem.getPedido().getNumero());
     }
 
-    public void crearFacturaItem(Pedido_Item pedidoItem) {
+    public void crearPedidoItem(Pedido_Item pedidoItem) {
         controlador.create(pedidoItem);
-        System.out.println("Registrando el item " + pedidoItem.getCodigoItem() + " en el pedido " + pedidoItem.getNumeroPedido());
+        System.out.println("Registrando el item " + pedidoItem.getItem().getCodigo()+ " en el pedido " + pedidoItem.getPedido().getNumero());
     }
     
     public void editarPedidoItem(Pedido_Item pedidoItem){
         controlador.edit(pedidoItem);
-        System.out.println("Editando el item " + pedidoItem.getCodigoItem() + " en el pedido " + pedidoItem.getNumeroPedido());
+        System.out.println("Editando el item " + pedidoItem.getItem().getCodigo() + " en el pedido " + pedidoItem.getPedido().getNumero());
     }
     
-    public Pedido_Item obtenerFacturaItem(Long numeroPedido){
-        Pedido_Item pedidoItem = controlador.find(numeroPedido);
+    public Pedido_Item obtenerPedidoItem(Long codigo){
+        Pedido_Item pedidoItem = controlador.find(codigo);
         return pedidoItem;
+    }
+    
+    public ArrayList<BigInteger> obtenerCodigo_ItemsPedido(Long numPedido){
+        
+        ArrayList<BigInteger> itemsPedido = (ArrayList) controlador.obtenerCodigo_ItemsPedido(numPedido);
+        return itemsPedido;
+        
+    }
+    
+    public ArrayList<Integer> obtenerCantidadItemsPedido(Long numPedido){
+        
+        ArrayList<Integer> itemsPedido = (ArrayList) controlador.obtenerCantidadItemsPedido(numPedido);
+        return itemsPedido;
+        
+    }
+    
+    public ArrayList<Boolean> obtenerEntregadoItemsPedido(Long numPedido){
+        
+        ArrayList<Boolean> itemsPedido = (ArrayList) controlador.obtenerEntregadoItemsPedido(numPedido);
+        return itemsPedido;
+        
+    }
+    
+    public void actualizarEntregadoItemPedido(Long numPedido, Long numItem, boolean estadoEntrega){
+        
+        controlador.actualizarEntregadoItemsPedido(numPedido, numItem, estadoEntrega);
+        
+    }
+    
+    public void eliminarPedidoItems(Long numeroPedido){
+        controlador.eliminarPedidoItems(numeroPedido);
     }
     
 }

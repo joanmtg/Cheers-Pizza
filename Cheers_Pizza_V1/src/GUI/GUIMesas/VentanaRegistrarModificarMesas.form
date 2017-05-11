@@ -100,7 +100,7 @@
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                               <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lCodigo1" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbNumero" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -109,8 +109,8 @@
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Component id="bFinalizar" min="-2" pref="88" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="tfNumero" alignment="0" pref="137" max="32767" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="tfNumero" alignment="0" pref="146" max="32767" attributes="0"/>
                               <Component id="tfCapacidad" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -123,7 +123,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lCodigo1" alignment="3" max="32767" attributes="0"/>
+                          <Component id="lbNumero" alignment="3" max="32767" attributes="0"/>
                           <Component id="tfNumero" alignment="3" pref="30" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -171,7 +171,7 @@
                 <Property name="text" type="java.lang.String" value="Limpiar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lCodigo1">
+            <Component class="javax.swing.JLabel" name="lbNumero">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Eras Demi ITC" size="14" style="0"/>
@@ -183,6 +183,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfNumero">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfNumeroKeyTyped"/>
               </Events>
