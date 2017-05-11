@@ -203,7 +203,13 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
 
-        VentanaRegistrarModificarMesas ventanaRegistro = new VentanaRegistrarModificarMesas(this, "Registro");
+        //Se obtiene el nuevo numMesa que se va a registrar
+        int cantFilas = tablaMesas.getRowCount();
+        int nuevo_numMesa = (Integer.parseInt(tablaMesas.getValueAt(cantFilas-1, 0).toString())) + 1;
+        
+        
+        VentanaRegistrarModificarMesas ventanaRegistro = new VentanaRegistrarModificarMesas(this, "Registro", new Mesa());
+        ventanaRegistro.nuevoNumeroMesaRegistro(nuevo_numMesa);
         ventanaRegistro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bRegistrarActionPerformed
@@ -218,7 +224,7 @@ public class VentanaGestionMesas extends javax.swing.JFrame {
             int filaSeleccionada = tablaMesas.getSelectedRow();
             Long numMesa = (Long) tablaMesas.getValueAt(filaSeleccionada, 0);
             Mesa mesaSelected = adaptadorMesa.obtenerMesa(numMesa);
-            VentanaRegistrarModificarMesas ventanaModificar = new VentanaRegistrarModificarMesas(this, "Modificación");
+            VentanaRegistrarModificarMesas ventanaModificar = new VentanaRegistrarModificarMesas(this, "Modificación", mesaSelected);
             ventanaModificar.setVisible(true);
             ventanaModificar.modificacionMesa(mesaSelected);
             this.setVisible(false);

@@ -8,6 +8,7 @@ package GUI.GUIPedidos;
 import Administracion.Pedido;
 import AccesoDatosORM.*;
 import Administracion.*;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -35,6 +36,7 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
     AdaptadorSucursalControlador adaptadorSucursal = new AdaptadorSucursalControlador();
     AdaptadorItemControlador adaptadorITem = new AdaptadorItemControlador();
     AdaptadorPedidoControlador adaptadorPedido = new AdaptadorPedidoControlador();
+    AdaptadorPedidoItemControlador adaptadorItemPedido = new AdaptadorPedidoItemControlador();
 
     //Para finalizar el registro del pedido
     double total = 0.0;
@@ -55,20 +57,19 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         bMarcarEntregado.setVisible(false);
-
-        if (operacion.equals("Modificación")) {
-
-            DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
-            modelo.addColumn("Entregado");
-            tablaItemsPedido.setModel(modelo);
-            bMarcarEntregado.setVisible(true);
-            bVerificarIDCliente.setVisible(false);
-
-        }
-
         //Se llenan los JcmboBox de Mesa y Sucursal
         llenarCbMesas();
         llenarCbSucursales();
+
+        if (operacion.equals("Modificación")) {
+
+            bMarcarEntregado.setVisible(true);
+            //Se pone el total en el JLabel
+            total = calcularTotal();
+            lbValorTotal.setText("$ " + total);
+            llenarDatos(pedido);
+
+        }
 
     }
 
@@ -178,11 +179,11 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nombre", "Precio Unitario", "Cantidad", "Subtotal"
+                "Código", "Nombre", "Precio Unitario", "Cantidad", "Subtotal", "Entregado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -390,51 +391,105 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
-        int indexTipo = cbTipo.getSelectedIndex();
-        int indexMesa = cbMesa.getSelectedIndex();
-        int indexSucursal = cbSucursales.getSelectedIndex();
+        //Se verifica si se va a crear un pedido o a modificar uno
 
-        //En caso de ser un pedido para llevar no necesita mesero
-        //Se verifica que esté lleno lo necesario
-        if (indexSucursal == 0 || total == 0.0 || indexTipo == 0 || !clienteVerificado) {
-            JOptionPane.showMessageDialog(null, "Debe completar todos los datos para el pedido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        if (operacion.equals("Registro")) {
 
-        } else {
-            //Se registra un pedido para llevar
-            //Se obtiene el tipo de pedido
-            String tipoPedido = cbTipo.getSelectedItem().toString();
-            System.out.println("tipoPedido: " + tipoPedido);
+            int indexTipo = cbTipo.getSelectedIndex();
+            int indexMesa = cbMesa.getSelectedIndex();
+            int indexSucursal = cbSucursales.getSelectedIndex();
 
-            //Se obtiene la mesa (Puede ser null en caso de ser pedido para llevar)
-            Mesa mesa;
-            if (indexMesa == 0) {
-                //Es porque el pedido es para llevar
-                mesa = null;
+            //En caso de ser un pedido para llevar no necesita mesero
+            //Se verifica que esté lleno lo necesario
+            if (indexSucursal == 0 || total == 0.0 || indexTipo == 0 || !clienteVerificado) {
+                JOptionPane.showMessageDialog(null, "Debe completar todos los datos para el pedido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+
             } else {
-                mesa = adaptadorMesa.obtenerMesa(Long.parseLong(cbMesa.getSelectedItem().toString()));
+                //Se registra un pedido para llevar
+                //Se obtiene el tipo de pedido
+                String tipoPedido = cbTipo.getSelectedItem().toString();
+                System.out.println("tipoPedido: " + tipoPedido);
+
+                //Se obtiene la mesa (Puede ser null en caso de ser pedido para llevar)
+                Mesa mesa;
+                if (indexMesa == 0) {
+                    //Es porque el pedido es para llevar
+                    mesa = null;
+                } else {
+                    mesa = adaptadorMesa.obtenerMesa(Long.parseLong(cbMesa.getSelectedItem().toString()));
+                }
+
+                //Se obtiene el mesero ((Puede ser null en caso de ser pedido para llevar)
+                Empleado mesero = adaptadorEmpleado.obtenerEmpleado(tfIDMesero.getText());
+
+                //Se obtiene la hora actual
+                LocalTime horaInicio = LocalTime.now();
+                System.out.println(horaInicio);
+
+                String idCliente = tfIDCliente.getText();
+                String nombreSucursal = cbSucursales.getSelectedItem().toString();
+
+                //Se obtiene el objeto Cliente y Sucursal
+                Cliente clienteComprador = adaptadorCliente.obtenerCliente(idCliente);
+                Sucursal sucursalPedido = getSucursal(nombreSucursal);
+
+                boolean entregado = false;
+
+                //Se guarda el pedido en la Bd, en las tablas necesarias con su respectiva información
+                Pedido pedidoGuardado = fabricaDePedidos.crearPedido(tipoPedido, horaInicio, null, mesa, mesero, clienteComprador, sucursalPedido, total, entregado);
+
+                guardarItemsPedido(pedidoGuardado, "Registro");
+
+                JOptionPane.showMessageDialog(null, "El pedido fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+
+            }
+        } else if (operacion.equals("Modificación")) {
+
+            Long numPedido = pedido.getNumero();
+            total = calcularTotal();
+            lbValorTotal.setText("$ " + total);
+            pedido.setTotal(total);
+
+            //Se comprueba que todos los items de ese pedido estén en entregado=true
+            ArrayList<Boolean> itemsEntregados = adaptadorItemPedido.obtenerEntregadoItemsPedido(numPedido);
+            boolean todosItemsEntregados = true;
+            for (int i = 0; i < itemsEntregados.size(); i++) {
+                if (!itemsEntregados.get(i)) {
+                    //En caso de que haya un false, algún item NO se entregó
+                    todosItemsEntregados = false;
+                }
             }
 
-            //Se obtiene el mesero ((Puede ser null en caso de ser pedido para llevar)
-            Empleado mesero = adaptadorEmpleado.obtenerEmpleado(tfIDMesero.getText());
+            if (todosItemsEntregados) {
+                //Se actualiza la bd -> tabla: pedido
+                pedido.setEntregado(true);
 
-            //Se obtiene la hora actual
-            LocalTime horaInicio = LocalTime.now();
-            System.out.println(horaInicio);
+                //Se pone la hora de la entrega
+                LocalTime horaEntrega = LocalTime.now();
+                pedido.setHoraEntrega(horaEntrega);
 
-            String idCliente = tfIDCliente.getText();
-            String nombreSucursal = cbSucursales.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(null, "El pedido fue entregado completamente con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
 
-            //Se obtiene el objeto Cliente y Sucursal
-            Cliente clienteComprador = adaptadorCliente.obtenerCliente(idCliente);
-            Sucursal sucursalPedido = getSucursal(nombreSucursal);
+            } else {
+                //Se limpia primero. Se eliminan los items asociado a este pedido en Pedido_Item
+                
+                adaptadorItemPedido.eliminarPedidoItems(numPedido);
+                
+                //Se guarda el registro de los items en el pedido
+                guardarItemsPedido(pedido, "Modificación");
+                
+                
+                JOptionPane.showMessageDialog(null, "El pedido fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
 
-            boolean entregado = false;
-
-            //Se guarda el pedido en la Bd, en las tablas necesarias con su respectiva información
-            fabricaDePedidos.crearPedido(tipoPedido, horaInicio, null, mesa, mesero, clienteComprador, sucursalPedido, total, entregado);
-
-            JOptionPane.showMessageDialog(null, "El pedido fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            limpiarCampos();
+            
+            adaptadorPedido.editarPedido(pedido);
+            VentanaGestionPedidos vPedidos = (VentanaGestionPedidos) ventanaAnterior;
+            this.dispose();
+            vPedidos.setVisible(true);
+            vPedidos.llenarTablaPedidos();
 
         }
 
@@ -455,7 +510,16 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
         if (filaSeleccionada != -1) {
 
             DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
+            Long codItem = Long.parseLong(tablaItemsPedido.getValueAt(filaSeleccionada, 0).toString());
+
+            //Se pone el total en el JLabel
+            //Se debe eliminar el item de la tabla pedido_item
+            /*Pedido_Item pedido_item_eliminar
+             = adaptadorItemPedido.obtenerPedidoItem(new PedidoItemPK(pedido.getNumero(), codItem));
+             adaptadorItemPedido.eliminarPedidoItem(pedido_item_eliminar);*/
             modelo.removeRow(filaSeleccionada);
+            total = calcularTotal();
+            lbValorTotal.setText("$ " + total);
             tablaItemsPedido.setModel(modelo);
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item a eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -465,6 +529,25 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
     private void bMarcarEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMarcarEntregadoActionPerformed
         // TODO add your handling code here:
+        int filaSeleccionada = tablaItemsPedido.getSelectedRow();
+        if (filaSeleccionada != -1) {
+
+            DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
+
+            Long codItem = Long.parseLong(tablaItemsPedido.getValueAt(filaSeleccionada, 0).toString());
+            Long numPedido = pedido.getNumero();
+            boolean entregado = true;
+            //Se actualiza en la BD
+            adaptadorItemPedido.actualizarEntregadoItemPedido(numPedido, codItem, entregado);
+
+            //Se actualiza en la tabla
+            tablaItemsPedido.setValueAt("Sí", filaSeleccionada, 5);
+
+            tablaItemsPedido.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item que se entregó", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_bMarcarEntregadoActionPerformed
 
     private void tablaItemsPedidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaItemsPedidoKeyReleased
@@ -568,6 +651,8 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
     //Llena el JComboBox con las mesas registradas en la BD
     public void llenarCbMesas() {
+        cbMesa.removeAllItems();
+        cbMesa.addItem("Seleccione una mesa");
         List<Mesa> listaMesas = adaptadorMesa.obtenerTodasMesas();
         for (int i = 0; i < listaMesas.size(); i++) {
             cbMesa.addItem("" + listaMesas.get(i).getNumero());
@@ -577,9 +662,11 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
     //Llena el JComboBox con las sucursales registradas en la BD
     public void llenarCbSucursales() {
+        cbSucursales.removeAllItems();
+        cbSucursales.addItem("Seleccione una sucursal");
         List<Sucursal> listaSucursales = adaptadorSucursal.obtenerTodasLasSucursales();
         for (int i = 0; i < listaSucursales.size(); i++) {
-            cbSucursales.addItem("" + listaSucursales.get(i).getNombre());
+            cbSucursales.addItem(listaSucursales.get(i).getNombre());
         }
     }
 
@@ -602,10 +689,13 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
 
         //Se agrega normal
-        Object[] fila = new Object[5];
+        Object[] fila = new Object[7];
         fila[0] = itemAgregado.getCodigo();
         fila[1] = itemAgregado.getNombre();
         fila[2] = itemAgregado.getPrecioActual();
+        fila[3] = 0;
+        fila[4] = calcularTotal();
+        fila[5] = "No";
 
         modelo.addRow(fila);
 
@@ -655,6 +745,7 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
         cbTipo.setSelectedIndex(0);
         bVerificarIDCliente.setEnabled(true);
         bVerificarIDMesero.setEnabled(true);
+        lbValorTotal.setText("$ ");
 
         //Se limpia la tabla
         DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
@@ -667,6 +758,109 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
         tablaItemsPedido.setModel(modelo);
     }
+
+    //Se encarga de colocar los datos del pedido a modificar en la ventana
+    public void llenarDatos(Pedido pedidoAModificar) {
+
+        Long numPedido = pedidoAModificar.getNumero();
+
+        //Se pone el tipo de pedido
+        String tipoPedido = pedidoAModificar.getTipoPedido();
+        cbTipo.setSelectedItem(tipoPedido);
+        cbTipo.setEnabled(false);
+
+        bVerificarIDCliente.setVisible(false);
+        tfIDCliente.setText(pedidoAModificar.getCliente().getId());
+        tfIDCliente.setEditable(false);
+
+        cbSucursales.setSelectedItem(pedidoAModificar.getSucursalPedido().getNombre());
+        System.out.println(cbSucursales.getItemAt(6));
+        System.out.println(pedidoAModificar.getSucursalPedido().getNombre());
+        cbSucursales.setEnabled(false);
+
+        //En caso de que haya sido pedido para llevar
+        if (tipoPedido.equals("Para llevar")) {
+            cbMesa.setSelectedIndex(0);
+            tfIDMesero.setText("");
+        } else {
+            cbMesa.setSelectedItem(pedidoAModificar.getMesa().getNumero().toString());
+            tfIDMesero.setText(pedidoAModificar.getMesero().getId());
+        }
+
+        cbMesa.setEnabled(false);
+        tfIDMesero.setEditable(false);
+        bVerificarIDMesero.setVisible(false);
+
+        //Se ponen los items
+        ArrayList<BigInteger> codigos_items = adaptadorItemPedido.obtenerCodigo_ItemsPedido(numPedido);
+        ArrayList<Integer> cantidadItems = adaptadorItemPedido.obtenerCantidadItemsPedido(numPedido);
+        ArrayList<Boolean> entregadoItems = adaptadorItemPedido.obtenerEntregadoItemsPedido(numPedido);
+
+        for (int i = 0; i < codigos_items.size(); i++) {
+            Long cod_item = codigos_items.get(i).longValue();
+            Item item = adaptadorITem.obtenerItem(cod_item);
+            String nombre = item.getNombre();
+            double precioUnitario = item.getPrecioActual();
+            int cantidad = cantidadItems.get(i);
+            double subtotal = precioUnitario * cantidad;
+            boolean entregado = entregadoItems.get(i);
+            String infoEntregado = "";
+            if (entregado) {
+                infoEntregado = "Sí";
+            } else {
+                infoEntregado = "No";
+            }
+
+            //Se agrega a la tabla
+            DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
+            Object[] fila = new Object[7];
+            fila[0] = cod_item;
+            fila[1] = nombre;
+            fila[2] = precioUnitario;
+            fila[3] = cantidad;
+            fila[4] = subtotal;
+            fila[5] = infoEntregado;
+
+            modelo.addRow(fila);
+            tablaItemsPedido.setModel(modelo);
+
+            //Se agregó el item i
+        }
+
+    }
+
+    //Se encarga de guardar los items de cada pedido. Tabla: item_pedido
+    public void guardarItemsPedido(Pedido pedidoGuardado, String operacion) {
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
+        int cantFilas = tablaItemsPedido.getRowCount();
+        
+        for (int i = 0; i < cantFilas; i++) {
+
+            Long codItem = (Long) tablaItemsPedido.getValueAt(i, 0);
+            Item item = adaptadorITem.obtenerItem(codItem);
+            
+            int cantidad = Integer.parseInt(tablaItemsPedido.getValueAt(i, 3).toString());
+            boolean entregado = false;
+
+            Pedido_Item pedidoItem = new Pedido_Item(pedidoGuardado, item, cantidad, entregado);
+
+            /*if (operacion.equals("Registro")) {
+
+                
+
+            } else if (operacion.equals("Modificación")) {
+
+                pedidoItem = new Pedido_Item(pedidoGuardado, item, cantidad, entregado);
+
+            }*/
+
+            //guardamos el item i en la tabla item_pedido
+            adaptadorItemPedido.crearPedidoItem(pedidoItem);
+
+        }
+    }
+
 
     /**
      * @param args the command line arguments
@@ -725,7 +919,7 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
     private javax.swing.JLabel lSucursal1;
     private javax.swing.JLabel lTipoPedido;
     private javax.swing.JLabel lbTotal;
-    private javax.swing.JLabel lbValorTotal;
+    public javax.swing.JLabel lbValorTotal;
     private javax.swing.JPanel panelInferior;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JTable tablaItemsPedido;

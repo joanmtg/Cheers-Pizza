@@ -8,6 +8,7 @@ package GUI.GUIPedidos;
 import Administracion.*;
 import AccesoDatosORM.*;
 import Administracion.Mesa;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -21,17 +22,17 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
     /**
      * Creates new form VentanaGestionPedidos
      */
-    
     JFrame ventanaAnterior;
     AdaptadorPedidoControlador adaptadorPedido = new AdaptadorPedidoControlador();
-    
+    AdaptadorPedidoItemControlador adaptadorPedidoItem = new AdaptadorPedidoItemControlador();
+
     public VentanaGestionPedidos(JFrame anterior) {
         super("Gestión de Pedidos");
         initComponents();
-        
+
         this.ventanaAnterior = anterior;
         setLocationRelativeTo(null);
-        
+
         llenarTablaPedidos();
     }
 
@@ -51,7 +52,6 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         tablaPedidos = new javax.swing.JTable();
         bRegistrar = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
-        bEliminar = new javax.swing.JButton();
         lFiltroCodigo = new javax.swing.JLabel();
         tfFiltroCodigo = new javax.swing.JTextField();
         lFiltroCodigo1 = new javax.swing.JLabel();
@@ -110,13 +110,6 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
             }
         });
 
-        bEliminar.setText("Eliminar");
-        bEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bEliminarActionPerformed(evt);
-            }
-        });
-
         lFiltroCodigo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo.setText("Filtrar por:");
@@ -154,9 +147,7 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(bRegistrar)
                                 .addGap(35, 35, 35)
-                                .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(bEliminar))
+                                .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
                         .addGap(25, 25, 25))))
         );
@@ -177,9 +168,8 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21))
         );
 
@@ -237,7 +227,7 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
 
         Pedido pedido = new Pedido();
-        
+
         VentanaRegistrarModificarPedido vRegistroPedido = new VentanaRegistrarModificarPedido(this, "Registro", pedido);
         vRegistroPedido.setVisible(true);
         this.setVisible(false);
@@ -248,86 +238,92 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
 
         int filaSeleccionada = tablaPedidos.getSelectedRow();
 
-        if(filaSeleccionada != -1){          
-            
+        if (filaSeleccionada != -1) {
+
             Long numPedido = Long.parseLong(tablaPedidos.getValueAt(filaSeleccionada, 0).toString());
-            
+
             Pedido pedidoAModificar = adaptadorPedido.obtenerPedido(numPedido);
-            
+
             VentanaRegistrarModificarPedido vModificacionPedido = new VentanaRegistrarModificarPedido(this, "Modificación", pedidoAModificar);
             vModificacionPedido.setVisible(true);
-            this.setVisible(false);            
-            
-        }else{
+            double total = pedidoAModificar.getTotal();
+            vModificacionPedido.lbValorTotal.setText("$ " + total);
+            this.setVisible(false);
+
+        } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un pedido a modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_bModificarActionPerformed
 
-    private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
-
-        int filaSeleccionada = tablaPedidos.getSelectedRow();
-
-        if(filaSeleccionada != -1){            
-
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un pedido a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }//GEN-LAST:event_bEliminarActionPerformed
-
     //Llena la tabla con los pedidos realizados
-    public void llenarTablaPedidos(){
+    public void llenarTablaPedidos() {
         DefaultTableModel modelo = (DefaultTableModel) tablaPedidos.getModel();
         modelo.setRowCount(0);
-        
+
         for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
             i -= 1;
         }
-        
+
         ArrayList<Pedido> pedidos = adaptadorPedido.obtenerTodosPedidos();
-        
+
         if (pedidos != null) {
-            
+
             for (int i = 0; i < pedidos.size(); i++) {
-                
+
                 Object[] fila = new Object[11];
-                
+
                 fila[0] = pedidos.get(i).getNumero();
                 fila[1] = pedidos.get(i).getTipoPedido();
                 fila[2] = pedidos.get(i).getHoraInicio();
                 fila[3] = pedidos.get(i).getHoraEntrega();
                 Mesa mesa = pedidos.get(i).getMesa();
-                if(mesa == null){ fila[4] = null;} else{ fila[4] = mesa.getNumero(); }
-                
+                if (mesa == null) {
+                    fila[4] = null;
+                } else {
+                    fila[4] = mesa.getNumero();
+                }
+
                 Cliente cliente = pedidos.get(i).getCliente();
-                if(cliente == null){ fila[5] = null; } else { fila[5] = cliente.getId();}
-                
+                if (cliente == null) {
+                    fila[5] = null;
+                } else {
+                    fila[5] = cliente.getId();
+                }
+
                 Empleado mesero = pedidos.get(i).getMesero();
-                if(mesero == null){ fila[6] = null;} else{ fila[6] = mesero.getId();}
-                
+                if (mesero == null) {
+                    fila[6] = null;
+                } else {
+                    fila[6] = mesero.getId();
+                }
+
                 Sucursal sucursal = pedidos.get(i).getSucursalPedido();
-                if(sucursal == null){ fila[7] = null;} else{ fila[7] = sucursal.getCodigo();}
-                
-                fila[8] = pedidos.get(i).isEntregado();
+                if (sucursal == null) {
+                    fila[7] = null;
+                } else {
+                    fila[7] = sucursal.getCodigo();
+                }
+
+                String infoEntregado = "";
+                if (pedidos.get(i).isEntregado()) {infoEntregado = "Sí";} else {infoEntregado = "No";}
+                fila[8] = infoEntregado;
                 fila[9] = pedidos.get(i).getTotal();
-                
+
                 modelo.addRow(fila);
             }
-            
+
             tablaPedidos.setModel(modelo);
-            
+
         } else {
-            
+
             JOptionPane.showMessageDialog(null, "No hay items registrados", "Warning", JOptionPane.WARNING_MESSAGE);
-            
+
         }
-        
-        System.out.println(pedidos.size());
+
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -365,7 +361,6 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
-    private javax.swing.JButton bEliminar;
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bRegistrar;
     private javax.swing.JScrollPane jScrollPane1;

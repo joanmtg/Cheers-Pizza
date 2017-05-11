@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Pedido;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**
@@ -59,11 +60,11 @@ public class AdaptadorPedidoControlador {
         return pedidos;
     }
     
-    public ArrayList<Long> obtenerPedidosNoPagos(){
+    public ArrayList<BigInteger> obtenerPedidosNoPagos(){
         
-        ArrayList<Long> pedidosNoPagos = (ArrayList) controlador.joinExcept();
+        ArrayList<BigInteger> pedidosNoPagos = (ArrayList) controlador.joinExcept();
         return pedidosNoPagos;
         
     }
-    
+     
 }
