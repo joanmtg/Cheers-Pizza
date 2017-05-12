@@ -37,17 +37,17 @@ public class AdaptadorPedidoItemControlador {
 
     public void eliminarPedidoItem(Pedido_Item pedidoItem) {
         controlador.delete(pedidoItem);
-        System.out.println("Eliminando el item " + pedidoItem.getItem().getCodigo()+ " en el pedido " + pedidoItem.getPedido().getNumero());
+        System.out.println("Eliminando el item " + pedidoItem.getCodigoItem()+ " en el pedido " + pedidoItem.getNumeroPedido());
     }
 
     public void crearPedidoItem(Pedido_Item pedidoItem) {
         controlador.create(pedidoItem);
-        System.out.println("Registrando el item " + pedidoItem.getItem().getCodigo()+ " en el pedido " + pedidoItem.getPedido().getNumero());
+        System.out.println("Registrando el item " + pedidoItem.getCodigoItem()+ " en el pedido " + pedidoItem.getNumeroPedido());
     }
     
     public void editarPedidoItem(Pedido_Item pedidoItem){
         controlador.edit(pedidoItem);
-        System.out.println("Editando el item " + pedidoItem.getItem().getCodigo() + " en el pedido " + pedidoItem.getPedido().getNumero());
+        System.out.println("Editando el item " + pedidoItem.getCodigoItem() + " en el pedido " + pedidoItem.getNumeroPedido());
     }
     
     public Pedido_Item obtenerPedidoItem(Long codigo){
