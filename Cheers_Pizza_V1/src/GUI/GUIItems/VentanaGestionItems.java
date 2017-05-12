@@ -7,9 +7,6 @@ package GUI.GUIItems;
 
 import AccesoDatosORM.AdaptadorItemControlador;
 import Administracion.Item;
-import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

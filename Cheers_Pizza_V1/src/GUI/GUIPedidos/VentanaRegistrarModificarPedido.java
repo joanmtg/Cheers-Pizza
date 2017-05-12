@@ -9,12 +9,9 @@ import Administracion.Pedido;
 import AccesoDatosORM.*;
 import Administracion.*;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -831,29 +828,18 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
     //Se encarga de guardar los items de cada pedido. Tabla: item_pedido
     public void guardarItemsPedido(Pedido pedidoGuardado, String operacion) {
-
+        
         DefaultTableModel modelo = (DefaultTableModel) tablaItemsPedido.getModel();
-        int cantFilas = tablaItemsPedido.getRowCount();
+        int cantFilas = modelo.getRowCount();
         
         for (int i = 0; i < cantFilas; i++) {
 
             Long codItem = (Long) tablaItemsPedido.getValueAt(i, 0);
-            Item item = adaptadorITem.obtenerItem(codItem);
             
             int cantidad = Integer.parseInt(tablaItemsPedido.getValueAt(i, 3).toString());
             boolean entregado = false;
 
-            Pedido_Item pedidoItem = new Pedido_Item(pedidoGuardado, item, cantidad, entregado);
-
-            /*if (operacion.equals("Registro")) {
-
-                
-
-            } else if (operacion.equals("Modificación")) {
-
-                pedidoItem = new Pedido_Item(pedidoGuardado, item, cantidad, entregado);
-
-            }*/
+            Pedido_Item pedidoItem = new Pedido_Item(pedidoGuardado.getNumero(), codItem, cantidad, entregado);
 
             //guardamos el item i en la tabla item_pedido
             adaptadorItemPedido.crearPedidoItem(pedidoItem);
