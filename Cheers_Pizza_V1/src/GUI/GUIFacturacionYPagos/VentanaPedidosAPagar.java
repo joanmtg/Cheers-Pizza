@@ -8,6 +8,7 @@ package GUI.GUIFacturacionYPagos;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import AccesoDatosORM.AdaptadorPedidoControlador;
+import Administracion.Factura;
 import Administracion.Pedido;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -317,8 +318,8 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
             Long numeroPedido = (Long) modelo.getValueAt(filaSeleccionada, 0);
             
             Pedido pedidoSeleccionado = controladorPedido.obtenerPedido(numeroPedido);
-            
-            VentanaRegistrarPago ventanaPago = new VentanaRegistrarPago(this, pedidoSeleccionado);
+            Factura factura = new Factura();
+            VentanaRegistrarPago ventanaPago = new VentanaRegistrarPago(this, pedidoSeleccionado, factura, "Pago");
             ventanaPago.setVisible(true);
             this.setVisible(false);
             

@@ -49,7 +49,7 @@ public class AdaptadorFacturaControlador {
         System.out.println("Editando la factura "+ factura.getNumero());
     }
     
-    public Factura obtenerFactura(String numeroFactura){
+    public Factura obtenerFactura(Long numeroFactura){
         Factura factura = controlador.find(numeroFactura);
         return factura;
     }
