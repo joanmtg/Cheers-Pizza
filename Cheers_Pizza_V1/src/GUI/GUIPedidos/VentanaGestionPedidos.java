@@ -63,6 +63,7 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         lFiltroCodigo2 = new javax.swing.JLabel();
         tfFiltroIDCliente = new javax.swing.JTextField();
         bEliminar = new javax.swing.JButton();
+        bInformacion = new javax.swing.JButton();
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -147,6 +148,13 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
             }
         });
 
+        bInformacion.setText("Información");
+        bInformacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bInformacionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
         panelInferiorLayout.setHorizontalGroup(
@@ -170,6 +178,8 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                             .addGroup(panelInferiorLayout.createSequentialGroup()
                                 .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bInformacion)
+                                .addGap(18, 18, 18)
                                 .addComponent(bRegistrar)
                                 .addGap(18, 18, 18)
                                 .addComponent(bModificar)
@@ -198,7 +208,8 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bRegistrar)))
+                        .addComponent(bRegistrar)
+                        .addComponent(bInformacion)))
                 .addGap(21, 21, 21))
         );
 
@@ -339,6 +350,35 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tfFiltroIDClienteKeyReleased
 
+    private void bInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInformacionActionPerformed
+       
+        //Validar que se seleccione un elemento de la tabla
+        int filasSeleccionadas = tablaPedidos.getSelectedRowCount();
+
+        if (filasSeleccionadas == 1) {
+
+            int filaSeleccionada = tablaPedidos.getSelectedRow();
+
+            DefaultTableModel modelo = (DefaultTableModel) tablaPedidos.getModel();
+
+            filaSeleccionada = tablaPedidos.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+
+            Long numeroPedido = (Long) modelo.getValueAt(filaSeleccionada, 0);
+            Pedido pedidoAVisualizar = adaptadorPedido.obtenerPedido(numeroPedido);
+
+            VentanaRegistrarModificarPedido ventanaPedidos = new VentanaRegistrarModificarPedido(this, "Visualizacion", pedidoAVisualizar);
+            ventanaPedidos.setVisible(true);
+            this.setVisible(false);
+            
+
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fila del item que desea eliminar", "Warning", JOptionPane.WARNING_MESSAGE);
+
+        }
+        
+    }//GEN-LAST:event_bInformacionActionPerformed
+
     //Llena la tabla con los pedidos realizados
     public void llenarTablaPedidos() {
         DefaultTableModel modelo = (DefaultTableModel) tablaPedidos.getModel();
@@ -445,6 +485,7 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
     private javax.swing.JButton bEliminar;
+    private javax.swing.JButton bInformacion;
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bRegistrar;
     private javax.swing.JScrollPane jScrollPane1;
