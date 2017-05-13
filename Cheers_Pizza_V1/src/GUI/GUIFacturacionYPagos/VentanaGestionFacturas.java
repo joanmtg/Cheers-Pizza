@@ -7,6 +7,7 @@ package GUI.GUIFacturacionYPagos;
 
 import AccesoDatosORM.AdaptadorFacturaControlador;
 import Administracion.Factura;
+import Administracion.Pedido;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -35,6 +36,9 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         llenarTablaFacturas();
+        
+        trsFiltro = new TableRowSorter(tablaFacturas.getModel());
+        tablaFacturas.setRowSorter(trsFiltro);
     }
     
     public void llenarTablaFacturas(){    
@@ -46,7 +50,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
                 
         if(facturas != null){
             
-            
+                
             for (int i = 0; i < facturas.size(); i++) {
                 Factura factura = facturas.get(i);
                 
@@ -58,7 +62,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
                 fila[3] = factura.getPropina();
                 fila[4] = factura.getDescuento();
                 fila[5] = factura.getTotalPago();                
-                fila[6] = "123457";
+                fila[6] = factura.getCajero().getId();
                 fila[7] = factura.getPedido().getNumero(); 
                 
                 modelo.addRow(fila);                
@@ -140,6 +144,12 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo.setText("Filtrar por:");
 
+        tfFiltroNumeroFactura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFiltroNumeroFacturaKeyReleased(evt);
+            }
+        });
+
         lFiltroCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo1.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo1.setText("Número Factura:");
@@ -147,6 +157,12 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         lFiltroCodigo2.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo2.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo2.setText("Cod. Pedido:");
+
+        tfFIltroCodPedido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFIltroCodPedidoKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
@@ -248,14 +264,42 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
 
     private void bVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerFacturaActionPerformed
 
-        int filaSeleccionada = tablaFacturas.getSelectedRow();
+        int filasSeleccionadas = tablaFacturas.getSelectedRowCount();
 
-        if(filaSeleccionada != -1){
+        if(filasSeleccionadas != -1){
+            
+            int filaSeleccionada = tablaFacturas.getSelectedRow();
+            
+            DefaultTableModel modelo = (DefaultTableModel) tablaFacturas.getModel();
+            filaSeleccionada = tablaFacturas.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+            
+            Long numeroFactura = (Long) modelo.getValueAt(filaSeleccionada, 0);
+            
+            Factura factura = controladorFactura.obtenerFactura(numeroFactura);
+            Pedido pedido = factura.getPedido();
+            
+            
+            VentanaRegistrarPago ventanaRegistrarPago = new VentanaRegistrarPago(this, pedido, factura, "Visualizar");
+            ventanaRegistrarPago.setVisible(true);
+            this.setVisible(false);
 
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar un pedido a modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_bVerFacturaActionPerformed
+
+    private void tfFiltroNumeroFacturaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroNumeroFacturaKeyReleased
+        // TODO add your handling code here:
+        
+        int columna = 0;
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFiltroNumeroFactura.getText(), columna));
+    }//GEN-LAST:event_tfFiltroNumeroFacturaKeyReleased
+
+    private void tfFIltroCodPedidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFIltroCodPedidoKeyReleased
+        // TODO add your handling code here:
+        int columna = 7;
+        trsFiltro.setRowFilter(RowFilter.regexFilter(tfFIltroCodPedido.getText(), columna));
+    }//GEN-LAST:event_tfFIltroCodPedidoKeyReleased
 
     /**
      * @param args the command line arguments

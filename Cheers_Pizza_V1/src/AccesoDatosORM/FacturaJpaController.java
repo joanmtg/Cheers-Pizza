@@ -47,7 +47,7 @@ public class FacturaJpaController{
         fachada.edit(factura);
     }
     
-    public Factura find(String numero){
+    public Factura find(Long numero){
         Factura factura = fachada.find(numero);
         return factura;
     }

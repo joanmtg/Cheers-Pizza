@@ -42,28 +42,74 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
     double descuento;
     double impuesto;
     double propina;
+    Factura factura;
+    String operacion;
 
-    public VentanaRegistrarPago(JFrame anterior, Pedido pedido) {
+    public VentanaRegistrarPago(JFrame anterior, Pedido pedido, Factura factura, String operacion) {
         super("Registro de Pago");
         initComponents();
 
         this.ventanaAnterior = anterior;
         this.pedido = pedido;
+        this.factura = factura;
         this.precioNeto = pedido.getTotal();
         this.total = pedido.getTotal();
         this.descuento = 0;
         this.impuesto = 0;
         this.propina = 0;
+        this.operacion = operacion;
         setLocationRelativeTo(null);
 
-        cbTipoPago2.setVisible(false);
-        tfOpcion2.setVisible(false);
+        //cbTipoPago2.setVisible(false);
+        //tfOpcion2.setVisible(false);
+        
+        if(operacion.equals("Visualizar")){
+            
+            llenarTablaItems();
+            spDescuento.setEnabled(false);
+            spImpuesto.setEnabled(false);
+            spPropina.setEnabled(false);
+            tfOpcion1.setEditable(false);
+            tfOpcion2.setEditable(false);
+            lDescuento.setText("" + factura.getDescuento());
+            lImpuesto.setText("" + factura.getImpuestos());
+            lPropina.setText("" + factura.getPropina());
+            lTotal.setText("" + factura.getTotalPago());
+            lInfo1.setVisible(false);
+            lPrecioNeto.setVisible(false);
+            cbFormaPago.setEnabled(false);
+            cbTipoPago1.setEnabled(false);
+            cbTipoPago2.setEnabled(false);            
+            bLimpiar.setEnabled(false);
+            bLimpiar.setVisible(false);
+            bFinalizar.setEnabled(false);
+            bFinalizar.setVisible(false);
+            
+            if(factura.getFacturaFormasPago().size() > 1){
+                
+                cbFormaPago.setSelectedItem("Mixto");
+                cbTipoPago1.setSelectedItem("Efectivo");
+                cbTipoPago2.setSelectedItem(factura.getFacturaFormasPago().get(1).getCodigoFormaPago());
+                tfOpcion1.setText("" + factura.getFacturaFormasPago().get(0).getMonto());
+                tfOpcion2.setText("" + factura.getFacturaFormasPago().get(1).getMonto());
+                
+                
+            }else if(factura.getFacturaFormasPago().size() == 1){
+                cbFormaPago.setSelectedItem("Simple");
+                cbTipoPago1.setSelectedItem(factura.getFacturaFormasPago().get(0).getCodigoFormaPago());
+                tfOpcion1.setText("" + factura.getFacturaFormasPago().get(0).getMonto());
+                cbTipoPago2.setVisible(false);
+                tfOpcion2.setVisible(false);
+            }
+            
+        }else{
 
-        llenarTablaItems();
-
-        lPrecioNeto.setText("" + precioNeto);
-        lTotal.setText("" + total);
-        lIDCliente.setText(pedido.getCliente().getId());
+            llenarTablaItems();
+        
+            lPrecioNeto.setText("" + precioNeto);
+            lTotal.setText("" + total);
+            lIDCliente.setText(pedido.getCliente().getId());
+        }
     }
 
     public void llenarTablaItems() {
@@ -381,7 +427,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
 
         cbTipoPago1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Débito", "Crédito" }));
 
-        cbTipoPago2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Débito", "Crédito" }));
+        cbTipoPago2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crédito", "Débito" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -789,7 +835,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarPago(null, null).setVisible(true);
+                new VentanaRegistrarPago(null, null, null, null).setVisible(true);
             }
         });
     }
