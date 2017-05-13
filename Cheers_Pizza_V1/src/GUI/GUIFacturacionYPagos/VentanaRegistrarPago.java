@@ -60,8 +60,8 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         this.operacion = operacion;
         setLocationRelativeTo(null);
 
-        //cbTipoPago2.setVisible(false);
-        //tfOpcion2.setVisible(false);
+        cbTipoPago2.setVisible(false);
+        tfOpcion2.setVisible(false);
         
         if(operacion.equals("Visualizar")){
             
@@ -581,8 +581,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         String tipoPago2;
         Factura factura;
         Factura_FormaPago facturaFormaPago;
-        Empleado cajero = controladorEmpleado.obtenerEmpleado("12345");
-        //String idCajero = "12345";
+        Empleado cajero = controladorEmpleado.obtenerEmpleado("1424599");        
         double impuestos = Double.parseDouble(lImpuesto.getText());
         double propinas = Double.parseDouble(lPropina.getText());
         double descuentos = Double.parseDouble(lDescuento.getText());
