@@ -66,6 +66,18 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
             lbValorTotal.setText("$ " + total);
             llenarDatos(pedido);
 
+        }else if(operacion.equals("Visualizacion")){
+            
+            bAgregarItem.setEnabled(false);
+            bQuitarItem.setEnabled(false);
+            bMarcarEntregado.setVisible(false);
+            bFinalizar.setEnabled(false);
+            bLimpiar.setEnabled(false);
+            tablaItemsPedido.setEnabled(false);
+            
+            lbValorTotal.setText("$ " + pedido.getTotal());
+            llenarDatos(pedido);
+            
         }
 
     }
