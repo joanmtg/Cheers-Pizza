@@ -5,12 +5,16 @@
  */
 package GUI;
 
+import Administracion.Empleado;
 import GUI.GUIFacturacionYPagos.VentanaPedidosAPagar;
 import GUI.GUIItems.VentanaGestionItems;
+import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
 import GUI.GUIMesas.VentanaGestionMesas;
 import GUI.GUIPedidos.VentanaGestionPedidos;
 import GUI.GUISucursales.VentanaGestionSucursales;
 import GUI.GUIUsuarios.VentanaGestionEmpleados;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 /**
@@ -22,13 +26,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form VentanaPrincipal
      */
-    
     JFrame ventanaAnterior;
-    
-    public VentanaPrincipal(JFrame anterior) {
+    Empleado empleadoIngresado;
+
+    public VentanaPrincipal(JFrame anterior, Empleado empleadoIngresado) {
         super("Ventana Principal");
-        initComponents();  
-        
+        initComponents();
+        this.empleadoIngresado = empleadoIngresado;
+        colocarInfoEmpleado();
         ventanaAnterior = anterior;
         setLocationRelativeTo(null);
     }
@@ -248,66 +253,78 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
-              
+
         int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cerrar la sesión?");
-        
-        if(opcion == JOptionPane.YES_OPTION){
+
+        if (opcion == JOptionPane.YES_OPTION) {
             this.dispose();
-            
-            VentanaLogin vLogin = (VentanaLogin)ventanaAnterior;
+
+            VentanaLogin vLogin = (VentanaLogin) ventanaAnterior;
             vLogin.setVisible(true);
             vLogin.limpiarCampos();
         }
-        
+
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bItemsActionPerformed
-                      
-        VentanaGestionItems ventanaItems = new VentanaGestionItems(this);        
+
+        VentanaGestionItems ventanaItems = new VentanaGestionItems(this);
         ventanaItems.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_bItemsActionPerformed
 
     private void bSucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSucursalesActionPerformed
-        
-        VentanaGestionSucursales ventanaSucursales = new VentanaGestionSucursales(this);        
+
+        VentanaGestionSucursales ventanaSucursales = new VentanaGestionSucursales(this);
         ventanaSucursales.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_bSucursalesActionPerformed
 
     private void bMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMesasActionPerformed
-        
+
         VentanaGestionMesas ventanMesas = new VentanaGestionMesas(this);
         ventanMesas.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_bMesasActionPerformed
 
     private void bEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEmpleadosActionPerformed
-        
+
         VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados(this);
         ventanaEmpleados.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_bEmpleadosActionPerformed
 
     private void bPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPedidosActionPerformed
-        
+
         VentanaGestionPedidos vPedidos = new VentanaGestionPedidos(this);
         vPedidos.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_bPedidosActionPerformed
 
     private void bPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPagosActionPerformed
-        
+
         VentanaPedidosAPagar vPedidosPagar = new VentanaPedidosAPagar(this);
         vPedidosPagar.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_bPagosActionPerformed
+
+    public void colocarInfoEmpleado() {
+        lIdentificacion.setText("Identificación: " + empleadoIngresado.getId());
+        lCargo.setText("Cargo: " + empleadoIngresado.getCargo());
+        lNombre.setText("Nombre: " + empleadoIngresado.getNombre() + " " + empleadoIngresado.getApellidos());
+        
+        //Foto del empleado:
+        BufferedImage img = decodeToImage(empleadoIngresado.getFotoURL());
+        ImageIcon icon = new ImageIcon(img);
+        Icon fotoEmpleado = new ImageIcon(icon.getImage().getScaledInstance(lLogo.getWidth(), lLogo.getHeight(), Image.SCALE_DEFAULT));
+        lLogo.setIcon(fotoEmpleado);
+    }
 
     /**
      * @param args the command line arguments
@@ -339,7 +356,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPrincipal(null).setVisible(true);
+                new VentanaPrincipal(null, null).setVisible(true);
             }
         });
     }
