@@ -7,8 +7,11 @@ package GUI;
 
 import AccesoDatosORM.*;
 import Administracion.Empleado;
+import Validaciones.Encriptar;
 import Validaciones.Validaciones;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +21,7 @@ import javax.swing.JOptionPane;
 public class VentanaLogin extends javax.swing.JFrame {
 
     Validaciones validador = new Validaciones();
+    Encriptar encriptador = new Encriptar();
     AdaptadorEmpleadoControlador adaptadorEmpleado = new AdaptadorEmpleadoControlador();
 
     /**
@@ -166,9 +170,19 @@ public class VentanaLogin extends javax.swing.JFrame {
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
 
         String username = tfUser.getText();
-        String pass = tfPasswd.getText();
+        String pass_desencriptada = tfPasswd.getText(); //COMENTAR ESTA LINEA UNA VEZ HAYAN CREADO UN EMPLEADO CON ESTA ACTUALIZACIÓN
+        
+        /*   DESCOMENTAR PARA QUE FUNCIONE TRAYENDO LA CONTRASEÑA Y DESENCRIPTANDOLA
+        //Se desencripta la contraseña primero
+        
+        String pass_desencriptada="rarara";
+        try {
+            pass_desencriptada = encriptador.encriptar(tfPasswd.getText());
+        } catch (Exception ex) {
+            System.out.println("Salió una excepción al momento de desencriptar contraseña en el acceso del Logini");
+        }*/
 
-        if (username.equals("") || pass.equals("")) {
+        if (username.equals("") || pass_desencriptada.equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese usuario y contraseña", "Advertencia", JOptionPane.WARNING_MESSAGE);
             tfUser.setText("");
             tfPasswd.setText("");
@@ -181,9 +195,9 @@ public class VentanaLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Username incorrecto", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 tfUser.setText("");
             } else {
-                
+
                 //De lo contrario, el username(id) dado existe
-                if (empleadoAIngresar.getPassword().equals(pass)) {
+                if (empleadoAIngresar.getPassword().equals(pass_desencriptada)) {
                     //En caso de que el username y la contraseña concuerde
                     VentanaPrincipal ventanaPpal = new VentanaPrincipal(this, empleadoAIngresar);
                     ventanaPpal.setVisible(true);
@@ -192,7 +206,7 @@ public class VentanaLogin extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     tfPasswd.setText("");
                 }
-                
+
             }
 
         }
@@ -212,7 +226,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         if (cTeclaPresionada == KeyEvent.VK_ENTER) {
             bLogin.doClick();
         }
-        
+
     }//GEN-LAST:event_tfUserKeyPressed
 
     private void tfPasswdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPasswdKeyPressed

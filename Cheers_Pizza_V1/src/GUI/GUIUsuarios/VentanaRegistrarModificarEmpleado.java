@@ -11,6 +11,7 @@ import Administracion.Empleado;
 import Administracion.Sucursal;
 import GUI.GUIItems.VentanaRegistrarModificarItem;
 import Validaciones.Validaciones;
+import Validaciones.Encriptar;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -39,13 +40,14 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     AdaptadorEmpleadoControlador controladorEmpleado = new AdaptadorEmpleadoControlador();
     AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
     Validaciones validacion = new Validaciones();
+    Encriptar encriptador = new Encriptar();
     File ficheroImagen;
 
     JFrame ventanaAnterior;
     String operacion; //"Registro" o "Modificación"
     Empleado empleado;
 
-    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) {
+    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) throws Exception {
         super(operacion + " de Empleado");
         initComponents();
 
@@ -79,8 +81,10 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
             spHoraInicio.setValue(empleado.getHoraInicio().getHour());
             spHoraFin.setValue(empleado.getHoraFin().getHour());
-
-            tfPassword.setText(empleado.getPassword());
+            
+            //Se desencripta la contraseña primero
+            String pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
+            tfPassword.setText(pass_desencriptada);
 
             BufferedImage img = decodeToImage(empleado.getFotoURL());
             ImageIcon icon = new ImageIcon(img);
@@ -115,7 +119,9 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             spHoraInicio.setValue(empleado.getHoraInicio().getHour());
             spHoraFin.setValue(empleado.getHoraFin().getHour());
 
-            tfPassword.setText(empleado.getPassword());
+            //Se desencripta la contraseña primero
+            String pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
+            tfPassword.setText(pass_desencriptada);
 
             BufferedImage img = decodeToImage(empleado.getFotoURL());
             ImageIcon icon = new ImageIcon(img);
@@ -493,6 +499,9 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 String direccion = tfDireccion.getText();
                 String cargo = (String) cbCargo.getSelectedItem();
                 String password = tfPassword.getText();
+                
+                //Se procede a encriptar la contraseña
+                String pass_encriptada = encriptador.encriptar(password);
 
                 LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
                 LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
@@ -503,7 +512,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
                 String image_string = encodeImageToString(img);
 
-                Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, password, horaInicio, horaFin, image_string, sucursal);
+                Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, pass_encriptada, horaInicio, horaFin, image_string, sucursal);
 
                 if (operacion.equalsIgnoreCase("Registro")) {
 
@@ -662,7 +671,11 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarModificarEmpleado(null, null, null).setVisible(true);
+                try {
+                    new VentanaRegistrarModificarEmpleado(null, null, null).setVisible(true);
+                } catch (Exception ex) {
+                    System.out.println("Se lanzó una Excepción");
+                }
             }
         });
     }

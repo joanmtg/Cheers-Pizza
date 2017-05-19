@@ -12,6 +12,8 @@ import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -285,11 +287,15 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
          
-        Empleado empleado = new Empleado();
+        try {
+            Empleado empleado = new Empleado();
             
-        VentanaRegistrarModificarEmpleado vRegistro = new VentanaRegistrarModificarEmpleado(this, "Registro", empleado);
-        vRegistro.setVisible(true);
-        this.setVisible(false); 
+            VentanaRegistrarModificarEmpleado vRegistro = new VentanaRegistrarModificarEmpleado(this, "Registro", empleado);
+            vRegistro.setVisible(true);
+            this.setVisible(false); 
+        } catch (Exception ex) {
+            Logger.getLogger(VentanaGestionEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_bRegistrarActionPerformed
 
@@ -300,19 +306,23 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         
         if (filasSeleccionadas == 1) {
             
-            int filaSeleccionada = tablaEmpleados.getSelectedRow();
-            
-            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
-            
-            filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
-            
-            String idEmpleado = (String) modelo.getValueAt(filaSeleccionada, 0);
-            
-            Empleado empleadoSeleccionado = controladorEmpleados.obtenerEmpleado(idEmpleado);
-            
-            VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Modificacion", empleadoSeleccionado);
-            ventanaRegistro.setVisible(true);
-            this.setVisible(false);
+            try {
+                int filaSeleccionada = tablaEmpleados.getSelectedRow();
+                
+                DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+                
+                filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+                
+                String idEmpleado = (String) modelo.getValueAt(filaSeleccionada, 0);
+                
+                Empleado empleadoSeleccionado = controladorEmpleados.obtenerEmpleado(idEmpleado);
+                
+                VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Modificacion", empleadoSeleccionado);
+                ventanaRegistro.setVisible(true);
+                this.setVisible(false);
+            } catch (Exception ex) {
+                Logger.getLogger(VentanaGestionEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
         } else {
             
@@ -368,18 +378,22 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
         if (filasSeleccionadas == 1) {
 
-            int filaSeleccionada = tablaEmpleados.getSelectedRow();
-
-            DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
-
-            filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
-
-            String idUsuario = (String) modelo.getValueAt(filaSeleccionada, 0);
-            Empleado usuarioAVisualizar = controladorEmpleados.obtenerEmpleado(idUsuario);
-
-            VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Visualizacion", usuarioAVisualizar);
-            ventanaRegistro.setVisible(true);
-            this.setVisible(false);
+            try {
+                int filaSeleccionada = tablaEmpleados.getSelectedRow();
+                
+                DefaultTableModel modelo = (DefaultTableModel) tablaEmpleados.getModel();
+                
+                filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
+                
+                String idUsuario = (String) modelo.getValueAt(filaSeleccionada, 0);
+                Empleado usuarioAVisualizar = controladorEmpleados.obtenerEmpleado(idUsuario);
+                
+                VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Visualizacion", usuarioAVisualizar);
+                ventanaRegistro.setVisible(true);
+                this.setVisible(false);
+            } catch (Exception ex) {
+                Logger.getLogger(VentanaGestionEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } else {
 
