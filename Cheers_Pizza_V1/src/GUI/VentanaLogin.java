@@ -170,17 +170,17 @@ public class VentanaLogin extends javax.swing.JFrame {
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
 
         String username = tfUser.getText();
-        String pass_desencriptada = tfPasswd.getText(); //COMENTAR ESTA LINEA UNA VEZ HAYAN CREADO UN EMPLEADO CON ESTA ACTUALIZACIÓN
+        //String pass_desencriptada = tfPasswd.getText(); //COMENTAR ESTA LINEA UNA VEZ HAYAN CREADO UN EMPLEADO CON ESTA ACTUALIZACIÓN
         
-        /*   DESCOMENTAR PARA QUE FUNCIONE TRAYENDO LA CONTRASEÑA Y DESENCRIPTANDOLA
+           /*DESCOMENTAR PARA QUE FUNCIONE TRAYENDO LA CONTRASEÑA Y DESENCRIPTANDOLA*/
         //Se desencripta la contraseña primero
         
-        String pass_desencriptada="rarara";
+        String pass_desencriptada="__*__*_";
         try {
             pass_desencriptada = encriptador.encriptar(tfPasswd.getText());
         } catch (Exception ex) {
             System.out.println("Salió una excepción al momento de desencriptar contraseña en el acceso del Logini");
-        }*/
+        }
 
         if (username.equals("") || pass_desencriptada.equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese usuario y contraseña", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -195,7 +195,18 @@ public class VentanaLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Username incorrecto", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 tfUser.setText("");
             } else {
-
+                
+                //
+                System.out.println("Lo que escribi en el tfPass: "+tfPasswd.getText());
+                System.out.println("pass Empleado: "+empleadoAIngresar.getPassword());
+                try {
+                    System.out.println("Pass desencriptada: "+ encriptador.desencriptar(empleadoAIngresar.getPassword()));
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //
+                
+                
                 //De lo contrario, el username(id) dado existe
                 if (empleadoAIngresar.getPassword().equals(pass_desencriptada)) {
                     //En caso de que el username y la contraseña concuerde

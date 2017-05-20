@@ -27,7 +27,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      */
     JFrame ventanaAnterior;
-    Empleado empleadoIngresado;
+    public Empleado empleadoIngresado;
 
     public VentanaPrincipal(JFrame anterior, Empleado empleadoIngresado) {
         super("Ventana Principal");
@@ -292,7 +292,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void bEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEmpleadosActionPerformed
 
-        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados(this);
+        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados(this, empleadoIngresado);
         ventanaEmpleados.setVisible(true);
         this.setVisible(false);
 
@@ -319,11 +319,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lCargo.setText("Cargo: " + empleadoIngresado.getCargo());
         lNombre.setText("Nombre: " + empleadoIngresado.getNombre() + " " + empleadoIngresado.getApellidos());
         
-        //Foto del empleado:
-        BufferedImage img = decodeToImage(empleadoIngresado.getFotoURL());
-        ImageIcon icon = new ImageIcon(img);
-        Icon fotoEmpleado = new ImageIcon(icon.getImage().getScaledInstance(lLogo.getWidth(), lLogo.getHeight(), Image.SCALE_DEFAULT));
-        lLogo.setIcon(fotoEmpleado);
     }
 
     /**

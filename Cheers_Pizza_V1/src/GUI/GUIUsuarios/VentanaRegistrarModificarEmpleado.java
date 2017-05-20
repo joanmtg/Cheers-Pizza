@@ -47,7 +47,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     String operacion; //"Registro" o "Modificación"
     Empleado empleado;
 
-    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) throws Exception {
+    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado){
         super(operacion + " de Empleado");
         initComponents();
 
@@ -82,14 +82,21 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             spHoraInicio.setValue(empleado.getHoraInicio().getHour());
             spHoraFin.setValue(empleado.getHoraFin().getHour());
             
-            //Se desencripta la contraseña primero
-            String pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
-            tfPassword.setText(pass_desencriptada);
-
             BufferedImage img = decodeToImage(empleado.getFotoURL());
             ImageIcon icon = new ImageIcon(img);
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
+            
+            //Se desencripta la contraseña primero
+            String pass_desencriptada = null;
+            try {
+                pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
+            } catch (Exception ex) {
+                System.out.println("Error al momento de desencriptar la contraseña. Constructor. 'Modificación'");
+            }
+            tfPassword.setText(pass_desencriptada);
+
+            
 
         }else if(operacion.equals("Visualizacion")){
             
@@ -119,14 +126,21 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             spHoraInicio.setValue(empleado.getHoraInicio().getHour());
             spHoraFin.setValue(empleado.getHoraFin().getHour());
 
-            //Se desencripta la contraseña primero
-            String pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
-            tfPassword.setText(pass_desencriptada);
-
             BufferedImage img = decodeToImage(empleado.getFotoURL());
             ImageIcon icon = new ImageIcon(img);
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
+            
+            //Se desencripta la contraseña primero
+            String pass_desencriptada = null; 
+            try {
+                pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
+            } catch (Exception ex) {
+                System.out.println("Error al momento de desencriptar la contraseña. Constructor. 'Visualización'");
+            }
+            tfPassword.setText(pass_desencriptada);
+
+            
             
         }
 
@@ -498,11 +512,6 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 String telefono = tfTelefono.getText();
                 String direccion = tfDireccion.getText();
                 String cargo = (String) cbCargo.getSelectedItem();
-                String password = tfPassword.getText();
-                
-                //Se procede a encriptar la contraseña
-                String pass_encriptada = encriptador.encriptar(password);
-
                 LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
                 LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
 
@@ -511,6 +520,12 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
                 BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
                 String image_string = encodeImageToString(img);
+                
+                String password = tfPassword.getText();
+                //Se procede a encriptar la contraseña
+                String pass_encriptada = encriptador.encriptar(password);
+
+                
 
                 Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, pass_encriptada, horaInicio, horaFin, image_string, sucursal);
 
@@ -527,6 +542,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                     limpiarCampos();
 
                     VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
+                    ventanaEmpleados.empleadoActual = nuevoEmpleado;
                     ventanaEmpleados.llenarTablaEmpleados();
                     ventanaEmpleados.setVisible(true);
                     this.setVisible(false);
@@ -535,7 +551,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
             }
         } catch (IOException ex) {
-            Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }//GEN-LAST:event_bFinalizarActionPerformed

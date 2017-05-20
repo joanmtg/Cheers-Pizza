@@ -9,6 +9,7 @@ import AccesoDatosORM.AdaptadorEmpleadoControlador;
 import Administracion.Empleado;
 import Administracion.Item;
 import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
+import GUI.VentanaPrincipal;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -31,13 +32,15 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     
     JFrame ventanaAnterior;
     TableRowSorter trsFiltro;
+    Empleado empleadoActual;
     
-    public VentanaGestionEmpleados(JFrame anterior) {
+    public VentanaGestionEmpleados(JFrame anterior, Empleado empleadoActual) {
         super("Gestión de Usuarios");
         initComponents();
         
         this.ventanaAnterior = anterior;
         this.setLocationRelativeTo(null);
+        this.empleadoActual = empleadoActual;
         
         llenarTablaEmpleados();
         
@@ -281,7 +284,10 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
         this.dispose();
-        ventanaAnterior.setVisible(true);        
+        VentanaPrincipal vPrin = (VentanaPrincipal) ventanaAnterior;
+        vPrin.empleadoIngresado = empleadoActual;
+        vPrin.colocarInfoEmpleado();
+        vPrin.setVisible(true);
         
     }//GEN-LAST:event_bAtrasActionPerformed
 
@@ -463,7 +469,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaGestionEmpleados(null).setVisible(true);
+                new VentanaGestionEmpleados(null, null).setVisible(true);
             }
         });
     }

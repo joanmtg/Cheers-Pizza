@@ -11,6 +11,8 @@
     <class>Administracion.Pedido</class>
     <class>Administracion.Pedido_Item</class>
     <class>Administracion.Sucursal</class>
+    <class>Administracion.Factura_FormaPago</class>
+    <class>Administracion.FormaPago</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/cheers_bd"/>
       <property name="javax.persistence.jdbc.user" value="wayne"/>
