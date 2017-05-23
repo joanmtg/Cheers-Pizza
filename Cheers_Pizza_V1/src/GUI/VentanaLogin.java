@@ -6,7 +6,13 @@
 package GUI;
 
 import AccesoDatosORM.*;
+import Administracion.Empleado;
+import Validaciones.Encriptar;
 import Validaciones.Validaciones;
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,8 +20,10 @@ import Validaciones.Validaciones;
  */
 public class VentanaLogin extends javax.swing.JFrame {
 
-    Validaciones validaciones = new Validaciones();;
-    
+    Validaciones validador = new Validaciones();
+    Encriptar encriptador = new Encriptar();
+    AdaptadorEmpleadoControlador adaptadorEmpleado = new AdaptadorEmpleadoControlador();
+
     /**
      * Creates new form GUILogin
      */
@@ -23,14 +31,14 @@ public class VentanaLogin extends javax.swing.JFrame {
         super("Bienvenido a la Pizzería Cheers");
         initComponents();
         setLocationRelativeTo(null);
-        
+
     }
-    
-    public void limpiarCampos(){
+
+    public void limpiarCampos() {
         setLocationRelativeTo(null);
         tfUser.setText("");
-        tfPasswd.setText("");        
-        tfUser.requestFocus();        
+        tfPasswd.setText("");
+        tfUser.requestFocus();
     }
 
     /**
@@ -59,9 +67,22 @@ public class VentanaLogin extends javax.swing.JFrame {
         tfUser.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
         tfUser.setText("username");
         tfUser.setPreferredSize(new java.awt.Dimension(53, 30));
+        tfUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfUserKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfUserKeyTyped(evt);
+            }
+        });
 
         tfPasswd.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
         tfPasswd.setText("jPasswordField1");
+        tfPasswd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfPasswdKeyPressed(evt);
+            }
+        });
 
         lLogo.setBackground(new java.awt.Color(89, 30, 27));
         lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
@@ -147,12 +168,86 @@ public class VentanaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
+
+        String username = tfUser.getText();
+        //String pass_desencriptada = tfPasswd.getText(); //COMENTAR ESTA LINEA UNA VEZ HAYAN CREADO UN EMPLEADO CON ESTA ACTUALIZACIÓN
         
-        VentanaPrincipal ventanaPpal = new VentanaPrincipal(this);
-        ventanaPpal.setVisible(true);
-        this.setVisible(false);
+           /*DESCOMENTAR PARA QUE FUNCIONE TRAYENDO LA CONTRASEÑA Y DESENCRIPTANDOLA*/
+        //Se desencripta la contraseña primero
         
+        String pass_desencriptada="__*__*_";
+        try {
+            pass_desencriptada = encriptador.encriptar(tfPasswd.getText());
+        } catch (Exception ex) {
+            System.out.println("Salió una excepción al momento de desencriptar contraseña en el acceso del Logini");
+        }
+
+        if (username.equals("") || pass_desencriptada.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese usuario y contraseña", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            tfUser.setText("");
+            tfPasswd.setText("");
+        } else {
+            //Obtengo el empleado para comparar la contraseña
+            Empleado empleadoAIngresar = adaptadorEmpleado.obtenerEmpleado(username);
+
+            //Si el empleadoAIngresar == null, entonces no existe empleado con ese id
+            if (empleadoAIngresar == null) {
+                JOptionPane.showMessageDialog(null, "Username incorrecto", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                tfUser.setText("");
+            } else {
+                
+                //
+                System.out.println("Lo que escribi en el tfPass: "+tfPasswd.getText());
+                System.out.println("pass Empleado: "+empleadoAIngresar.getPassword());
+                try {
+                    System.out.println("Pass desencriptada: "+ encriptador.desencriptar(empleadoAIngresar.getPassword()));
+                } catch (Exception ex) {
+                    Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //
+                
+                
+                //De lo contrario, el username(id) dado existe
+                if (empleadoAIngresar.getPassword().equals(pass_desencriptada)) {
+                    //En caso de que el username y la contraseña concuerde
+                    VentanaPrincipal ventanaPpal = new VentanaPrincipal(this, empleadoAIngresar);
+                    ventanaPpal.setVisible(true);
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    tfPasswd.setText("");
+                }
+
+            }
+
+        }
+
+
     }//GEN-LAST:event_bLoginActionPerformed
+
+    private void tfUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfUserKeyTyped
+        // Solo se permiten numeros (id en la BD 
+        validador.validarNumeros(evt);
+    }//GEN-LAST:event_tfUserKeyTyped
+
+    private void tfUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfUserKeyPressed
+        // cuando presione la tecla ENTER, ocurra un evento dado
+        char cTeclaPresionada = evt.getKeyChar();
+
+        if (cTeclaPresionada == KeyEvent.VK_ENTER) {
+            bLogin.doClick();
+        }
+
+    }//GEN-LAST:event_tfUserKeyPressed
+
+    private void tfPasswdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPasswdKeyPressed
+        // cuando presione la tecla ENTER, ocurra un evento dado
+        char cTeclaPresionada = evt.getKeyChar();
+
+        if (cTeclaPresionada == KeyEvent.VK_ENTER) {
+            bLogin.doClick();
+        }
+    }//GEN-LAST:event_tfPasswdKeyPressed
 
     /**
      * @param args the command line arguments

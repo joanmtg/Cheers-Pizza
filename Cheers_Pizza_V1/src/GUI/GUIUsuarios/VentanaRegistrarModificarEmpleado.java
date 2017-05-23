@@ -11,6 +11,7 @@ import Administracion.Empleado;
 import Administracion.Sucursal;
 import GUI.GUIItems.VentanaRegistrarModificarItem;
 import Validaciones.Validaciones;
+import Validaciones.Encriptar;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -39,13 +40,14 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     AdaptadorEmpleadoControlador controladorEmpleado = new AdaptadorEmpleadoControlador();
     AdaptadorSucursalControlador controladorSucursal = new AdaptadorSucursalControlador();
     Validaciones validacion = new Validaciones();
+    Encriptar encriptador = new Encriptar();
     File ficheroImagen;
 
     JFrame ventanaAnterior;
     String operacion; //"Registro" o "Modificación"
     Empleado empleado;
 
-    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) {
+    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado){
         super(operacion + " de Empleado");
         initComponents();
 
@@ -79,13 +81,22 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
             spHoraInicio.setValue(empleado.getHoraInicio().getHour());
             spHoraFin.setValue(empleado.getHoraFin().getHour());
-
-            tfPassword.setText(empleado.getPassword());
-
+            
             BufferedImage img = decodeToImage(empleado.getFotoURL());
             ImageIcon icon = new ImageIcon(img);
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
+            
+            //Se desencripta la contraseña primero
+            String pass_desencriptada = null;
+            try {
+                pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
+            } catch (Exception ex) {
+                System.out.println("Error al momento de desencriptar la contraseña. Constructor. 'Modificación'");
+            }
+            tfPassword.setText(pass_desencriptada);
+
+            
 
         }else if(operacion.equals("Visualizacion")){
             
@@ -115,12 +126,21 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             spHoraInicio.setValue(empleado.getHoraInicio().getHour());
             spHoraFin.setValue(empleado.getHoraFin().getHour());
 
-            tfPassword.setText(empleado.getPassword());
-
             BufferedImage img = decodeToImage(empleado.getFotoURL());
             ImageIcon icon = new ImageIcon(img);
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
+            
+            //Se desencripta la contraseña primero
+            String pass_desencriptada = null; 
+            try {
+                pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
+            } catch (Exception ex) {
+                System.out.println("Error al momento de desencriptar la contraseña. Constructor. 'Visualización'");
+            }
+            tfPassword.setText(pass_desencriptada);
+
+            
             
         }
 
@@ -492,8 +512,6 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 String telefono = tfTelefono.getText();
                 String direccion = tfDireccion.getText();
                 String cargo = (String) cbCargo.getSelectedItem();
-                String password = tfPassword.getText();
-
                 LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
                 LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
 
@@ -502,8 +520,14 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
                 BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
                 String image_string = encodeImageToString(img);
+                
+                String password = tfPassword.getText();
+                //Se procede a encriptar la contraseña
+                String pass_encriptada = encriptador.encriptar(password);
 
-                Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, password, horaInicio, horaFin, image_string, sucursal);
+                
+
+                Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, pass_encriptada, horaInicio, horaFin, image_string, sucursal);
 
                 if (operacion.equalsIgnoreCase("Registro")) {
 
@@ -518,6 +542,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                     limpiarCampos();
 
                     VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
+                    ventanaEmpleados.empleadoActual = nuevoEmpleado;
                     ventanaEmpleados.llenarTablaEmpleados();
                     ventanaEmpleados.setVisible(true);
                     this.setVisible(false);
@@ -526,7 +551,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
             }
         } catch (IOException ex) {
-            Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }//GEN-LAST:event_bFinalizarActionPerformed
@@ -662,7 +687,11 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarModificarEmpleado(null, null, null).setVisible(true);
+                try {
+                    new VentanaRegistrarModificarEmpleado(null, null, null).setVisible(true);
+                } catch (Exception ex) {
+                    System.out.println("Se lanzó una Excepción");
+                }
             }
         });
     }

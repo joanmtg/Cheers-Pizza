@@ -386,7 +386,7 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar el registro?");
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la operación?");
 
         if (opcion == JOptionPane.YES_OPTION) {
             this.dispose();
@@ -642,11 +642,13 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
 
     private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
         // TODO add your handling code here:
+        //En caso de que sea pedido para la mesa, se habilitan todos los campos
         if (cbTipo.getSelectedIndex() == 1) {
             tfIDMesero.setEnabled(true);
             cbMesa.setEnabled(true);
             bVerificarIDMesero.setEnabled(true);
         } else if (cbTipo.getSelectedIndex() == 2) {
+            //Si el pedido es para llevar, no se necesita ni mesero ni mesa
             tfIDMesero.setEnabled(false);
             tfIDMesero.setText("");
             cbMesa.setEnabled(false);
@@ -850,6 +852,8 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
             
             int cantidad = Integer.parseInt(tablaItemsPedido.getValueAt(i, 3).toString());
             boolean entregado = false;
+            String estado = tablaItemsPedido.getValueAt(i, 5).toString();
+            if(estado.equalsIgnoreCase("Sí")) { entregado = true; }
 
             Pedido_Item pedidoItem = new Pedido_Item(pedidoGuardado.getNumero(), codItem, cantidad, entregado);
 
