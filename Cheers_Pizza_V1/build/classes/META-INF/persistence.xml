@@ -15,9 +15,9 @@
     <class>Administracion.FormaPago</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/cheers_bd"/>
-      <property name="javax.persistence.jdbc.user" value="jhonfmr"/>
+      <property name="javax.persistence.jdbc.user" value="wayne"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="jhon1234"/>
+      <property name="javax.persistence.jdbc.password" value="arkham"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
     </properties>
   </persistence-unit>
