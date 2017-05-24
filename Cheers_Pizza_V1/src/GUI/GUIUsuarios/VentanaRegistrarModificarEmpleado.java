@@ -46,6 +46,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     JFrame ventanaAnterior;
     String operacion; //"Registro" o "Modificación"
     Empleado empleado;
+    boolean nuevaImagen;
 
     public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) {
         super(operacion + " de Empleado");
@@ -574,6 +575,10 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
             } else if (operacion.equalsIgnoreCase("Modificacion")) {
 
+                if(!nuevaImagen){
+                    nuevoEmpleado.setFotoURL(empleado.getFotoURL()); //Si la foto no cambió, se asigna la anterior
+                }  
+                
                 controladorEmpleado.editarEmpleado(nuevoEmpleado);
                 JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
@@ -612,6 +617,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 ImageIcon icon = new ImageIcon(ficheroImagen.toString());
                 Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
                 lFoto.setIcon(icono);
+                nuevaImagen = true;
             }
 
         }
