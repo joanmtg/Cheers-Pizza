@@ -47,7 +47,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     String operacion; //"Registro" o "Modificación"
     Empleado empleado;
 
-    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado){
+    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) {
         super(operacion + " de Empleado");
         initComponents();
 
@@ -71,7 +71,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             cbTipoID.setSelectedItem(empleado.getTipoId());
             tfIdentificacion.setText(empleado.getId());
             tfIdentificacion.setEditable(false);
-            
+
             tfNombre.setText(empleado.getNombre());
             tfApellidos.setText(empleado.getApellidos());
             tfTelefono.setText(empleado.getTelefono());
@@ -81,12 +81,12 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
             spHoraInicio.setValue(empleado.getHoraInicio().getHour());
             spHoraFin.setValue(empleado.getHoraFin().getHour());
-            
+
             BufferedImage img = decodeToImage(empleado.getFotoURL());
             ImageIcon icon = new ImageIcon(img);
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
-            
+
             //Se desencripta la contraseña primero
             String pass_desencriptada = null;
             try {
@@ -96,10 +96,8 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             }
             tfPassword.setText(pass_desencriptada);
 
-            
+        } else if (operacion.equals("Visualizacion")) {
 
-        }else if(operacion.equals("Visualizacion")){
-            
             cbTipoID.setEnabled(false);
             tfIdentificacion.setEditable(false);
             tfNombre.setEditable(false);
@@ -112,10 +110,10 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             bCambiarFoto.setEnabled(false);
             bLimpiar.setEnabled(false);
             bFinalizar.setEnabled(false);
-            
+
             cbTipoID.setSelectedItem(empleado.getTipoId());
             tfIdentificacion.setText(empleado.getId());
-            
+
             tfNombre.setText(empleado.getNombre());
             tfApellidos.setText(empleado.getApellidos());
             tfTelefono.setText(empleado.getTelefono());
@@ -130,9 +128,9 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             ImageIcon icon = new ImageIcon(img);
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
-            
+
             //Se desencripta la contraseña primero
-            String pass_desencriptada = null; 
+            String pass_desencriptada = null;
             try {
                 pass_desencriptada = encriptador.desencriptar(empleado.getPassword());
             } catch (Exception ex) {
@@ -140,8 +138,6 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             }
             tfPassword.setText(pass_desencriptada);
 
-            
-            
         }
 
     }
@@ -163,11 +159,11 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lNombre = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
         LTipoID = new javax.swing.JLabel();
-        cbTipoID = new javax.swing.JComboBox<>();
+        cbTipoID = new javax.swing.JComboBox<String>();
         lIdentificacion = new javax.swing.JLabel();
         tfIdentificacion = new javax.swing.JTextField();
         lApellidos = new javax.swing.JLabel();
-        cbCargo = new javax.swing.JComboBox<>();
+        cbCargo = new javax.swing.JComboBox<String>();
         lCargo = new javax.swing.JLabel();
         lCargo1 = new javax.swing.JLabel();
         lTelefono = new javax.swing.JLabel();
@@ -178,7 +174,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         tfDireccion = new javax.swing.JTextField();
         bCambiarFoto = new javax.swing.JButton();
         lSucursal = new javax.swing.JLabel();
-        cbSucursales = new javax.swing.JComboBox<>();
+        cbSucursales = new javax.swing.JComboBox<String>();
         lInicio = new javax.swing.JLabel();
         lFin = new javax.swing.JLabel();
         spHoraInicio = new javax.swing.JSpinner();
@@ -221,7 +217,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         LTipoID.setForeground(new java.awt.Color(255, 255, 255));
         LTipoID.setText("Tipo de ID:");
 
-        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
+        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
         cbTipoID.setPreferredSize(new java.awt.Dimension(127, 30));
 
         lIdentificacion.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
@@ -239,7 +235,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lApellidos.setForeground(new java.awt.Color(255, 255, 255));
         lApellidos.setText("Apellidos:");
 
-        cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
+        cbCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
 
         lCargo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lCargo.setForeground(new java.awt.Color(255, 255, 255));
@@ -278,7 +274,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lSucursal.setForeground(new java.awt.Color(255, 255, 255));
         lSucursal.setText("Sucursal:");
 
-        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una sucursal" }));
+        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una sucursal" }));
 
         lInicio.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lInicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -289,8 +285,19 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lFin.setText("Fin:");
 
         spHoraInicio.setModel(new javax.swing.SpinnerNumberModel(0, 0, 24, 1));
+        spHoraInicio.setEditor(new javax.swing.JSpinner.NumberEditor(spHoraInicio, ""));
+        spHoraInicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                spHoraInicioKeyTyped(evt);
+            }
+        });
 
         spHoraFin.setModel(new javax.swing.SpinnerNumberModel(0, 0, 24, 1));
+        spHoraFin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                spHoraFinKeyTyped(evt);
+            }
+        });
 
         lFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imageUser.jpg"))); // NOI18N
 
@@ -494,86 +501,121 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
 
-        try {
+        if (cbTipoID.getSelectedIndex() == 0 || tfIdentificacion.getText().equals("") || tfNombre.getText().equals("")
+                || tfApellidos.getText().equals("") || tfTelefono.getText().equals("") || tfDireccion.getText().equals("")
+                || cbCargo.getSelectedIndex() == 0 || cbSucursales.getSelectedIndex() == 0 || tfPassword.getText().equals("")) {
 
-            if (cbTipoID.getSelectedIndex() == 0 || tfIdentificacion.getText().equals("") || tfApellidos.getText().equals("")
-                    || tfTelefono.getText().equals("") || tfDireccion.getText().equals("") || cbCargo.getSelectedIndex() == 0
-                    || cbSucursales.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos solicitados", "Mensaje", JOptionPane.WARNING_MESSAGE);
 
-                JOptionPane.showMessageDialog(null, "Debe ingresar todos los campos solicitados", "Mensaje", JOptionPane.WARNING_MESSAGE);
+        } else if (tfIdentificacion.getText().length() != 8 && tfIdentificacion.getText().length() != 10) {
 
-            } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un número de identificación válido", "Warning", JOptionPane.WARNING_MESSAGE);
 
-                // Obteniendo los campos
-                String tipoDocumento = (String) cbTipoID.getSelectedItem();
-                String identificacion = tfIdentificacion.getText();
-                String nombre = tfNombre.getText();
-                String apellidos = tfApellidos.getText();
-                String telefono = tfTelefono.getText();
-                String direccion = tfDireccion.getText();
-                String cargo = (String) cbCargo.getSelectedItem();
-                LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
-                LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
+        } else if ((Integer) spHoraInicio.getValue() < 0 || (Integer) spHoraInicio.getValue() > 23
+                || (Integer) spHoraFin.getValue() < 0 || (Integer) spHoraFin.getValue() > 23) {
 
-                Long codSucursal = (long) cbSucursales.getSelectedIndex();
-                Sucursal sucursal = controladorSucursal.obtenerSucursal(codSucursal);
+            JOptionPane.showMessageDialog(null, "Debe ingresar una hora válida", "Warning", JOptionPane.WARNING_MESSAGE);
 
-                BufferedImage img = ImageIO.read(new File(ficheroImagen.toString()));
-                String image_string = encodeImageToString(img);
-                
-                String password = tfPassword.getText();
-                //Se procede a encriptar la contraseña
-                String pass_encriptada = encriptador.encriptar(password);
+        } else if (tfNombre.getText().length() > 80) {
 
-                
+            JOptionPane.showMessageDialog(null, "El nombre del empleado no debe exceder los 80 caracteres", "Warning", JOptionPane.WARNING_MESSAGE);
 
-                Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, pass_encriptada, horaInicio, horaFin, image_string, sucursal);
+        } else if (tfApellidos.getText().length() > 80) {
 
-                if (operacion.equalsIgnoreCase("Registro")) {
+            JOptionPane.showMessageDialog(null, "Los apellidos del empleado no deben exceder los 80 caracteres", "Warning", JOptionPane.WARNING_MESSAGE);
 
-                    controladorEmpleado.crearEmpleado(nuevoEmpleado);
-                    JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    limpiarCampos();
+        } else if (tfDireccion.getText().length() > 100) {
 
-                } else if (operacion.equalsIgnoreCase("Modificacion")) {
+            JOptionPane.showMessageDialog(null, "La dirección del empleado no debe exceder los 100 caracteres", "Warning", JOptionPane.WARNING_MESSAGE);
 
-                    controladorEmpleado.editarEmpleado(nuevoEmpleado);
-                    JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    limpiarCampos();
+        } else if (tfPassword.getText().length() > 50) {
 
-                    VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
-                    ventanaEmpleados.empleadoActual = nuevoEmpleado;
-                    ventanaEmpleados.llenarTablaEmpleados();
-                    ventanaEmpleados.setVisible(true);
-                    this.setVisible(false);
+            JOptionPane.showMessageDialog(null, "La contraseña no debe exceder los 50 caracteres", "Warning", JOptionPane.WARNING_MESSAGE);
 
-                }
+        } else if (tfTelefono.getText().length() != 7 && tfTelefono.getText().length() != 10) {
+            
+            JOptionPane.showMessageDialog(null, "Debe ingresar un número de teléfono válido", "Warning", JOptionPane.WARNING_MESSAGE);
+
+        } else {
+            // Obteniendo los campos
+            String tipoDocumento = (String) cbTipoID.getSelectedItem();
+            String identificacion = tfIdentificacion.getText();
+            String nombre = tfNombre.getText();
+            String apellidos = tfApellidos.getText();
+            String telefono = tfTelefono.getText();
+            String direccion = tfDireccion.getText();
+            String cargo = (String) cbCargo.getSelectedItem();
+
+            LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
+            LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
+
+            Long codSucursal = (long) cbSucursales.getSelectedIndex();
+            Sucursal sucursal = controladorSucursal.obtenerSucursal(codSucursal);
+
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(new File(ficheroImagen.toString()));
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaRegistrarModificarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String image_string = encodeImageToString(img);
+
+            String password = tfPassword.getText();
+            //Se procede a encriptar la contraseña
+            String pass_encriptada = encriptador.encriptar(password);
+
+            Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, pass_encriptada, horaInicio, horaFin, image_string, sucursal);
+
+            if (operacion.equalsIgnoreCase("Registro")) {
+
+                controladorEmpleado.crearEmpleado(nuevoEmpleado);
+                JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+
+            } else if (operacion.equalsIgnoreCase("Modificacion")) {
+
+                controladorEmpleado.editarEmpleado(nuevoEmpleado);
+                JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+
+                VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
+                ventanaEmpleados.empleadoActual = nuevoEmpleado;
+                ventanaEmpleados.llenarTablaEmpleados();
+                ventanaEmpleados.setVisible(true);
+                this.setVisible(false);
 
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+
         }
 
     }//GEN-LAST:event_bFinalizarActionPerformed
 
     private void bCambiarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCambiarFotoActionPerformed
-        
+
         JFileChooser file = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.jpg", "jpg", "png");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.jpg, *.png", "jpg", "png");
         file.setFileFilter(filtro);
 
         int seleccion = file.showOpenDialog(new JPanel());
 
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-
             //Seleccionamos el fichero
             ficheroImagen = file.getSelectedFile();
-            ImageIcon icon = new ImageIcon(ficheroImagen.toString());
-            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
-            lFoto.setIcon(icono);
+
+            int verificarJPG = ficheroImagen.getName().lastIndexOf(".jpg");
+            int verificarPNG = ficheroImagen.getName().lastIndexOf(".png");
+
+            if (verificarJPG == -1 && verificarPNG == -1) {
+                JOptionPane.showMessageDialog(null, "Sólo se permiten imagenes con formato JPEG y PNG", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else {
+
+                ImageIcon icon = new ImageIcon(ficheroImagen.toString());
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
+                lFoto.setIcon(icono);
+            }
 
         }
-        
+
     }//GEN-LAST:event_bCambiarFotoActionPerformed
 
     private void tfIdentificacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfIdentificacionKeyTyped
@@ -583,6 +625,14 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     private void tfTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefonoKeyTyped
         validacion.validarNumeros(evt);
     }//GEN-LAST:event_tfTelefonoKeyTyped
+
+    private void spHoraInicioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spHoraInicioKeyTyped
+        validacion.validarNumeros(evt);
+    }//GEN-LAST:event_spHoraInicioKeyTyped
+
+    private void spHoraFinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spHoraFinKeyTyped
+        validacion.validarNumeros(evt);
+    }//GEN-LAST:event_spHoraFinKeyTyped
 
     public void limpiarCampos() {
 
@@ -608,8 +658,10 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             ImageIcon icon = new ImageIcon(ficheroImagen.toString());
             Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lFoto.getWidth(), lFoto.getHeight(), Image.SCALE_DEFAULT));
             lFoto.setIcon(icono);
+
         } catch (URISyntaxException ex) {
-            Logger.getLogger(VentanaRegistrarModificarItem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VentanaRegistrarModificarItem.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -670,16 +722,21 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaRegistrarModificarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
