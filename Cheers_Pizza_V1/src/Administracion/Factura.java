@@ -68,7 +68,7 @@ public class Factura implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "id_empleado")
-    private Empleado cajero;
+    private Empleado cajero; 
     
     @ManyToOne
     @JoinColumn(name = "numero_pedido")
@@ -77,6 +77,9 @@ public class Factura implements Serializable {
     @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
     private List<Factura_FormaPago> facturaFormasPago = new ArrayList<>();
     
+    @OneToMany(mappedBy = "itemFactura", cascade = CascadeType.ALL)
+    private List<ItemFactura> itemsFactura = new ArrayList<>();
+       
     
     //Constructor N°1
     
@@ -88,16 +91,12 @@ public class Factura implements Serializable {
     public Factura(LocalTime horaPago, double impuestos, double propina, double descuento, double totalPago, Empleado cajero, Pedido pedido) {
         this.horaPago = horaPago;
         this.impuestos = impuestos;
+        this.pedido = pedido;
         this.propina = propina;
         this.descuento = descuento;
         this.totalPago = totalPago;
-        this.cajero = cajero;
-        this.pedido = pedido;        
-    }
-
-    
-
-    
+        this.cajero = cajero;      
+    }    
     
     //Setters & Getters
 
@@ -155,15 +154,7 @@ public class Factura implements Serializable {
 
     public void setCajero(Empleado cajero) {
         this.cajero = cajero;
-    }
-
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
+    }  
 
     public List<Factura_FormaPago> getFacturaFormasPago() {
         return facturaFormasPago;
@@ -172,9 +163,22 @@ public class Factura implements Serializable {
     public void setFacturaFormasPago(List<Factura_FormaPago> facturaFormasPago) {
         this.facturaFormasPago = facturaFormasPago;
     }
-    
-    
 
+    public List<ItemFactura> getItemsFactura() {
+        return itemsFactura;
+    }
+
+    public void setItemsFactura(List<ItemFactura> itemsFactura) {
+        this.itemsFactura = itemsFactura;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    } 
     
 
     @Override
@@ -199,10 +203,7 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "numero=" + numero + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", totalPago=" + totalPago + ", cajero=" + cajero + ", pedido=" + pedido + ", facturaFormasPago=" + facturaFormasPago + '}';
-    }
-    
-    
-    
+        return "Factura{" + "numero=" + numero + ", horaPago=" + horaPago + ", impuestos=" + impuestos + ", propina=" + propina + ", descuento=" + descuento + ", totalPago=" + totalPago + ", cajero=" + cajero + ", pedido=" + pedido + ", facturaFormasPago=" + facturaFormasPago + ", itemsFactura=" + itemsFactura + '}';
+    }       
     
 }

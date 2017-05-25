@@ -9,9 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import AccesoDatosORM.AdaptadorPedidoControlador;
 import Administracion.Factura;
+import Administracion.ItemFactura;
 import Administracion.Pedido;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -29,12 +31,14 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
     JFrame ventanaAnterior;
     AdaptadorPedidoControlador controladorPedido = new AdaptadorPedidoControlador();
     TableRowSorter trsFiltro;
+    String codigoEmpleado;
     
-    public VentanaPedidosAPagar(JFrame anterior) {
+    public VentanaPedidosAPagar(JFrame anterior, String codEmpleado) {
         super("Pago de pedidos");
         initComponents();
         
         this.ventanaAnterior = anterior;
+        this.codigoEmpleado = codEmpleado;
         setLocationRelativeTo(null); 
         
         llenarTablaPedidos();
@@ -293,8 +297,8 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bVerFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerFacturasActionPerformed
-
-        VentanaGestionFacturas vFacturas = new VentanaGestionFacturas(this);
+        
+        VentanaGestionFacturas vFacturas = new VentanaGestionFacturas(this, codigoEmpleado);
         vFacturas.setVisible(true);
         this.setVisible(false);        
         
@@ -319,7 +323,8 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
             
             Pedido pedidoSeleccionado = controladorPedido.obtenerPedido(numeroPedido);
             Factura factura = new Factura();
-            VentanaRegistrarPago ventanaPago = new VentanaRegistrarPago(this, pedidoSeleccionado, factura, "Pago");
+            List<ItemFactura> itemsFact = new ArrayList<>();           
+            VentanaRegistrarPago ventanaPago = new VentanaRegistrarPago(this, pedidoSeleccionado, itemsFact, factura, "Pago", codigoEmpleado);
             ventanaPago.setVisible(true);
             this.setVisible(false);
             
@@ -378,7 +383,7 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPedidosAPagar(null).setVisible(true);
+                new VentanaPedidosAPagar(null, null).setVisible(true);
             }
         });
     }

@@ -307,8 +307,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_bPedidosActionPerformed
 
     private void bPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPagosActionPerformed
-
-        VentanaPedidosAPagar vPedidosPagar = new VentanaPedidosAPagar(this);
+        
+        String codigoEmpleado = lIdentificacion.getText().substring(16).trim();
+        VentanaPedidosAPagar vPedidosPagar = new VentanaPedidosAPagar(this, codigoEmpleado);
         vPedidosPagar.setVisible(true);
         this.setVisible(false);
 
