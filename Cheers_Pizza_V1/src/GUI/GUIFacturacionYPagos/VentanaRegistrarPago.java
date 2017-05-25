@@ -8,6 +8,7 @@ package GUI.GUIFacturacionYPagos;
 import AccesoDatosORM.AdaptadorEmpleadoControlador;
 import AccesoDatosORM.AdaptadorFacturaControlador;
 import AccesoDatosORM.AdaptadorFacturaFormaPagoControlador;
+import AccesoDatosORM.AdaptadorItemFacturaControlador;
 import javax.swing.JFrame;
 import java.util.ArrayList;
 import java.time.LocalTime;
@@ -18,6 +19,7 @@ import AccesoDatosORM.AdaptadorPedidoItemControlador;
 import Administracion.Empleado;
 import Administracion.Factura;
 import Administracion.Factura_FormaPago;
+import Administracion.ItemFactura;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -33,10 +35,13 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
      */
     JFrame ventanaAnterior;
     Pedido pedido = new Pedido();
+    String codigoEmpleado;
+    List<ItemFactura> itemsFactura = new ArrayList<>();
     AdaptadorPedidoItemControlador controladorPedidoItem = new AdaptadorPedidoItemControlador();
     AdaptadorEmpleadoControlador controladorEmpleado = new AdaptadorEmpleadoControlador();
     AdaptadorFacturaControlador controladorFactura = new AdaptadorFacturaControlador();
     AdaptadorFacturaFormaPagoControlador controladorFacturaFormaPago = new AdaptadorFacturaFormaPagoControlador();
+    AdaptadorItemFacturaControlador controladorItemFactura = new AdaptadorItemFacturaControlador();
     double precioNeto;
     double total;
     double descuento;
@@ -45,12 +50,14 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
     Factura factura;
     String operacion;
 
-    public VentanaRegistrarPago(JFrame anterior, Pedido pedido, Factura factura, String operacion) {
+    public VentanaRegistrarPago(JFrame anterior, Pedido pedido, List<ItemFactura> itemsFactura, Factura factura, String operacion, String codEmpleado) {
         super("Registro de Pago");
         initComponents();
 
         this.ventanaAnterior = anterior;
         this.pedido = pedido;
+        this.itemsFactura = itemsFactura;
+        this.codigoEmpleado = codEmpleado;
         this.factura = factura;
         this.precioNeto = pedido.getTotal();
         this.total = pedido.getTotal();
@@ -110,7 +117,8 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
             lTotal.setText("" + total);
             lIDCliente.setText(pedido.getCliente().getId());
         }
-    }
+    }    
+    
 
     public void llenarTablaItems() {
 
@@ -145,6 +153,33 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No hay items registrados", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
+    }
+    
+    public void registrarItemsFactura(List<Pedido_Item> items, Factura factura){
+        
+        ItemFactura itemFact;
+        Long codigo;
+        String nombre;
+        String categoria;
+        String descripcion;
+        String fotografia;
+        double precioActual;
+        
+        for(int i = 0; i < items.size(); i++){
+            
+            //System.out.println("Código item: " + codigo);
+            nombre = items.get(i).getItem().getNombre();
+            //System.out.println("Nombre item: " + nombre);
+            categoria = items.get(i).getItem().getCategoria().getNombre();
+            descripcion = items.get(i).getItem().getDescripcion();
+            fotografia = items.get(i).getItem().getFotografia();
+            precioActual = items.get(i).getItem().getPrecioActual();
+            
+            itemFact = new ItemFactura(nombre, descripcion, precioActual, fotografia, categoria, factura);
+            
+            controladorItemFactura.crearItemFactura(itemFact);           
+        }
+        
     }
 
     /**
@@ -579,9 +614,10 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         String formaPago = cbFormaPago.getSelectedItem().toString();
         String tipoPago1;
         String tipoPago2;
-        Factura factura;
-        Factura_FormaPago facturaFormaPago;
-        Empleado cajero = controladorEmpleado.obtenerEmpleado("1424599");        
+        Factura factura = new Factura();
+        List<Pedido_Item> items = pedido.getPedidoItems();
+        Factura_FormaPago facturaFormaPago;        
+        Empleado cajero = controladorEmpleado.obtenerEmpleado(codigoEmpleado);        
         double impuestos = Double.parseDouble(lImpuesto.getText());
         double propinas = Double.parseDouble(lPropina.getText());
         double descuentos = Double.parseDouble(lDescuento.getText());
@@ -613,6 +649,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         controladorFactura.crearFactura(factura);
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                        registrarItemsFactura(items, factura);
                     
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -629,6 +666,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         controladorFactura.crearFactura(factura);
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                        registrarItemsFactura(items, factura);
                     
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -644,6 +682,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         controladorFactura.crearFactura(factura);
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                        registrarItemsFactura(items, factura);
                     
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -685,6 +724,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro2), monto2);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                        registrarItemsFactura(items, factura);
                     
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -704,6 +744,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro2), monto2);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                        registrarItemsFactura(items, factura);
                     
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -716,7 +757,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Las cantidades ingresadas deben sumar un valor igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
             }
-        }        
+        }     
 
     }//GEN-LAST:event_bFinalizarActionPerformed
 
@@ -834,7 +875,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaRegistrarPago(null, null, null, null).setVisible(true);
+                new VentanaRegistrarPago(null, null, null, null, null, null).setVisible(true);
             }
         });
     }

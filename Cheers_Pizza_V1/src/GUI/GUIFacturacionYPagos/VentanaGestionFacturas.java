@@ -7,8 +7,10 @@ package GUI.GUIFacturacionYPagos;
 
 import AccesoDatosORM.AdaptadorFacturaControlador;
 import Administracion.Factura;
+import Administracion.ItemFactura;
 import Administracion.Pedido;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -26,13 +28,14 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
     JFrame ventanaAnterior;
     AdaptadorFacturaControlador controladorFactura = new AdaptadorFacturaControlador();
     TableRowSorter trsFiltro;
+    String codigoEmpleado;
     
-    
-    public VentanaGestionFacturas(JFrame anterior) {
+    public VentanaGestionFacturas(JFrame anterior, String codEmpleado) {
         super("Gestión de Facturas");
         initComponents();
         
         this.ventanaAnterior = anterior;
+        this.codigoEmpleado = codEmpleado;
         setLocationRelativeTo(null);
         
         llenarTablaFacturas();
@@ -277,9 +280,10 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
             
             Factura factura = controladorFactura.obtenerFactura(numeroFactura);
             Pedido pedido = factura.getPedido();
+            List<ItemFactura> items = factura.getItemsFactura();
             
             
-            VentanaRegistrarPago ventanaRegistrarPago = new VentanaRegistrarPago(this, pedido, factura, "Visualizar");
+            VentanaRegistrarPago ventanaRegistrarPago = new VentanaRegistrarPago(this, pedido, items,factura, "Visualizar", codigoEmpleado);
             ventanaRegistrarPago.setVisible(true);
             this.setVisible(false);
 
@@ -331,7 +335,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaGestionFacturas(null).setVisible(true);
+                new VentanaGestionFacturas(null,null).setVisible(true);
             }
         });
     }
