@@ -65,7 +65,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             cbSucursales.addItem(categoria);
         }
 
-        defaultImage();
+        //defaultImage();
 
         if (operacion.equals("Modificacion")) {
 

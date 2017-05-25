@@ -61,7 +61,7 @@ public class VentanaRegistrarModificarItem extends javax.swing.JFrame {
             cbCategoria.addItem(categoria);
         }
 
-        defaultImage();
+        //defaultImage();
 
         if (operacion.equals("Modificacion")) {
 
