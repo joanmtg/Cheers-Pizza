@@ -269,7 +269,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
 
         int filasSeleccionadas = tablaFacturas.getSelectedRowCount();
 
-        if(filasSeleccionadas != -1){
+        if(filasSeleccionadas == 1){
             
             int filaSeleccionada = tablaFacturas.getSelectedRow();
             
