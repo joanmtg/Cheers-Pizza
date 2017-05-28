@@ -605,8 +605,12 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
-        this.dispose();
-        ventanaAnterior.setVisible(true);
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la operación?");
+
+        if (opcion == JOptionPane.YES_OPTION){            
+            this.dispose();
+            ventanaAnterior.setVisible(true);           
+        }       
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
