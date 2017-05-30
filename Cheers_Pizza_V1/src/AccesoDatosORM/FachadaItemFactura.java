@@ -1,6 +1,5 @@
  /**
  * Proyecto Desarrollo de Software II
- * Fecha de entrega: 19/04/2017
  * Universidad del Valle
  * EISC
  *

@@ -1,6 +1,5 @@
 /**
  * Proyecto Desarrollo de Software II
- * Fecha de entrega: 19/04/2017
  * Universidad del Valle
  * EISC
  *
@@ -18,7 +17,9 @@
 package AccesoDatosORM;
 
 import Administracion.Sucursal;
+import java.math.BigInteger;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -55,6 +56,32 @@ public class SucursalJpaController {
     public List<Sucursal> findAll(){
         List<Sucursal> sucursales = fachada.findAll();
         return sucursales;
+    }
+    
+    public List<String> sucursalSinGerente(){
+        
+        fachada.getEntityManager().getTransaction().begin();
+        String join = "SELECT nombre from sucursal EXCEPT "
+                + "(SELECT nombre from sucursal NATURAL JOIN "
+                + "(SELECT cod_sucursal as codigo FROM empleado where cargo = 'Gerente')"
+                + " as sub1);";
+        Query query = fachada.getEntityManager().createNativeQuery(join);
+        List<String> sucursales = query.getResultList();
+        fachada.getEntityManager().getTransaction().commit();
+        
+        return sucursales;
+    }
+    
+    public BigInteger obtenerCodigoSucursal(String nombreSucursal){
+        
+        fachada.getEntityManager().getTransaction().begin();
+        String join = "SELECT codigo from sucursal "
+                + "WHERE nombre = '" + nombreSucursal + "';";
+        Query query = fachada.getEntityManager().createNativeQuery(join);
+        BigInteger sucursal = (BigInteger) query.getSingleResult();
+        fachada.getEntityManager().getTransaction().commit();
+        
+        return sucursal;
     }
     
     

@@ -1,7 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Proyecto Desarrollo de Software II
+ * Universidad del Valle
+ * EISC
+ *
+ * Integrantes: 
+ *
+ * Jhonier Andrés Calero Rodas		1424599
+ * Fabio Andrés Castañeda Duarte	1424386
+ * Juan Pablo Moreno Muñoz		1423437
+ * Joan Manuel Tovar Guzmán		1423124
+ *
+ * file: VentanaRegistrarModificarEmpleado.java
+ * 
  */
 package GUI.GUIUsuarios;
 
@@ -10,6 +20,8 @@ import AccesoDatosORM.AdaptadorSucursalControlador;
 import Administracion.Empleado;
 import Administracion.Sucursal;
 import GUI.GUIItems.VentanaRegistrarModificarItem;
+import GUI.VentanaCajero;
+import GUI.VentanaMesero;
 import Validaciones.Validaciones;
 import Validaciones.Encriptar;
 import java.awt.Image;
@@ -18,6 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,6 +38,7 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.persistence.EntityExistsException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -57,15 +71,17 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         this.ventanaAnterior = anterior;
         this.operacion = operacion;
         this.empleado = empleado;
-
-        ArrayList<Sucursal> sucursales = controladorSucursal.obtenerTodasLasSucursales();
-
-        for (int i = 0; i < sucursales.size(); i++) {
-            String categoria = sucursales.get(i).getNombre();
-            cbSucursales.addItem(categoria);
-        }
+        
+        ponerTodasLasSucursales();
 
         defaultImage();
+        
+        String cargo = this.empleado.getCargo();
+        if(cargo.equals("Mesero") || cargo.equals("Cajero")){
+            System.out.println("El cargo es: "+cargo);
+            cbCargo.setEnabled(false);
+            cbSucursales.setEnabled(false);
+        }
 
         if (operacion.equals("Modificacion")) {
 
@@ -160,11 +176,11 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lNombre = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
         LTipoID = new javax.swing.JLabel();
-        cbTipoID = new javax.swing.JComboBox<String>();
+        cbTipoID = new javax.swing.JComboBox<>();
         lIdentificacion = new javax.swing.JLabel();
         tfIdentificacion = new javax.swing.JTextField();
         lApellidos = new javax.swing.JLabel();
-        cbCargo = new javax.swing.JComboBox<String>();
+        cbCargo = new javax.swing.JComboBox<>();
         lCargo = new javax.swing.JLabel();
         lCargo1 = new javax.swing.JLabel();
         lTelefono = new javax.swing.JLabel();
@@ -175,7 +191,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         tfDireccion = new javax.swing.JTextField();
         bCambiarFoto = new javax.swing.JButton();
         lSucursal = new javax.swing.JLabel();
-        cbSucursales = new javax.swing.JComboBox<String>();
+        cbSucursales = new javax.swing.JComboBox<>();
         lInicio = new javax.swing.JLabel();
         lFin = new javax.swing.JLabel();
         spHoraInicio = new javax.swing.JSpinner();
@@ -218,7 +234,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         LTipoID.setForeground(new java.awt.Color(255, 255, 255));
         LTipoID.setText("Tipo de ID:");
 
-        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
+        cbTipoID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo", "Cédula de ciudadanía", "NIT" }));
         cbTipoID.setPreferredSize(new java.awt.Dimension(127, 30));
 
         lIdentificacion.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
@@ -236,7 +252,12 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lApellidos.setForeground(new java.awt.Color(255, 255, 255));
         lApellidos.setText("Apellidos:");
 
-        cbCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
+        cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un cargo", "Gerente", "Mesero", "Cajero" }));
+        cbCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCargoActionPerformed(evt);
+            }
+        });
 
         lCargo.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lCargo.setForeground(new java.awt.Color(255, 255, 255));
@@ -275,7 +296,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         lSucursal.setForeground(new java.awt.Color(255, 255, 255));
         lSucursal.setText("Sucursal:");
 
-        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una sucursal" }));
+        cbSucursales.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una sucursal" }));
 
         lInicio.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lInicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -494,9 +515,20 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
         this.dispose();
-        VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
-        ventanaEmpleados.llenarTablaEmpleados();
-        ventanaEmpleados.setVisible(true);
+        
+        if(empleado.getCargo().equals("Mesero")){
+            VentanaMesero ventMesero = (VentanaMesero) ventanaAnterior;
+            ventMesero.setVisible(true);
+        } else if(empleado.getCargo().equals("Cajero")){
+            VentanaCajero ventCajero = (VentanaCajero) ventanaAnterior;
+            ventCajero.setVisible(true);
+        }
+        else{//Gerente
+            VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
+            ventanaEmpleados.llenarTablaEmpleados();
+            ventanaAnterior.setVisible(true);
+        }
+        
 
     }//GEN-LAST:event_bAtrasActionPerformed
 
@@ -534,63 +566,77 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "La contraseña no debe exceder los 50 caracteres", "Warning", JOptionPane.WARNING_MESSAGE);
 
         } else if (tfTelefono.getText().length() != 7 && tfTelefono.getText().length() != 10) {
-            
+
             JOptionPane.showMessageDialog(null, "Debe ingresar un número de teléfono válido", "Warning", JOptionPane.WARNING_MESSAGE);
 
+        } else if (!validacion.esAlfanumerico(tfPassword.getText())) {
+
+            JOptionPane.showMessageDialog(null, "Debe ingresar una contraseña alfanumérica", "Warning", JOptionPane.WARNING_MESSAGE);
+
         } else {
-            // Obteniendo los campos
-            String tipoDocumento = (String) cbTipoID.getSelectedItem();
-            String identificacion = tfIdentificacion.getText();
-            String nombre = tfNombre.getText();
-            String apellidos = tfApellidos.getText();
-            String telefono = tfTelefono.getText();
-            String direccion = tfDireccion.getText();
-            String cargo = (String) cbCargo.getSelectedItem();
 
-            LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
-            LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
-
-            Long codSucursal = (long) cbSucursales.getSelectedIndex();
-            Sucursal sucursal = controladorSucursal.obtenerSucursal(codSucursal);
-
-            BufferedImage img = null;
             try {
-                img = ImageIO.read(new File(ficheroImagen.toString()));
-            } catch (IOException ex) {
-                Logger.getLogger(VentanaRegistrarModificarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            String image_string = encodeImageToString(img);
+                // Obteniendo los campos
+                String tipoDocumento = (String) cbTipoID.getSelectedItem();
+                String identificacion = tfIdentificacion.getText();
+                String nombre = tfNombre.getText();
+                String apellidos = tfApellidos.getText();
+                String telefono = tfTelefono.getText();
+                String direccion = tfDireccion.getText();
+                String cargo = (String) cbCargo.getSelectedItem();
 
-            String password = tfPassword.getText();
-            //Se procede a encriptar la contraseña
-            String pass_encriptada = encriptador.encriptar(password);
+                LocalTime horaInicio = LocalTime.of((Integer) spHoraInicio.getValue(), 0);
+                LocalTime horaFin = LocalTime.of((Integer) spHoraFin.getValue(), 0);
 
-            Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, pass_encriptada, horaInicio, horaFin, image_string, sucursal);
+                /*Long codSucursal = (long) cbSucursales.getSelectedIndex();*/
+                String nombre_sucursal = cbSucursales.getSelectedItem().toString();
+                Long codSucursal = (Long) controladorSucursal.obtenerCodigoSucursal(nombre_sucursal).longValue();
+                Sucursal sucursal = controladorSucursal.obtenerSucursal(codSucursal);
 
-            if (operacion.equalsIgnoreCase("Registro")) {
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new File(ficheroImagen.toString()));
+                } catch (IOException ex) {
+                    Logger.getLogger(VentanaRegistrarModificarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                String image_string = encodeImageToString(img);
 
-                controladorEmpleado.crearEmpleado(nuevoEmpleado);
-                JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                String password = tfPassword.getText();
+                //Se procede a encriptar la contraseña
+                String pass_encriptada = encriptador.encriptar(password);
+
+                Empleado nuevoEmpleado = new Empleado(identificacion, tipoDocumento, nombre, apellidos, direccion, telefono, cargo, pass_encriptada, horaInicio, horaFin, image_string, sucursal);
+
+                if (operacion.equalsIgnoreCase("Registro")) {
+
+                    controladorEmpleado.crearEmpleado(nuevoEmpleado);
+                    JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue registrado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+
+                } else if (operacion.equalsIgnoreCase("Modificacion")) {
+
+                    if (!nuevaImagen) {
+                        nuevoEmpleado.setFotoURL(empleado.getFotoURL()); //Si la foto no cambió, se asigna la anterior
+                    }
+
+                    controladorEmpleado.editarEmpleado(nuevoEmpleado);
+                    JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+
+                    VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
+                    ventanaEmpleados.empleadoActual = nuevoEmpleado;
+                    ventanaEmpleados.llenarTablaEmpleados();
+                    ventanaEmpleados.setVisible(true);
+                    this.setVisible(false);
+
+                }
+            } catch (EntityExistsException e) {
+                JOptionPane.showMessageDialog(null, "El usuario con ID " + tfIdentificacion.getText() + " ya se encuentra registado", "Warning", JOptionPane.WARNING_MESSAGE);
                 limpiarCampos();
-
-            } else if (operacion.equalsIgnoreCase("Modificacion")) {
-
-                if(!nuevaImagen){
-                    nuevoEmpleado.setFotoURL(empleado.getFotoURL()); //Si la foto no cambió, se asigna la anterior
-                }  
-                
-                controladorEmpleado.editarEmpleado(nuevoEmpleado);
-                JOptionPane.showMessageDialog(null, "El empleado " + nuevoEmpleado.getNombre() + " fue modificado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (javax.persistence.RollbackException e) {
+                JOptionPane.showMessageDialog(null, "El usuario con ID " + tfIdentificacion.getText() + " ya se encuentra registado", "Warning", JOptionPane.WARNING_MESSAGE);
                 limpiarCampos();
-
-                VentanaGestionEmpleados ventanaEmpleados = (VentanaGestionEmpleados) ventanaAnterior;
-                ventanaEmpleados.empleadoActual = nuevoEmpleado;
-                ventanaEmpleados.llenarTablaEmpleados();
-                ventanaEmpleados.setVisible(true);
-                this.setVisible(false);
-
             }
-
         }
 
     }//GEN-LAST:event_bFinalizarActionPerformed
@@ -640,6 +686,30 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         validacion.validarNumeros(evt);
     }//GEN-LAST:event_spHoraFinKeyTyped
 
+    private void cbCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCargoActionPerformed
+        // TODO add your handling code here:
+        if (cbCargo.getSelectedIndex() == 1) {
+            //Primero se limpia el cb
+            cbSucursales.removeAllItems();
+            cbSucursales.addItem("Seleccione una sucursal");
+            
+            //si elige gerente, solo se muestran las sucursales que no tienen gerente
+            ArrayList<String> sucursales = controladorSucursal.obtenerSucursalesSinGerente();
+
+            for (int i = 0; i < sucursales.size(); i++) {
+                String categoria = sucursales.get(i);
+                cbSucursales.addItem(categoria);
+            }
+        }
+        else{
+            //Se ponen todas las sucursales
+            //Primero se limpia el cb
+            cbSucursales.removeAllItems();
+            cbSucursales.addItem("Seleccione la sucursal");
+            ponerTodasLasSucursales();
+        }
+    }//GEN-LAST:event_cbCargoActionPerformed
+
     public void limpiarCampos() {
 
         cbTipoID.setSelectedIndex(0);
@@ -648,6 +718,8 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         tfApellidos.setText("");
         tfTelefono.setText("");
         tfDireccion.setText("");
+        //Se ponen todas las sucursales
+        ponerTodasLasSucursales();
         cbCargo.setSelectedIndex(0);
         cbSucursales.setSelectedIndex(0);
         tfPassword.setText("");
@@ -656,6 +728,15 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
         defaultImage();
 
+    }
+    
+    public void ponerTodasLasSucursales(){
+        ArrayList<Sucursal> sucursales = controladorSucursal.obtenerTodasLasSucursales();
+
+        for (int i = 0; i < sucursales.size(); i++) {
+            String categoria = sucursales.get(i).getNombre();
+            cbSucursales.addItem(categoria);
+        }
     }
 
     public void defaultImage() {
