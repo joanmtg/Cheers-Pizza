@@ -1,6 +1,5 @@
 /**
  * Proyecto Desarrollo de Software II
- * Fecha de entrega: 19/04/2017
  * Universidad del Valle
  * EISC
  *
@@ -11,7 +10,7 @@
  * Juan Pablo Moreno Muñoz		1423437
  * Joan Manuel Tovar Guzmán		1423124
  *
- * file: EmpleadoJpaController.java
+ * file: CategoriaJpaController.java
  * 
  */
 

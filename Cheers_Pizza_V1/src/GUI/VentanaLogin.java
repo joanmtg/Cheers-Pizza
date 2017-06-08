@@ -1,7 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Proyecto Desarrollo de Software II
+ * Universidad del Valle
+ * EISC
+ *
+ * Integrantes: 
+ *
+ * Jhonier Andrés Calero Rodas		1424599
+ * Fabio Andrés Castañeda Duarte	1424386
+ * Juan Pablo Moreno Muñoz		1423437
+ * Joan Manuel Tovar Guzmán		1423124
+ *
+ * file: VentanaLogin.java
+ * 
  */
 package GUI;
 
@@ -65,7 +75,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         panelPrincipal.setBackground(new java.awt.Color(89, 30, 27));
 
         tfUser.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
-        tfUser.setText("username");
         tfUser.setPreferredSize(new java.awt.Dimension(53, 30));
         tfUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -77,7 +86,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         });
 
         tfPasswd.setFont(new java.awt.Font("Eras Medium ITC", 0, 16)); // NOI18N
-        tfPasswd.setText("jPasswordField1");
         tfPasswd.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfPasswdKeyPressed(evt);
@@ -204,15 +212,32 @@ public class VentanaLogin extends javax.swing.JFrame {
                 } catch (Exception ex) {
                     Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                //
-                
                 
                 //De lo contrario, el username(id) dado existe
                 if (empleadoAIngresar.getPassword().equals(pass_desencriptada)) {
                     //En caso de que el username y la contraseña concuerde
-                    VentanaPrincipal ventanaPpal = new VentanaPrincipal(this, empleadoAIngresar);
-                    ventanaPpal.setVisible(true);
-                    this.setVisible(false);
+                    //Se evalúa que tipo de Empleado acaba de ingresar a la base de datos
+                    String cargo = empleadoAIngresar.getCargo();
+                    System.out.println(cargo);
+                    
+                    switch(cargo){
+                        case "Gerente":
+                            VentanaGerente ventGerente = new VentanaGerente(this, empleadoAIngresar);
+                            ventGerente.setVisible(true);
+                            this.setVisible(false);
+                            break;
+                        case "Mesero":
+                            VentanaMesero ventMesero = new VentanaMesero(this, empleadoAIngresar);
+                            ventMesero.setVisible(true);
+                            this.setVisible(false);
+                            break;
+                        case "Cajero":
+                            VentanaCajero ventCajero = new VentanaCajero(this, empleadoAIngresar);
+                            ventCajero.setVisible(true);
+                            this.setVisible(false);
+                            break;
+                    }
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     tfPasswd.setText("");
@@ -280,13 +305,15 @@ public class VentanaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaLogin().setVisible(true);
+               VentanaLogin vLogin = new VentanaLogin();
+               vLogin.setVisible(true);
+               
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bLogin;
+    public javax.swing.JButton bLogin;
     private javax.swing.JLabel lInfoIngreso;
     private javax.swing.JLabel lLogo;
     private javax.swing.JLabel lPass;

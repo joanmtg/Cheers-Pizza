@@ -17,6 +17,7 @@
 package AccesoDatosORM;
 
 import Administracion.Sucursal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**
@@ -57,6 +58,16 @@ public class AdaptadorSucursalControlador {
     public ArrayList<Sucursal> obtenerTodasLasSucursales(){
         ArrayList<Sucursal> sucursales = (ArrayList)controlador.findAll();
         return sucursales;
+    }
+    
+    public ArrayList<String> obtenerSucursalesSinGerente(){
+        ArrayList<String> sucursales = (ArrayList)controlador.sucursalSinGerente();
+        return sucursales;
+    }
+    
+    public BigInteger obtenerCodigoSucursal(String nombre){
+        BigInteger cod_sucursal = controlador.obtenerCodigoSucursal(nombre);
+        return cod_sucursal;
     }
     
 }

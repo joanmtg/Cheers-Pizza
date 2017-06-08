@@ -1,6 +1,5 @@
 /**
  * Proyecto Desarrollo de Software II
- * Fecha de entrega: 19/04/2017
  * Universidad del Valle
  * EISC
  *
@@ -111,6 +110,34 @@ public class Validaciones {
  
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+        
+    }
+    
+    //Verifica que el string ingresado contiene letras Y numeros
+    public boolean esAlfanumerico(String pass){
+        
+        boolean tieneLetras = false;
+        boolean tieneNumeros = false;
+        
+        for (int i = 0; i < pass.length(); i++) {
+            
+            //obtengo cada uno de los chart
+            char c = pass.charAt(i);
+            if(Character.isAlphabetic(c)){
+                tieneLetras = true;
+            }
+            else if(Character.isDigit(c)){
+                tieneNumeros = true;
+            }
+            
+            //Pregunto si ya los 2 booleanos son true
+            if(tieneLetras && tieneNumeros){
+                return true;
+            }
+            
+        }
+        
+        return false;
         
     }
     
