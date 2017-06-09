@@ -19,6 +19,7 @@ import AccesoDatosORM.AdaptadorEmpleadoControlador;
 import Administracion.Empleado;
 import Administracion.Item;
 import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
+import GUI.VentanaGerente;
 import GUI.VentanaPrincipal;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -294,10 +295,10 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
 
         this.dispose();
-        VentanaPrincipal vPrin = (VentanaPrincipal) ventanaAnterior;
-        vPrin.empleadoIngresado = empleadoActual;
-        vPrin.colocarInfoEmpleado();
-        vPrin.setVisible(true);
+        VentanaGerente vGerente = (VentanaGerente) ventanaAnterior;
+        vGerente.empleadoIngresado = empleadoActual;
+        vGerente.colocarInfoEmpleado();
+        vGerente.setVisible(true);
         
     }//GEN-LAST:event_bAtrasActionPerformed
 
