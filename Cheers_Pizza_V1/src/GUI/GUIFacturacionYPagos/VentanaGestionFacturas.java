@@ -19,6 +19,8 @@ import AccesoDatosORM.AdaptadorFacturaControlador;
 import Administracion.Factura;
 import Administracion.ItemFactura;
 import Administracion.Pedido;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -70,7 +72,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
                 Object[] fila = new Object[8];
                 
                 fila[0] = factura.getNumero();
-                fila[1] = factura.getHoraPago();
+                fila[1] = factura.getHoraPago().format(DateTimeFormatter.ofPattern("H:m:s"));
                 fila[2] = factura.getImpuestos();
                 fila[3] = factura.getPropina();
                 fila[4] = factura.getDescuento();
@@ -86,7 +88,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         }else {
             JOptionPane.showMessageDialog(null, "No hay facturas registradas", "Warning", JOptionPane.WARNING_MESSAGE);
         }        
-    }   
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -16,7 +16,7 @@
 
 package Administracion;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import AccesoDatosORM.*;
 
 /**
@@ -33,7 +33,7 @@ public class FabricaPedidos {
     }
     
         
-    public Pedido crearPedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, Mesa mesa, 
+    public Pedido crearPedido(String tipoPedido, LocalDateTime horaInicio, LocalDateTime horaEntrega, Mesa mesa, 
             Empleado mesero, Cliente cliente, Sucursal sucursal, double total, boolean entregado){
         
         Pedido pedidoGenerado = null;

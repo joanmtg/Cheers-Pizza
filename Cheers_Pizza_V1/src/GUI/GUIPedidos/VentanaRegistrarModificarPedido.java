@@ -19,7 +19,7 @@ import Administracion.Pedido;
 import AccesoDatosORM.*;
 import Administracion.*;
 import java.math.BigInteger;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -442,7 +442,7 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
                 Empleado mesero = adaptadorEmpleado.obtenerEmpleado(tfIDMesero.getText());
 
                 //Se obtiene la hora actual
-                LocalTime horaInicio = LocalTime.now();
+                LocalDateTime horaInicio = LocalDateTime.now();
                 System.out.println(horaInicio);
 
                 String idCliente = tfIDCliente.getText();
@@ -485,7 +485,7 @@ public class VentanaRegistrarModificarPedido extends javax.swing.JFrame {
                 pedido.setEntregado(true);
 
                 //Se pone la hora de la entrega
-                LocalTime horaEntrega = LocalTime.now();
+                LocalDateTime horaEntrega = LocalDateTime.now();
                 pedido.setHoraEntrega(horaEntrega);
 
                 JOptionPane.showMessageDialog(null, "El pedido fue entregado completamente con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
