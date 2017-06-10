@@ -91,8 +91,8 @@ INSERT INTO mesa (numero, capacidad) VALUES (10, 6);
 -- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: joanmatg
 --
 
-INSERT INTO pedido (numero, entregado, hora_entrega, hora_inicio, tipo_pedido, total, id_cliente, numero_mesa, id_empleado, cod_sucursal) VALUES (1, false, NULL, '\\254\\355\\000\\005sr\\000\\015java.time.Ser\\225]\\204\\272\\033"H\\262\\014\\000\\000xpw\\010\\004\\017\\004\\036\\015i:@x', 'A la Mesa', 44300, '123', 3, '1423437', 5);
-INSERT INTO pedido (numero, entregado, hora_entrega, hora_inicio, tipo_pedido, total, id_cliente, numero_mesa, id_empleado, cod_sucursal) VALUES (2, false, NULL, '\\254\\355\\000\\005sr\\000\\015java.time.Ser\\225]\\204\\272\\033"H\\262\\014\\000\\000xpw\\010\\004\\017\\005\\0150\\031\\327\\300x', 'Para llevar', 57500, '123', NULL, NULL, 2);
+INSERT INTO pedido (numero, entregado, hora_entrega, hora_inicio, tipo_pedido, total, id_cliente, numero_mesa, id_empleado, cod_sucursal) VALUES (1, false, NULL, '2017-05-19 10:23:54', 'A la Mesa', 44300, '123', 3, '1423437', 5);
+INSERT INTO pedido (numero, entregado, hora_entrega, hora_inicio, tipo_pedido, total, id_cliente, numero_mesa, id_empleado, cod_sucursal) VALUES (2, false, NULL, '2017-05-19 10:34:54', 'Para llevar', 57500, '123', NULL, NULL, 2);
 
 
 --

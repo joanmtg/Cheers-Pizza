@@ -18,7 +18,9 @@ package GUI.GUIPedidos;
 import Administracion.*;
 import AccesoDatosORM.*;
 import Administracion.Mesa;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -50,6 +52,17 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         trsFiltro = new TableRowSorter(tablaPedidos.getModel());
         tablaPedidos.setRowSorter(trsFiltro);
     }
+    
+    public String extraerHoraDateTime(LocalDateTime dateTime){
+        
+        if(dateTime != null){            
+            return dateTime.format(DateTimeFormatter.ofPattern("H:m:s"));            
+        }
+        else {
+            return null;
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -409,8 +422,8 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
 
                 fila[0] = pedidos.get(i).getNumero();
                 fila[1] = pedidos.get(i).getTipoPedido();
-                fila[2] = pedidos.get(i).getHoraInicio();
-                fila[3] = pedidos.get(i).getHoraEntrega();
+                fila[2] = extraerHoraDateTime(pedidos.get(i).getHoraInicio());
+                fila[3] = extraerHoraDateTime(pedidos.get(i).getHoraEntrega());
                 Mesa mesa = pedidos.get(i).getMesa();
                 if (mesa == null) {
                     fila[4] = null;

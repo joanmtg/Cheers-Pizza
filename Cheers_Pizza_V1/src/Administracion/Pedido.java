@@ -18,6 +18,7 @@
 package Administracion;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +53,10 @@ public class Pedido implements Serializable {
     private String tipoPedido;
     
     @Column(name = "hora_inicio", nullable = false)
-    private LocalTime horaInicio;
+    private LocalDateTime horaInicio;
     
     @Column(name = "hora_entrega")
-    private LocalTime horaEntrega;
+    private LocalDateTime horaEntrega;
     
     @Column(name = "entregado", nullable = false)
     private boolean entregado;
@@ -89,7 +90,7 @@ public class Pedido implements Serializable {
 
     //Constructor N°2
 
-    public Pedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, boolean entregado, double total, Mesa mesa, Cliente cliente, Empleado mesero, Sucursal sucursalPedido) {
+    public Pedido(String tipoPedido, LocalDateTime horaInicio, LocalDateTime horaEntrega, boolean entregado, double total, Mesa mesa, Cliente cliente, Empleado mesero, Sucursal sucursalPedido) {
         this.tipoPedido = tipoPedido;
         this.horaInicio = horaInicio;
         this.horaEntrega = horaEntrega;
@@ -104,7 +105,7 @@ public class Pedido implements Serializable {
     
     //Constructor N°3
 
-    public Pedido(String tipoPedido, LocalTime horaInicio, LocalTime horaEntrega, boolean entregado, double total, Cliente cliente, Sucursal sucursalPedido) {
+    public Pedido(String tipoPedido, LocalDateTime horaInicio, LocalDateTime horaEntrega, boolean entregado, double total, Cliente cliente, Sucursal sucursalPedido) {
         this.tipoPedido = tipoPedido;
         this.horaInicio = horaInicio;
         this.horaEntrega = horaEntrega;
@@ -133,19 +134,19 @@ public class Pedido implements Serializable {
         this.tipoPedido = tipoPedido;
     }
 
-    public LocalTime getHoraInicio() {
+    public LocalDateTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setHoraInicio(LocalDateTime horaInicio) {
+        this.horaInicio = horaInicio;       
     }
 
-    public LocalTime getHoraEntrega() {
+    public LocalDateTime getHoraEntrega() {
         return horaEntrega;
     }
 
-    public void setHoraEntrega(LocalTime horaEntrega) {
+    public void setHoraEntrega(LocalDateTime horaEntrega) {
         this.horaEntrega = horaEntrega;
     }
 
