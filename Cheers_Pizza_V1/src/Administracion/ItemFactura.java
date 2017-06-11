@@ -53,8 +53,8 @@ public class ItemFactura implements Serializable{
     @Column(name = "precio", nullable = false)
     private double precioActual;
     
-    @Column(name = "foto", columnDefinition = "TEXT")
-    private String fotografia;
+    @Column(name = "cantidad")
+    private int cantidad;
     
     @Column(name = "categoria")
     private String categoria;
@@ -66,11 +66,11 @@ public class ItemFactura implements Serializable{
     public ItemFactura(){        
     }
     
-    public ItemFactura(String nombre, String descripcion, double precioActual, String fotografia, String categoria, Factura factura){        
+    public ItemFactura(String nombre, String descripcion, double precioActual, int cantidad, String categoria, Factura factura){        
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
-        this.fotografia = fotografia;
+        this.cantidad = cantidad;
         this.categoria = categoria;
         this.itemFactura = factura;        
     }
@@ -107,13 +107,14 @@ public class ItemFactura implements Serializable{
         this.precioActual = precioActual;
     }
 
-    public String getFotografia() {
-        return fotografia;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setFotografia(String fotografia) {
-        this.fotografia = fotografia;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
+
 
     public String getCategoria() {
         return categoria;
@@ -156,8 +157,10 @@ public class ItemFactura implements Serializable{
 
     @Override
     public String toString() {
-        return "ItemFactura{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", fotografia=" + fotografia + ", categoria=" + categoria + ", itemFactura=" + itemFactura + '}';
+        return "ItemFactura{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioActual=" + precioActual + ", cantidad=" + cantidad + ", categoria=" + categoria + ", itemFactura=" + itemFactura + '}';
     }
+
+    
 
     
     

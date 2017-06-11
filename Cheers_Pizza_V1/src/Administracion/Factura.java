@@ -18,7 +18,7 @@
 package Administracion;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -51,7 +51,7 @@ public class Factura implements Serializable {
     private Long numero;    
     
     @Column(name = "horaPago")
-    private LocalTime horaPago;
+    private LocalDateTime horaPago;
     
     @Column(name = "impuestos")
     private double impuestos;
@@ -87,7 +87,7 @@ public class Factura implements Serializable {
 
     //Constructor N°2
 
-    public Factura(LocalTime horaPago, double impuestos, double propina, double descuento, double totalPago, Empleado cajero, Pedido pedido) {
+    public Factura(LocalDateTime horaPago, double impuestos, double propina, double descuento, double totalPago, Empleado cajero, Pedido pedido) {
         this.horaPago = horaPago;
         this.impuestos = impuestos;
         this.pedido = pedido;
@@ -107,11 +107,11 @@ public class Factura implements Serializable {
         this.numero = numero;
     }
 
-    public LocalTime getHoraPago() {
+    public LocalDateTime getHoraPago() {
         return horaPago;
     }
 
-    public void setHoraPago(LocalTime horaPago) {
+    public void setHoraPago(LocalDateTime horaPago) {
         this.horaPago = horaPago;
     }
 

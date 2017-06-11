@@ -21,15 +21,15 @@ import AccesoDatosORM.AdaptadorFacturaFormaPagoControlador;
 import AccesoDatosORM.AdaptadorItemFacturaControlador;
 import javax.swing.JFrame;
 import java.util.ArrayList;
-import java.time.LocalTime;
 import Administracion.Pedido;
 import Administracion.Pedido_Item;
-import Administracion.Item;
 import AccesoDatosORM.AdaptadorPedidoItemControlador;
 import Administracion.Empleado;
 import Administracion.Factura;
 import Administracion.Factura_FormaPago;
 import Administracion.ItemFactura;
+import Reportes.Reportes;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -172,8 +172,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         String nombre;
         String categoria;
         String descripcion;
-        String fotografia;
+        int cantidad;
         double precioActual;
+        ArrayList<ItemFactura> itemsFactura = new ArrayList<>();
         
         for(int i = 0; i < items.size(); i++){
             
@@ -182,14 +183,14 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
             //System.out.println("Nombre item: " + nombre);
             categoria = items.get(i).getItem().getCategoria().getNombre();
             descripcion = items.get(i).getItem().getDescripcion();
-            fotografia = items.get(i).getItem().getFotografia();
+            cantidad = items.get(i).getCantidad();
             precioActual = items.get(i).getItem().getPrecioActual();
             
-            itemFact = new ItemFactura(nombre, descripcion, precioActual, fotografia, categoria, factura);
-            
+            itemFact = new ItemFactura(nombre, descripcion, precioActual, cantidad, categoria, factura);
+            itemsFactura.add(itemFact);
             controladorItemFactura.crearItemFactura(itemFact);           
         }
-        
+        factura.setItemsFactura(itemsFactura);
     }
 
     /**
@@ -638,7 +639,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         double totalPago = Double.parseDouble(lTotal.getText());
         double monto1;
         double monto2;
-        LocalTime horaPago = LocalTime.now();
+        LocalDateTime horaPago = LocalDateTime.now();
         Long numeroPedido = pedido.getNumero();
         int tipoPagoRegistro1;
         int tipoPagoRegistro2;
@@ -671,8 +672,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.llenarTablaPedidos();
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
-                    
-
+            
+                        Reportes newReport = new Reportes();
+                        newReport.reporteFactura(factura);
                     } else if (tipoPago1.equals("Crédito")) {
 
                         tipoPagoRegistro1 = 2;
@@ -705,6 +707,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
                     }
+                    
                 }else{
                     
                     JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
