@@ -101,7 +101,8 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaAgregarItem);
 
-        bAgregarItem.setText("Agregar Ítem");
+        bAgregarItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAgregarItem.png"))); // NOI18N
+        bAgregarItem.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAgregarItemPR.png"))); // NOI18N
         bAgregarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bAgregarItemActionPerformed(evt);
@@ -126,7 +127,7 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
                     .addGroup(panelInferiorLayout.createSequentialGroup()
                         .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bAgregarItem)
+                        .addComponent(bAgregarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))
                     .addGroup(panelInferiorLayout.createSequentialGroup()
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -152,11 +153,11 @@ public class VentanaAgregarItem extends javax.swing.JFrame {
                     .addComponent(tfFiltroNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bAgregarItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21))
+                    .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bAgregarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         lLogo.setBackground(new java.awt.Color(89, 30, 27));

@@ -96,22 +96,25 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="bAtras" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="bItems" min="-2" pref="120" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="bReportes" pref="120" max="32767" attributes="0"/>
-                                  <Component id="bEmpleados" max="32767" attributes="0"/>
-                                  <Component id="bMesas" max="32767" attributes="0"/>
+                                  <Component id="bEmpleados" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="bMesas" pref="0" max="32767" attributes="0"/>
+                                  <Component id="bReportes" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                              <EmptySpace pref="64" max="32767" attributes="0"/>
                               <Component id="bSucursales" min="-2" pref="120" max="-2" attributes="0"/>
+                              <EmptySpace pref="45" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="61" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -119,16 +122,18 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="bEmpleados" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="bMesas" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                          <Component id="bItems" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                          <Component id="bSucursales" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="bEmpleados" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="bSucursales" pref="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="bItems" pref="0" max="32767" attributes="0"/>
+                              <Component id="bMesas" min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="bReportes" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="bReportes" min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="bAtras" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
                   </Group>
@@ -138,7 +143,12 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="bItems">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Items"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bItems.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bItemsPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bItemsActionPerformed"/>
@@ -146,7 +156,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bEmpleados">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Empleados"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bEmpleados.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bEmpleadosPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bEmpleadosActionPerformed"/>
@@ -154,7 +169,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bSucursales">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Sucursales"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bSucursales.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bSucursalesPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSucursalesActionPerformed"/>
@@ -162,7 +182,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bMesas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mesas"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bMesas.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bMesasPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bMesasActionPerformed"/>
@@ -170,7 +195,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bReportes">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Reportes"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bReportes.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bReportesPR.png"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="bAtras">
