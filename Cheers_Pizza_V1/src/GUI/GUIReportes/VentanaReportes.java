@@ -6,6 +6,7 @@
 package GUI.GUIReportes;
 
 import Administracion.Empleado;
+import Reportes.Reportes;
 import javax.swing.*;
 
 /**
@@ -16,6 +17,7 @@ public class VentanaReportes extends javax.swing.JFrame {
 
     JFrame ventanaAnterior;
     Empleado empleadoActual;
+    Reportes reportes = new Reportes();
     
     public VentanaReportes(JFrame ventana, Empleado empleado) {
         super("Reportes");
@@ -225,15 +227,21 @@ public class VentanaReportes extends javax.swing.JFrame {
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bMasVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMasVendidosActionPerformed
-        // TODO add your handling code here:
+        
+        reportes.reporteTopMasVendidos(empleadoActual.getId(), empleadoActual.getNombre());
+        
     }//GEN-LAST:event_bMasVendidosActionPerformed
 
     private void bMenosVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMenosVendidosActionPerformed
-        // TODO add your handling code here:
+        
+        reportes.reporteTopMenosVendidos(empleadoActual.getId(), empleadoActual.getNombre());
+        
     }//GEN-LAST:event_bMenosVendidosActionPerformed
 
     private void bTiempoAtencionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTiempoAtencionActionPerformed
-        // TODO add your handling code here:
+        
+        reportes.reporteTiempoPromedioAtencion(empleadoActual.getId(), empleadoActual.getNombre());
+        
     }//GEN-LAST:event_bTiempoAtencionActionPerformed
 
     private void bIngresosDiariosSemanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIngresosDiariosSemanaActionPerformed
@@ -245,7 +253,9 @@ public class VentanaReportes extends javax.swing.JFrame {
     }//GEN-LAST:event_bIngresosDiariosSemanaActionPerformed
 
     private void bMeserosDelMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMeserosDelMesActionPerformed
-        // TODO add your handling code here:
+        
+        // Reporte en construcción
+        
     }//GEN-LAST:event_bMeserosDelMesActionPerformed
 
     private void bIngresosDiariosMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIngresosDiariosMesActionPerformed

@@ -21,6 +21,7 @@ import GUI.GUIItems.VentanaGestionItems;
 import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
 import GUI.GUIMesas.VentanaGestionMesas;
 import GUI.GUIPedidos.VentanaGestionPedidos;
+import GUI.GUIReportes.VentanaReportes;
 import GUI.GUISucursales.VentanaGestionSucursales;
 import GUI.GUIUsuarios.VentanaGestionEmpleados;
 import java.awt.Image;
@@ -113,6 +114,11 @@ public class VentanaGerente extends javax.swing.JFrame {
 
         bReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bReportes.png"))); // NOI18N
         bReportes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bReportesPR.png"))); // NOI18N
+        bReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bReportesActionPerformed(evt);
+            }
+        });
 
         bAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtras.png"))); // NOI18N
         bAtras.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bAtrasPR.png"))); // NOI18N
@@ -151,9 +157,8 @@ public class VentanaGerente extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(bItems, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(bMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(bItems, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(bMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(bReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -292,6 +297,14 @@ public class VentanaGerente extends javax.swing.JFrame {
         this.setVisible(false);
 
     }//GEN-LAST:event_bEmpleadosActionPerformed
+
+    private void bReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReportesActionPerformed
+        
+        VentanaReportes vReportes = new VentanaReportes(this, empleadoIngresado);
+        vReportes.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_bReportesActionPerformed
 
     public void colocarInfoEmpleado() {
         lIdentificacion.setText("Identificación: " + empleadoIngresado.getId());
