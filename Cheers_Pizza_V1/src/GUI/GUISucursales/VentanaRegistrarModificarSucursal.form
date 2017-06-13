@@ -29,10 +29,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="panelPrincipal" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="panelPrincipal" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -112,9 +109,9 @@
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="bLimpiar" min="-2" pref="98" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="bFinalizar" min="-2" pref="88" max="-2" attributes="0"/>
+                              <Component id="bLimpiar" min="-2" pref="120" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="bFinalizar" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="tfNombre" pref="137" max="32767" attributes="0"/>
@@ -122,7 +119,7 @@
                               <Component id="tfTelefono" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                      <EmptySpace pref="64" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -144,15 +141,15 @@
                           <Component id="lCodigo5" alignment="3" max="32767" attributes="0"/>
                           <Component id="tfTelefono" alignment="3" pref="30" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="bLimpiar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="bFinalizar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="bFinalizar" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <Component id="bAtras" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -173,7 +170,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bFinalizar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Finalizar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bFinalizar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bFinalizarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFinalizarActionPerformed"/>
@@ -181,7 +183,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bLimpiar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Limpiar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bLimpiar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bLimpiarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLimpiarActionPerformed"/>

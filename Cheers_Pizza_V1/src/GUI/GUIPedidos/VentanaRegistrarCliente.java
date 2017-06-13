@@ -81,14 +81,16 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
         panelInferior.setBackground(new java.awt.Color(89, 30, 27));
         panelInferior.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Ingrese los datos del cliente", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Eras Medium ITC", 0, 16), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        bFinalizar.setText("Finalizar");
+        bFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bFinalizar.png"))); // NOI18N
+        bFinalizar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bFinalizarPR.png"))); // NOI18N
         bFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bFinalizarActionPerformed(evt);
             }
         });
 
-        bFinalizar1.setText("Limpiar");
+        bFinalizar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLimpiar.png"))); // NOI18N
+        bFinalizar1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLimpiarPR.png"))); // NOI18N
         bFinalizar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bFinalizar1ActionPerformed(evt);
@@ -162,11 +164,10 @@ public class VentanaRegistrarCliente extends javax.swing.JFrame {
                             .addComponent(tfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)
-                                .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 48, Short.MAX_VALUE)))
+                                .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 69, Short.MAX_VALUE)))
                 .addGap(25, 25, 25)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tfApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)

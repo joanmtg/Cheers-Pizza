@@ -169,14 +169,16 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaPedidos);
 
-        bVerFacturas.setText("Ver Facturas");
+        bVerFacturas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bVerFacturas.png"))); // NOI18N
+        bVerFacturas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bVerFacturasPR.png"))); // NOI18N
         bVerFacturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bVerFacturasActionPerformed(evt);
             }
         });
 
-        bPagarPedido.setText("Realizar Pago");
+        bPagarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bRealizarPago.png"))); // NOI18N
+        bPagarPedido.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bRealizarPagoPR.png"))); // NOI18N
         bPagarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bPagarPedidoActionPerformed(evt);
@@ -212,14 +214,8 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
         panelInferiorLayout.setHorizontalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInferiorLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(151, 151, 151)
-                        .addComponent(bVerFacturas)
-                        .addGap(48, 48, 48)
-                        .addComponent(bPagarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelInferiorLayout.createSequentialGroup()
                         .addComponent(lFiltro)
                         .addGap(18, 18, 18)
@@ -229,9 +225,18 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(lIDCliente)
                         .addGap(18, 18, 18)
-                        .addComponent(tfFiltroIDCliente))
-                    .addComponent(jScrollPane1))
-                .addGap(25, 25, 25))
+                        .addComponent(tfFiltroIDCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInferiorLayout.createSequentialGroup()
+                        .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(panelInferiorLayout.createSequentialGroup()
+                                .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(156, 156, 156)
+                                .addComponent(bVerFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addComponent(bPagarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30))))
         );
         panelInferiorLayout.setVerticalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,11 +252,12 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
                         .addComponent(lFiltroCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bVerFacturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bPagarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bPagarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(bVerFacturas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21))
         );
 
@@ -266,14 +272,13 @@ public class VentanaPedidosAPagar extends javax.swing.JFrame {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(248, 248, 248)
-                        .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35)
+                .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(304, 304, 304))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

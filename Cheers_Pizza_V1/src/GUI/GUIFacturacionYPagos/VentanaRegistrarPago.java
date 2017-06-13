@@ -239,6 +239,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         panelPrincipal.setBackground(new java.awt.Color(89, 30, 27));
 
@@ -253,14 +254,16 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
             }
         });
 
-        bFinalizar.setText("Finalizar");
+        bFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bFinalizar.png"))); // NOI18N
+        bFinalizar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bFinalizarPR.png"))); // NOI18N
         bFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bFinalizarActionPerformed(evt);
             }
         });
 
-        bLimpiar.setText("Limpiar");
+        bLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLimpiar.png"))); // NOI18N
+        bLimpiar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLimpiarPR.png"))); // NOI18N
 
         tablaItemsPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -473,7 +476,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
 
         cbTipoPago1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Débito", "Crédito" }));
 
-        cbTipoPago2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crédito", "Débito" }));
+        cbTipoPago2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Débito", "Crédito" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -532,20 +535,18 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelInferiorLayout.createSequentialGroup()
-                                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelInferiorLayout.createSequentialGroup()
-                                        .addGap(50, 50, 50)
-                                        .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelInferiorLayout.createSequentialGroup()
-                                        .addComponent(panelPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(panelPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(3, 3, 3)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelInferiorLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 40, Short.MAX_VALUE))))
         );
         panelInferiorLayout.setVerticalGroup(
@@ -564,9 +565,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(bFinalizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -673,8 +674,8 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
             
-                        Reportes newReport = new Reportes();
-                        newReport.reporteFactura(factura);
+                        //Reportes newReport = new Reportes();
+                        //newReport.reporteFactura(factura);
                     } else if (tipoPago1.equals("Crédito")) {
 
                         tipoPagoRegistro1 = 2;

@@ -93,14 +93,17 @@ public class VentanaRegistrarModificarMesas extends javax.swing.JFrame {
             }
         });
 
-        bFinalizar.setText("Finalizar");
+        bFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bFinalizar.png"))); // NOI18N
+        bFinalizar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bFinalizarPR.png"))); // NOI18N
         bFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bFinalizarActionPerformed(evt);
             }
         });
 
-        bFinalizar1.setText("Limpiar");
+        bFinalizar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLimpiar.png"))); // NOI18N
+        bFinalizar1.setToolTipText("");
+        bFinalizar1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bLimpiarPR.png"))); // NOI18N
 
         lbNumero.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lbNumero.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,27 +132,25 @@ public class VentanaRegistrarModificarMesas extends javax.swing.JFrame {
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInferiorLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lCodigo2)
+                    .addComponent(lbNumero)
+                    .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lCodigo2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbNumero, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(37, 37, 37)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInferiorLayout.createSequentialGroup()
-                        .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(tfNumero, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                        .addComponent(tfCapacidad, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addComponent(tfCapacidad, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                        .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         panelInferiorLayout.setVerticalGroup(
             panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInferiorLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addGap(40, 40, 40)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
@@ -157,13 +158,13 @@ public class VentanaRegistrarModificarMesas extends javax.swing.JFrame {
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lCodigo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfCapacidad, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addGap(83, 83, 83)
+                .addGap(40, 40, 40)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(bFinalizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13))
+                .addGap(40, 40, 40))
         );
 
         lLogo.setBackground(new java.awt.Color(89, 30, 27));
@@ -177,7 +178,7 @@ public class VentanaRegistrarModificarMesas extends javax.swing.JFrame {
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(panelPrincipalLayout.createSequentialGroup()
@@ -203,9 +204,7 @@ public class VentanaRegistrarModificarMesas extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

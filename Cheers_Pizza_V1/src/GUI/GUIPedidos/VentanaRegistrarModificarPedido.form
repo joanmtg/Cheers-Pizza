@@ -24,7 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelPrincipal" alignment="0" max="32767" attributes="0"/>
+          <Component id="panelPrincipal" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -45,17 +45,14 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="417" max="-2" attributes="0"/>
-                          <Component id="lLogo" min="-2" pref="86" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lLogo" min="-2" pref="86" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="447" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -66,7 +63,7 @@
                   <Component id="lLogo" min="-2" pref="89" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="panelInferior" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="34" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -99,7 +96,7 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="lMesa" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="lTipoPedido" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -127,24 +124,24 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="bLimpiar" min="-2" pref="98" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="bFinalizar" min="-2" pref="97" max="-2" attributes="0"/>
+                              <Component id="bLimpiar" min="-2" pref="120" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="bFinalizar" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Component id="lbValorTotal" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" alignment="0" min="-2" pref="519" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="42" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="bMarcarEntregado" alignment="1" max="32767" attributes="0"/>
-                              <Component id="bQuitarItem" alignment="1" max="32767" attributes="0"/>
-                              <Component id="bAgregarItem" alignment="1" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="bVerificarIDMesero" alignment="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="bVerificarIDCliente" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="bVerificarIDCliente" min="-2" pref="87" max="-2" attributes="0"/>
-                          <Component id="bVerificarIDMesero" min="-2" pref="87" max="-2" attributes="0"/>
+                          <Component id="bAgregarItem" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="bQuitarItem" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="bMarcarEntregado" alignment="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -191,13 +188,15 @@
                           <Component id="lbTotal" alignment="3" max="32767" attributes="0"/>
                           <Component id="lbValorTotal" alignment="3" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="bAtras" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="bLimpiar" alignment="1" max="32767" attributes="0"/>
-                          <Component id="bFinalizar" alignment="1" max="32767" attributes="0"/>
+                      <EmptySpace min="46" pref="46" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="bLimpiar" alignment="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="bAtras" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="bFinalizar" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -218,7 +217,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bFinalizar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Finalizar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bFinalizar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bFinalizarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFinalizarActionPerformed"/>
@@ -226,7 +230,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bLimpiar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Limpiar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bLimpiar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bLimpiarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bLimpiarActionPerformed"/>
@@ -396,7 +405,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bAgregarItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Agregar &#xcd;tem"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bAgregarItem.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bAgregarItemPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bAgregarItemActionPerformed"/>
@@ -404,7 +418,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bQuitarItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Quitar &#xcd;tem"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bQuitarItem.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bQuitarItemPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bQuitarItemActionPerformed"/>
@@ -412,7 +431,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bMarcarEntregado">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Marcar Entregado"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bMarcarEntregado.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bMarcarEntregadoPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bMarcarEntregadoActionPerformed"/>
@@ -420,7 +444,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bVerificarIDCliente">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Verificar ID"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bVerificar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bVerificarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVerificarIDClienteActionPerformed"/>
@@ -431,7 +460,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bVerificarIDMesero">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Verificar ID"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bVerificar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bVerificarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVerificarIDMeseroActionPerformed"/>

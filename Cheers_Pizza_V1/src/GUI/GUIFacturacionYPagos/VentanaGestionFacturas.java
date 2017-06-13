@@ -148,7 +148,8 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaFacturas);
 
-        bVerFactura.setText("Ver Factura");
+        bVerFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bVerFactura.png"))); // NOI18N
+        bVerFactura.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bVerFacturaPR.png"))); // NOI18N
         bVerFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bVerFacturaActionPerformed(evt);
@@ -159,12 +160,6 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         lFiltroCodigo.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo.setText("Filtrar por:");
 
-        tfFiltroNumeroFactura.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfFiltroNumeroFacturaKeyReleased(evt);
-            }
-        });
-
         lFiltroCodigo1.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo1.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo1.setText("Número Factura:");
@@ -172,12 +167,6 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
         lFiltroCodigo2.setFont(new java.awt.Font("Eras Demi ITC", 0, 14)); // NOI18N
         lFiltroCodigo2.setForeground(new java.awt.Color(255, 255, 255));
         lFiltroCodigo2.setText("Cod. Pedido:");
-
-        tfFIltroCodPedido.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfFIltroCodPedidoKeyReleased(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
@@ -202,7 +191,7 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
                             .addGroup(panelInferiorLayout.createSequentialGroup()
                                 .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bVerFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(bVerFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
                         .addGap(25, 25, 25))))
         );
@@ -220,10 +209,10 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
                         .addComponent(lFiltroCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bVerFactura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bVerFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
 

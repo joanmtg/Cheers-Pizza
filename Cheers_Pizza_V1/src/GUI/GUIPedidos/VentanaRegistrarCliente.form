@@ -118,13 +118,12 @@
                                   <Component id="tfTelefono" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
                                   <Component id="tfCelular" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                      <Component id="bFinalizar1" min="-2" pref="98" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                      <Component id="bFinalizar" min="-2" pref="97" max="-2" attributes="0"/>
+                                      <Component id="bFinalizar1" min="-2" pref="110" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                                      <Component id="bFinalizar" min="-2" pref="110" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="48" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="69" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -184,7 +183,12 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="bFinalizar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Finalizar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bFinalizar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bFinalizarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFinalizarActionPerformed"/>
@@ -192,7 +196,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="bFinalizar1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Limpiar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bLimpiar.png"/>
+                </Property>
+                <Property name="pressedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/bLimpiarPR.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bFinalizar1ActionPerformed"/>

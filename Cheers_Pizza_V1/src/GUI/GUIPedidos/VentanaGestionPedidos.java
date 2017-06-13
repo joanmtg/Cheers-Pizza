@@ -126,14 +126,16 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaPedidos);
 
-        bRegistrar.setText("Registrar");
+        bRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bRegistrar.png"))); // NOI18N
+        bRegistrar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bRegistrarPR.png"))); // NOI18N
         bRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bRegistrarActionPerformed(evt);
             }
         });
 
-        bModificar.setText("Modificar");
+        bModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bModificar.png"))); // NOI18N
+        bModificar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bModificarPR.png"))); // NOI18N
         bModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bModificarActionPerformed(evt);
@@ -164,14 +166,16 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
             }
         });
 
-        bEliminar.setText("Eliminar");
+        bEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bEliminar.png"))); // NOI18N
+        bEliminar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bEliminarPR.png"))); // NOI18N
         bEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bEliminarActionPerformed(evt);
             }
         });
 
-        bInformacion.setText("Información");
+        bInformacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bInformacion.png"))); // NOI18N
+        bInformacion.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bInformacionPR.png"))); // NOI18N
         bInformacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bInformacionActionPerformed(evt);
@@ -196,19 +200,19 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(tfFiltroIDCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelInferiorLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInferiorLayout.createSequentialGroup()
                         .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelInferiorLayout.createSequentialGroup()
                                 .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bInformacion)
-                                .addGap(18, 18, 18)
-                                .addComponent(bRegistrar)
-                                .addGap(18, 18, 18)
-                                .addComponent(bModificar)
-                                .addGap(21, 21, 21)
-                                .addComponent(bEliminar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                                .addComponent(bInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(bRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))
                         .addGap(25, 25, 25))))
         );
         panelInferiorLayout.setVerticalGroup(
@@ -225,15 +229,15 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                         .addComponent(lFiltroCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bRegistrar)
-                        .addComponent(bInformacion)))
-                .addGap(21, 21, 21))
+                .addGap(30, 30, 30)
+                .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(bRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(bInformacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(bAtras, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
         );
 
         lLogo.setBackground(new java.awt.Color(89, 30, 27));
@@ -252,9 +256,9 @@ public class VentanaGestionPedidos extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(panelInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(425, 425, 425)
+                        .addGap(393, 393, 393)
                         .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
