@@ -20,6 +20,9 @@ package Reportes;
 import Administracion.Factura;
 import static Reportes.Reportes.lLogger;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -83,9 +86,12 @@ public class Reportes {
     
     public void reporteTopMasVendidos(String codEmpleado, String nombreEmpleado){
        JasperReport report = null;
+       Connection conectar;
        
        try
        {
+            conectar = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cheers_bd", "wayne", "arkham");
+           
             URL ruta = this.getClass().getResource("/Reportes/reporteItemsMasPedidos.jasper");
             URL logo = this.getClass().getResource("/images/logo.png");
             
@@ -95,7 +101,7 @@ public class Reportes {
             parametros.put("nombreEmpleado", nombreEmpleado);
             parametros.put("codigoEmpleado", codEmpleado);            
             
-            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
+            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
             
             Visualizador visualizar = Visualizador.obtenerInstancia(contenido, false);
             visualizar.setZoomRatio(0.5F);
@@ -104,16 +110,21 @@ public class Reportes {
        }catch(JRException ex)
        {
            JOptionPane.showMessageDialog(null, "No se pudo generar el reporte " + ex, "Error", JOptionPane.ERROR_MESSAGE);
-       }
+       } catch (SQLException ex) {
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }
       
     }
     
     
     public void reporteTopMenosVendidos(String codEmpleado, String nombreEmpleado){
        JasperReport report = null;
+       Connection conectar;
        
        try
        {
+           conectar = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cheers_bd", "wayne", "arkham");
+           
             URL ruta = this.getClass().getResource("/Reportes/reporteItemsMenosPedidos.jasper");
             URL logo = this.getClass().getResource("/images/logo.png");
             
@@ -123,7 +134,7 @@ public class Reportes {
             parametros.put("nombreEmpleado", nombreEmpleado);
             parametros.put("codigoEmpleado", codEmpleado);            
             
-            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
+            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
             
             Visualizador visualizar = Visualizador.obtenerInstancia(contenido, false);
             visualizar.setZoomRatio(0.5F);
@@ -132,14 +143,19 @@ public class Reportes {
        }catch(JRException ex)
        {
            JOptionPane.showMessageDialog(null, "No se pudo generar el reporte " + ex, "Error", JOptionPane.ERROR_MESSAGE);
-       }      
+       } catch (SQLException ex) {      
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }      
     }
     
     public void reporteTiempoPromedioAtencion(String codEmpleado, String nombreEmpleado){
        JasperReport report = null;
+       Connection conectar;
        
        try
        {
+            conectar = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cheers_bd", "wayne", "arkham");
+           
             URL ruta = this.getClass().getResource("/Reportes/ReporteTiempoAtencion.jasper");
             URL logo = this.getClass().getResource("/images/logo.png");
             
@@ -149,7 +165,7 @@ public class Reportes {
             parametros.put("nombreEmpleado", nombreEmpleado);
             parametros.put("codigoEmpleado", codEmpleado);            
             
-            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
+            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
             
             Visualizador visualizar = Visualizador.obtenerInstancia(contenido, false);
             visualizar.setZoomRatio(0.5F);
@@ -158,14 +174,19 @@ public class Reportes {
        }catch(JRException ex)
        {
            JOptionPane.showMessageDialog(null, "No se pudo generar el reporte " + ex, "Error", JOptionPane.ERROR_MESSAGE);
-       }      
+       } catch (SQLException ex) {      
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }      
     }
     
     public void reporteIngresosDiariosSemana(String codEmpleado, String nombreEmpleado, int anio, int semana){
        JasperReport report = null;
+       Connection conectar;
        
        try
        {
+            conectar = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cheers_bd", "wayne", "arkham");
+           
             URL ruta = this.getClass().getResource("/Reportes/ReporteIngresosSemana.jasper");
             URL logo = this.getClass().getResource("/images/logo.png");
             
@@ -177,7 +198,7 @@ public class Reportes {
             parametros.put("numeroSemana", semana);
             parametros.put("anio", anio);  
             
-            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
+            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
             
             Visualizador visualizar = Visualizador.obtenerInstancia(contenido, false);
             visualizar.setZoomRatio(0.5F);
@@ -186,14 +207,19 @@ public class Reportes {
        }catch(JRException ex)
        {
            JOptionPane.showMessageDialog(null, "No se pudo generar el reporte " + ex, "Error", JOptionPane.ERROR_MESSAGE);
-       }      
+       } catch (SQLException ex) {      
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }      
     }
     
     public void reporteIngresosDiariosMes(int anio, int mes){
        JasperReport report = null;
+       Connection conectar;
        
        try
        {
+            conectar = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cheers_bd", "wayne", "arkham");
+           
             URL ruta = this.getClass().getResource("/Reportes/ReporteIngresosSemana.jasper");
             URL logo = this.getClass().getResource("/images/logo.png");
             
@@ -203,7 +229,7 @@ public class Reportes {
             parametros.put("mes", mes);
             parametros.put("anio", anio);  
             
-            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
+            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
             
             Visualizador visualizar = Visualizador.obtenerInstancia(contenido, false);
             visualizar.setZoomRatio(0.5F);
@@ -212,7 +238,9 @@ public class Reportes {
        }catch(JRException ex)
        {
            JOptionPane.showMessageDialog(null, "No se pudo generar el reporte " + ex, "Error", JOptionPane.ERROR_MESSAGE);
-       }      
+       } catch (SQLException ex) {      
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }      
     }
     
     
