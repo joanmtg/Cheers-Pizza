@@ -6,6 +6,9 @@
 package GUI.GUIReportes;
 
 import Administracion.Empleado;
+import Reportes.Reportes;
+import java.time.LocalDate;
+import java.util.Calendar;
 import javax.swing.*;
 
 /**
@@ -24,7 +27,41 @@ public class VentanaReporteIngresosSemana extends javax.swing.JFrame {
         ventanaAnterior = ventana;
         empleadoActual = empleado; 
         setLocationRelativeTo(null);        
-                
+               
+        llenarComboAnios();
+    }
+    
+    public void llenarComboAnios(){
+        
+        LocalDate fecha = LocalDate.now();
+        int anio = fecha.getYear();
+        
+        for (int i = 2010; i <= anio; i++) {
+            cbAnio.addItem(i+"");
+        }
+        
+        cbAnio.setSelectedItem(anio+"");  
+        llenarComboSemanas();
+    }
+    
+    
+    public void llenarComboSemanas(){
+        
+        int indiceSeleccionado = cbAnio.getSelectedIndex();
+        int limite = 52;
+        
+        if(indiceSeleccionado == cbAnio.getItemCount()-1){                      
+            limite = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)-1;            
+        }
+        
+        cbSemana.removeAllItems();
+        
+        for (int i = 1; i <= limite; i++) {
+            cbSemana.addItem(i+"");
+        }
+        
+        cbSemana.setSelectedIndex(cbSemana.getItemCount()-1);
+        
     }
 
     /**
@@ -41,9 +78,9 @@ public class VentanaReporteIngresosSemana extends javax.swing.JFrame {
         bAtras = new javax.swing.JButton();
         lAnio = new javax.swing.JLabel();
         lAnio1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        bGenerarReporte = new javax.swing.JButton();
+        cbAnio = new javax.swing.JComboBox<>();
+        cbSemana = new javax.swing.JComboBox<>();
         lLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -69,8 +106,19 @@ public class VentanaReporteIngresosSemana extends javax.swing.JFrame {
         lAnio1.setForeground(new java.awt.Color(255, 255, 255));
         lAnio1.setText("Semana:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bGenerarReporte.png"))); // NOI18N
-        jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bGenerarReportePR.png"))); // NOI18N
+        bGenerarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bGenerarReporte.png"))); // NOI18N
+        bGenerarReporte.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bGenerarReportePR.png"))); // NOI18N
+        bGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGenerarReporteActionPerformed(evt);
+            }
+        });
+
+        cbAnio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbAnioItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelInferiorLayout = new javax.swing.GroupLayout(panelInferior);
         panelInferior.setLayout(panelInferiorLayout);
@@ -84,9 +132,9 @@ public class VentanaReporteIngresosSemana extends javax.swing.JFrame {
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(168, Short.MAX_VALUE))
         );
         panelInferiorLayout.setVerticalGroup(
@@ -95,15 +143,15 @@ public class VentanaReporteIngresosSemana extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lAnio)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lAnio1)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(bGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -159,6 +207,22 @@ public class VentanaReporteIngresosSemana extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bAtrasActionPerformed
 
+    private void cbAnioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbAnioItemStateChanged
+        
+        llenarComboSemanas();
+        
+    }//GEN-LAST:event_cbAnioItemStateChanged
+
+    private void bGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerarReporteActionPerformed
+        
+        int anio = Integer.parseInt((String)cbAnio.getSelectedItem());
+        int semana = Integer.parseInt((String)cbSemana.getSelectedItem());
+        
+        Reportes reportes = new Reportes();
+        reportes.reporteIngresosDiariosSemana(empleadoActual.getId(), empleadoActual.getNombre(), anio, semana);
+        
+    }//GEN-LAST:event_bGenerarReporteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -197,9 +261,9 @@ public class VentanaReporteIngresosSemana extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAtras;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton bGenerarReporte;
+    private javax.swing.JComboBox<String> cbAnio;
+    private javax.swing.JComboBox<String> cbSemana;
     private javax.swing.JLabel lAnio;
     private javax.swing.JLabel lAnio1;
     private javax.swing.JLabel lLogo;

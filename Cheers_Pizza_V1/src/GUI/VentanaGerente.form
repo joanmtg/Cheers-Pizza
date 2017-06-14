@@ -126,10 +126,8 @@
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bSucursales" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="bItems" pref="0" max="32767" attributes="0"/>
-                              <Component id="bMesas" min="-2" pref="30" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="bItems" pref="0" max="32767" attributes="0"/>
+                          <Component id="bMesas" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="bReportes" min="-2" pref="31" max="-2" attributes="0"/>
@@ -202,6 +200,9 @@
                   <Image iconType="3" name="/images/bReportesPR.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bReportesActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bAtras">
               <Properties>

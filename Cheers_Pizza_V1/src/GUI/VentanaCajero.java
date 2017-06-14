@@ -21,6 +21,7 @@ import GUI.GUIItems.VentanaGestionItems;
 import static GUI.GUIItems.VentanaRegistrarModificarItem.decodeToImage;
 import GUI.GUIMesas.VentanaGestionMesas;
 import GUI.GUIPedidos.VentanaGestionPedidos;
+import GUI.GUIReportes.VentanaReportes;
 import GUI.GUISucursales.VentanaGestionSucursales;
 import GUI.GUIUsuarios.VentanaGestionEmpleados;
 import GUI.GUIUsuarios.VentanaRegistrarModificarEmpleado;
@@ -88,6 +89,11 @@ public class VentanaCajero extends javax.swing.JFrame {
 
         bReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bReportes.png"))); // NOI18N
         bReportes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bReportesPR.png"))); // NOI18N
+        bReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bReportesActionPerformed(evt);
+            }
+        });
 
         bPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bPagos.png"))); // NOI18N
         bPagos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bPagosPR.png"))); // NOI18N
@@ -129,9 +135,8 @@ public class VentanaCajero extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(bPagos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(bMisDatos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(bPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(bMisDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -257,6 +262,14 @@ public class VentanaCajero extends javax.swing.JFrame {
         this.setVisible(false);
 
     }//GEN-LAST:event_bPagosActionPerformed
+
+    private void bReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bReportesActionPerformed
+        
+        VentanaReportes vReportes = new VentanaReportes(this, empleadoIngresado);
+        vReportes.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_bReportesActionPerformed
 
     public void colocarInfoEmpleado() {
         lIdentificacion.setText("Identificación: " + empleadoIngresado.getId());
