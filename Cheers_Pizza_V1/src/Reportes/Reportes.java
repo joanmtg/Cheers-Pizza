@@ -220,7 +220,7 @@ public class Reportes {
        {
             conectar = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cheers_bd", "wayne", "arkham");
            
-            URL ruta = this.getClass().getResource("/Reportes/ReporteIngresosSemana.jasper");
+            URL ruta = this.getClass().getResource("/Reportes/ReporteIngresosDiaMes.jasper");
             URL logo = this.getClass().getResource("/images/logo.png");
             
             report = (JasperReport) JRLoader.loadObject(ruta);
