@@ -9,7 +9,7 @@
 	<parameter name="nombreEmpleado" class="java.lang.String"/>
 	<parameter name="codigoEmpleado" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT nombre, Count(*) numeroPedidos from Item INNER JOIN (SELECT codigo_item FROM pedido_item) ped ON Item.codigo = ped.codigo_item GROUP BY codigo ORDER BY COUNT(*) DESC LIMIT 10;]]>
+		<![CDATA[SELECT nombre, Count(*) numeroPedidos FROM item INNER JOIN (SELECT codigo_item FROM pedido_item WHERE numero_pedido IN (SELECT numero FROM pedido WHERE extract(month from hora_inicio) = extract(month from now()))) ped ON item.codigo = ped.codigo_item GROUP BY codigo ORDER BY Count(*) DESC LIMIT 10;]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="numeropedidos" class="java.lang.Long"/>
@@ -185,7 +185,7 @@
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA[""]]></seriesExpression>
+						<seriesExpression><![CDATA[$F{nombre}]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{nombre}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{numeropedidos}]]></valueExpression>
 					</categorySeries>
