@@ -75,15 +75,15 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         ponerTodasLasSucursales();
 
         defaultImage();
-        
-        String cargo = this.empleado.getCargo();
-        if(cargo.equals("Mesero") || cargo.equals("Cajero")){
-            System.out.println("El cargo es: "+cargo);
-            cbCargo.setEnabled(false);
-            cbSucursales.setEnabled(false);
-        }
+                      
 
         if (operacion.equals("Modificacion")) {
+            
+            String cargo = this.empleado.getCargo();  
+            if(cargo.equals("Mesero") || cargo.equals("Cajero")){                
+                cbCargo.setEnabled(false);
+                cbSucursales.setEnabled(false);
+            }
 
             cbTipoID.setSelectedItem(empleado.getTipoId());
             tfIdentificacion.setText(empleado.getId());
@@ -470,9 +470,9 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(bFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(bFinalizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
