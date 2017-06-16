@@ -61,7 +61,7 @@ public class PedidoJpaController{
     public List<BigInteger> joinExcept(){
         
         fachada.getEntityManager().getTransaction().begin();
-        String join = "SELECT numero FROM Pedido "
+        String join = "SELECT numero FROM Pedido WHERE Pedido.entregado = 'true'"
                     + "EXCEPT "
                     + "SELECT numero_pedido FROM Factura INNER JOIN Factura_FormaPago ON Factura.numero = Factura_FormaPago.factura_numero;";
         Query query = fachada.getEntityManager().createNativeQuery(join);
