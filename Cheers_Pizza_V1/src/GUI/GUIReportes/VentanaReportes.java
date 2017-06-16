@@ -256,7 +256,7 @@ public class VentanaReportes extends javax.swing.JFrame {
 
     private void bMeserosDelMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMeserosDelMesActionPerformed
         
-        // Reporte en construcción
+        reportes.reporteEmpleadoMes(empleadoActual.getId(), empleadoActual.getNombre());
         
     }//GEN-LAST:event_bMeserosDelMesActionPerformed
 

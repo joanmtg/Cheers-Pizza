@@ -245,5 +245,36 @@ public class Reportes {
         }      
     }
     
+    public void reporteEmpleadoMes(String codEmpleado, String nombreEmpleado) {
+
+        JasperReport report = null;
+        Connection conectar;
+
+        try {
+            conectar = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cheers_bd", "wayne", "arkham");
+
+            URL ruta = this.getClass().getResource("/Reportes/reporteEmpleadoDelMes.jasper");
+            URL logo = this.getClass().getResource("/images/logo.png");
+
+            report = (JasperReport) JRLoader.loadObject(ruta);
+            Map parametros = new HashMap();
+            parametros.put("logo", logo);
+            parametros.put("nombreEmpleado", nombreEmpleado);
+            parametros.put("codigoEmpleado", codEmpleado);
+
+            JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
+
+            Visualizador visualizar = Visualizador.obtenerInstancia(contenido, false);
+            visualizar.setZoomRatio(0.5F);
+            visualizar.setVisible(true);
+
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo generar el reporte " + ex, "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
     
 }
