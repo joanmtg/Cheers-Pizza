@@ -228,7 +228,9 @@ public class VentanaReportes extends javax.swing.JFrame {
 
     private void bMasVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMasVendidosActionPerformed
         
-        reportes.reporteTopMasVendidos(empleadoActual.getId(), empleadoActual.getNombre());
+        VentanaReporteMasVendidos vRepMasVendidos = new VentanaReporteMasVendidos(this, empleadoActual);
+        vRepMasVendidos.setVisible(true);
+        this.setVisible(false);
         
     }//GEN-LAST:event_bMasVendidosActionPerformed
 

@@ -84,7 +84,7 @@ public class Reportes {
       
     }
     
-    public void reporteTopMasVendidos(String codEmpleado, String nombreEmpleado){
+    public void reporteTopMasVendidos(String codEmpleado, String nombreEmpleado, int mes, int anio){
        JasperReport report = null;
        Connection conectar;
        
@@ -100,6 +100,8 @@ public class Reportes {
             parametros.put("logo", logo);
             parametros.put("nombreEmpleado", nombreEmpleado);
             parametros.put("codigoEmpleado", codEmpleado);            
+            parametros.put("mes", mes); 
+            parametros.put("anio", anio); 
             
             JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
             
