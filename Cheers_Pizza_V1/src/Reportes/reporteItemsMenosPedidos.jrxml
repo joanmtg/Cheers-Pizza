@@ -7,7 +7,7 @@
 	<parameter name="codigoEmpleado" class="java.lang.String"/>
 	<parameter name="nombreEmpleado" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT nombre, Count(*) numeroPedidos from Item INNER JOIN (SELECT codigo_item FROM pedido_item) ped ON Item.codigo = ped.codigo_item GROUP BY codigo ORDER BY COUNT(*) ASC LIMIT 10;]]>
+		<![CDATA[SELECT nombre, Count(*) numeroPedidos FROM item INNER JOIN (SELECT codigo_item FROM pedido_item WHERE numero_pedido IN (SELECT numero FROM pedido WHERE (date_trunc('month', now() + interval '30 days')-hora_inicio) <= interval '6 months')) ped ON item.codigo = ped.codigo_item GROUP BY codigo ORDER BY Count(*) ASC LIMIT 10;]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="numeropedidos" class="java.lang.Long"/>
