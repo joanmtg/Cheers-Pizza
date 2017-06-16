@@ -644,6 +644,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         Long numeroPedido = pedido.getNumero();
         int tipoPagoRegistro1;
         int tipoPagoRegistro2;
+        double cambio;
 
         if (formaPago.equals("Simple")) {
 
@@ -653,30 +654,42 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
             } else {
 
                 tipoPago1 = cbTipoPago1.getSelectedItem().toString();
-                monto1 = Double.parseDouble(tfOpcion1.getText());
+                monto1 = Double.parseDouble(tfOpcion1.getText());               
                 
-                if(monto1 == totalPago){
-                
-                    if (tipoPago1.equals("Efectivo")) {
+                if (tipoPago1.equals("Efectivo")) {
+
+                    if (monto1 >= totalPago) {
 
                         tipoPagoRegistro1 = 1;
-                    
+
                         factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
                         controladorFactura.crearFactura(factura);
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
                         registrarItemsFactura(items, factura);
-                    
+
+                        if (monto1 > totalPago) {
+                            cambio = monto1 - totalPago;
+                            JOptionPane.showMessageDialog(null, "Su cambio es de: " + cambio, "Información", JOptionPane.INFORMATION_MESSAGE);
+                        }
+
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
                         VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
                         ventanaPedidosPagar.llenarTablaPedidos();
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
-            
+
                         //Reportes newReport = new Reportes();
                         //newReport.reporteFactura(factura);
-                    } else if (tipoPago1.equals("Crédito")) {
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad mayor o igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+
+                if (tipoPago1.equals("Crédito")) {
+                    
+                    if (monto1 == totalPago) {
 
                         tipoPagoRegistro1 = 2;
                         factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
@@ -684,15 +697,22 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
                         registrarItemsFactura(items, factura);
-                    
+
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
                         VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
                         ventanaPedidosPagar.llenarTablaPedidos();
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
+                        
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                } 
 
-                    } else if (tipoPago1.equals("Débito")) {
+                if (tipoPago1.equals("Débito")) {
+                    
+                    if (monto1 == totalPago) {
 
                         tipoPagoRegistro1 = 3;
                         factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
@@ -700,19 +720,17 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
                         controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
                         registrarItemsFactura(items, factura);
-                    
+
                         JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
 
                         VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
                         ventanaPedidosPagar.llenarTablaPedidos();
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     }
-                    
-                }else{
-                    
-                    JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
-                }
+                } 
             }
 
         } else if (formaPago.equals("Mixto")) {
@@ -771,11 +789,64 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
                     }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Las cantidades ingresadas deben sumar un valor igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }else if(monto1 + monto2 > totalPago){
+                    
+                    if(monto2 < totalPago){
+                        
+                         if (tipoPago2.equals("Crédito")) {
+                            
+                            cambio = monto1 + monto2 - totalPago;
+                             
+                            tipoPagoRegistro2 = 2;
+
+                            factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
+                            controladorFactura.crearFactura(factura);
+
+                            facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
+                            controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                            facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro2), monto2);
+                            controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                            registrarItemsFactura(items, factura);
+                            
+                            JOptionPane.showMessageDialog(null, "Su cambio es de: " + cambio, "Información", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                            VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
+                            ventanaPedidosPagar.llenarTablaPedidos();
+                            ventanaPedidosPagar.setVisible(true);
+                            this.setVisible(false);
+
+                        } else if (tipoPago2.equals("Débito")) {
+                            
+                            cambio = monto1 + monto2 - totalPago;
+
+                            tipoPagoRegistro2 = 3;
+
+                            factura = new Factura(horaPago, impuestos, propinas, descuentos, totalPago, cajero, pedido);
+                            controladorFactura.crearFactura(factura);
+
+                            facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro1), monto1);
+                            controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                            facturaFormaPago = new Factura_FormaPago(factura.getNumero(), Long.valueOf(tipoPagoRegistro2), monto2);
+                            controladorFacturaFormaPago.crearFacturaFormaPago(facturaFormaPago);
+                            registrarItemsFactura(items, factura);
+                            
+                            JOptionPane.showMessageDialog(null, "Su cambio es de: " + cambio, "Información", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "El pago se ha realizado con éxito", "Pago exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                            VentanaPedidosAPagar ventanaPedidosPagar = (VentanaPedidosAPagar) ventanaAnterior;
+                            ventanaPedidosPagar.llenarTablaPedidos();
+                            ventanaPedidosPagar.setVisible(true);
+                            this.setVisible(false);
+                        }
+
+                    }else {
+                        JOptionPane.showMessageDialog(null, "La cantidad que se desea pagar con tarjeta debe ser inferior al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+
                 }
             }
-        }     
+        }
 
     }//GEN-LAST:event_bFinalizarActionPerformed
 
