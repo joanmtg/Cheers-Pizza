@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" pageWidth="720" pageHeight="1000" columnWidth="620" leftMargin="50" rightMargin="50" topMargin="40" bottomMargin="40" uuid="bab01703-5ad2-4b57-afe7-53c230dcc16d">
-	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.zoom" value="0.9982500000000003"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="logo" class="java.net.URL">
@@ -8,17 +8,23 @@
 	</parameter>
 	<parameter name="nombreEmpleado" class="java.lang.String"/>
 	<parameter name="codigoEmpleado" class="java.lang.String"/>
-	<parameter name="mes" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="anio" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
-		<![CDATA[SELECT nombre, Count(*) numeroPedidos FROM item INNER JOIN (SELECT codigo_item FROM pedido_item WHERE numero_pedido IN (SELECT numero FROM pedido WHERE extract(month from hora_inicio) = $P{mes}  AND extract(year from hora_inicio) = $P{anio})) ped ON item.codigo = ped.codigo_item GROUP BY codigo ORDER BY Count(*) DESC LIMIT 10;]]>
+		<![CDATA[SELECT identificacion, nombre, num_mes, mes, total_empleado FROM
+	(SELECT pedido.id_empleado AS identificacion, empleado.nombre AS nombre, EXTRACT (MONTH FROM horapago) AS num_mes, to_char(factura.horapago, 'TMMonth') AS mes, SUM(factura.totalpago) AS total_empleado
+		FROM factura, pedido, empleado WHERE pedido.numero = factura.numero_pedido AND pedido.id_empleado = empleado.id AND EXTRACT(YEAR FROM factura.horapago) = EXTRACT(YEAR FROM now())
+		GROUP BY identificacion, nombre, num_mes, mes)  ingresos1
+WHERE total_empleado = (SELECT MAX(total_empleado) FROM 
+						(SELECT pedido.id_empleado AS identificacion, empleado.nombre AS nombre, EXTRACT (MONTH FROM horapago) AS num_mes, to_char(factura.horapago, 'TMMonth') AS mes, SUM(factura.totalpago) AS total_empleado
+							FROM factura, pedido, empleado WHERE pedido.numero = factura.numero_pedido AND pedido.id_empleado = empleado.id AND EXTRACT(YEAR FROM factura.horapago) = EXTRACT(YEAR FROM now())
+							GROUP BY identificacion, nombre, num_mes, mes)  ingresos2
+						WHERE ingresos1.num_mes = ingresos2.num_mes)
+ORDER BY num_mes ASC;]]>
 	</queryString>
+	<field name="identificacion" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
-	<field name="numeropedidos" class="java.lang.Long"/>
+	<field name="num_mes" class="java.lang.Double"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="total_empleado" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -45,8 +51,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Franklin Gothic Book" size="24" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 					</textElement>
-					<text><![CDATA[Ya nos conoces ... Hacemos todo pensando en darte gusto ...]]></text>
+					<text><![CDATA[Ya nos conoces ... Hacemos todo pensando en darte gusto ]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="56" y="114" width="100" height="20" uuid="66cbf518-0362-4fbe-b854-d14e55eefa1e"/>
+					<textFieldExpression><![CDATA[""+$P{logo}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<image scaleImage="RealSize">
 				<reportElement x="11" y="5" width="183" height="154" uuid="62a209b9-7228-4800-a9e2-2eeab4e9d99a"/>
@@ -160,53 +170,112 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="67" splitType="Stretch">
+		<band height="108" splitType="Stretch">
 			<rectangle radius="10">
-				<reportElement x="0" y="11" width="387" height="43" forecolor="#FFFFFF" backcolor="#591E1B" uuid="bc623988-b669-4c4d-a75f-c1c9899b78af"/>
+				<reportElement x="19" y="0" width="583" height="63" forecolor="#FFFFFF" backcolor="#591E1B" uuid="f9938a88-1ee4-4dee-ae24-89edc864c134"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="11" y="11" width="366" height="43" forecolor="#FFFFFF" uuid="6eb7182d-626c-47d2-b92e-ed1c9c0fc921"/>
-				<box bottomPadding="0">
-					<pen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
-					<topPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+				<reportElement mode="Opaque" x="19" y="83" width="116" height="25" forecolor="#FFFFFF" backcolor="#591E1B" uuid="d7d37f56-ac9f-4b87-8607-6453fc65dfa5"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="24" isBold="true"/>
+					<font fontName="Arial" size="14" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Ítems más pedidos]]></text>
+				<text><![CDATA[Identificación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="135" y="83" width="177" height="25" forecolor="#FFFFFF" backcolor="#591E1B" uuid="75fe1e42-4c61-4a35-a0f4-57dbe9ccd114"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="312" y="83" width="148" height="25" forecolor="#FFFFFF" backcolor="#591E1B" uuid="6ca01fd0-323e-4057-9e0d-7b38e95a4c38"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="460" y="83" width="142" height="25" forecolor="#FFFFFF" backcolor="#591E1B" uuid="fd27490f-f0f3-44f7-b1e0-41e8916336f2"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="0" width="513" height="63" forecolor="#FFFFFF" uuid="959eb488-4e8c-4ea9-81c1-7e66afd83edc"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Franklin Gothic Book" size="24" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[El mesero de cada mes se muestra a continuación]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="328" splitType="Stretch">
-			<stackedBar3DChart>
-				<chart>
-					<reportElement x="0" y="37" width="570" height="271" uuid="895be1bb-7a56-453e-8a8b-17963aea4821"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<categoryDataset>
-					<categorySeries>
-						<seriesExpression><![CDATA[$F{nombre}]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{nombre}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{numeropedidos}]]></valueExpression>
-					</categorySeries>
-				</categoryDataset>
-				<bar3DPlot>
-					<plot/>
-					<itemLabel/>
-					<categoryAxisFormat>
-						<axisFormat/>
-					</categoryAxisFormat>
-					<valueAxisFormat>
-						<axisFormat/>
-					</valueAxisFormat>
-				</bar3DPlot>
-			</stackedBar3DChart>
+		<band height="21" splitType="Stretch">
+			<textField pattern="">
+				<reportElement mode="Transparent" x="19" y="1" width="116" height="20" uuid="2c05e9aa-03d6-4868-8ef6-d658b51f8815"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement mode="Transparent" x="135" y="1" width="177" height="20" uuid="065314d3-081b-46a2-a574-ee569c67fc77"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement mode="Transparent" x="312" y="1" width="148" height="20" uuid="cc2ca132-18af-45b9-89a0-c11a4ad19c5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement mode="Transparent" x="460" y="1" width="142" height="20" uuid="bd2ca922-4151-4d6a-b32f-a38dd5734b56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_empleado}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
