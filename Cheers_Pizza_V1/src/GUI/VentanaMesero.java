@@ -245,7 +245,7 @@ public class VentanaMesero extends javax.swing.JFrame {
 
     private void bMisDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMisDatosActionPerformed
 
-        VentanaRegistrarModificarEmpleado ventRegModf = new VentanaRegistrarModificarEmpleado(this, "Modificacion", empleadoIngresado);
+        VentanaRegistrarModificarEmpleado ventRegModf = new VentanaRegistrarModificarEmpleado(this, "Modificacion", empleadoIngresado, empleadoIngresado);
         ventRegModf.setVisible(true);
         this.setVisible(false);
         

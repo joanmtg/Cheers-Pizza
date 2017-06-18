@@ -60,9 +60,10 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
     JFrame ventanaAnterior;
     String operacion; //"Registro" o "Modificación"
     Empleado empleado;
+    Empleado empleadoActual;
     boolean nuevaImagen;
 
-    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado) {
+    public VentanaRegistrarModificarEmpleado(JFrame anterior, String operacion, Empleado empleado, Empleado empleadoActual) {
         super(operacion + " de Empleado");
         initComponents();
 
@@ -71,6 +72,8 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         this.ventanaAnterior = anterior;
         this.operacion = operacion;
         this.empleado = empleado;
+        this.empleadoActual = empleadoActual;
+        
         
         ponerTodasLasSucursales();
 
@@ -524,10 +527,10 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
 
         this.dispose();
         
-        if(empleado.getCargo().equals("Mesero")){
+        if(empleadoActual.getCargo().equals("Mesero")){
             VentanaMesero ventMesero = (VentanaMesero) ventanaAnterior;
             ventMesero.setVisible(true);
-        } else if(empleado.getCargo().equals("Cajero")){
+        } else if(empleadoActual.getCargo().equals("Cajero")){
             VentanaCajero ventCajero = (VentanaCajero) ventanaAnterior;
             ventCajero.setVisible(true);
         }
@@ -840,7 +843,7 @@ public class VentanaRegistrarModificarEmpleado extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new VentanaRegistrarModificarEmpleado(null, null, null).setVisible(true);
+                    new VentanaRegistrarModificarEmpleado(null, null, null, null).setVisible(true);
                 } catch (Exception ex) {
                     System.out.println("Se lanzó una Excepción");
                 }
