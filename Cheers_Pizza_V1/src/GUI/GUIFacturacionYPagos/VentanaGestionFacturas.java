@@ -19,7 +19,7 @@ import AccesoDatosORM.AdaptadorFacturaControlador;
 import Administracion.Factura;
 import Administracion.ItemFactura;
 import Administracion.Pedido;
-import java.time.LocalDateTime;
+import Reportes.Reportes;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -288,6 +288,9 @@ public class VentanaGestionFacturas extends javax.swing.JFrame {
             ventanaRegistrarPago.setVisible(true);
             this.setVisible(false);
 
+            Reportes reporteFactura = new Reportes();
+            reporteFactura.reporteFactura(factura, 0);
+            
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar un pedido a modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
