@@ -52,7 +52,9 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.empleadoActual = empleadoActual;
         
+        
         llenarTablaEmpleados();
+        
         
         trsFiltro = new TableRowSorter(tablaEmpleados.getModel());
         tablaEmpleados.setRowSorter(trsFiltro);
@@ -317,7 +319,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         try {
             Empleado empleado = new Empleado();
             
-            VentanaRegistrarModificarEmpleado vRegistro = new VentanaRegistrarModificarEmpleado(this, "Registro", empleado);
+            VentanaRegistrarModificarEmpleado vRegistro = new VentanaRegistrarModificarEmpleado(this, "Registro", empleado, empleadoActual);
             vRegistro.setVisible(true);
             this.setVisible(false); 
         } catch (Exception ex) {
@@ -344,7 +346,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
                 
                 Empleado empleadoSeleccionado = controladorEmpleados.obtenerEmpleado(idEmpleado);
                 
-                VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Modificacion", empleadoSeleccionado);
+                VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Modificacion", empleadoSeleccionado, empleadoActual);
                 ventanaRegistro.setVisible(true);
                 this.setVisible(false);
             } catch (Exception ex) {
@@ -413,9 +415,12 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
                 filaSeleccionada = tablaEmpleados.getRowSorter().convertRowIndexToModel(filaSeleccionada);
                 
                 String idUsuario = (String) modelo.getValueAt(filaSeleccionada, 0);
-                Empleado usuarioAVisualizar = controladorEmpleados.obtenerEmpleado(idUsuario);
                 
-                VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Visualizacion", usuarioAVisualizar);
+                
+                Empleado usuarioAVisualizar = controladorEmpleados.obtenerEmpleado(idUsuario);
+                           
+                
+                VentanaRegistrarModificarEmpleado ventanaRegistro = new VentanaRegistrarModificarEmpleado(this, "Visualizacion", usuarioAVisualizar, empleadoActual);
                 ventanaRegistro.setVisible(true);
                 this.setVisible(false);
             } catch (Exception ex) {
