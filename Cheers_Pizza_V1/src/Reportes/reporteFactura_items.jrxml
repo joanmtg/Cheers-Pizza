@@ -66,9 +66,16 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="82" height="20" uuid="c68df672-b448-47d1-837c-9ad1d49ae14f"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isStrikeThrough="false"/>
 				</textElement>
@@ -76,6 +83,13 @@
 			</textField>
 			<textField>
 				<reportElement x="82" y="0" width="122" height="20" uuid="2f4dabfe-1b0a-49c0-88b6-5166d9ecb2fb"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isStrikeThrough="false"/>
 				</textElement>
@@ -83,6 +97,13 @@
 			</textField>
 			<textField>
 				<reportElement x="203" y="0" width="100" height="20" uuid="2715e6ab-9cbd-44c6-a632-859e128e3024"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isStrikeThrough="false"/>
 				</textElement>
@@ -90,6 +111,13 @@
 			</textField>
 			<textField>
 				<reportElement x="303" y="0" width="66" height="20" uuid="e63c952e-da33-4141-836d-1d2fcd38a384"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isStrikeThrough="false"/>
 				</textElement>
@@ -97,6 +125,13 @@
 			</textField>
 			<textField>
 				<reportElement x="369" y="0" width="93" height="20" uuid="5baab701-d01f-4cfc-a859-af2a32c8ed62"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isStrikeThrough="false"/>
 				</textElement>
@@ -104,6 +139,13 @@
 			</textField>
 			<textField>
 				<reportElement x="462" y="0" width="93" height="20" uuid="34ddca72-7990-49d5-bb56-5298a4b21311"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14"/>
 				</textElement>

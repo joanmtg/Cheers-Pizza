@@ -644,7 +644,7 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
         Long numeroPedido = pedido.getNumero();
         int tipoPagoRegistro1;
         int tipoPagoRegistro2;
-        double cambio;
+        double cambio = 0;
 
         if (formaPago.equals("Simple")) {
 
@@ -680,8 +680,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
 
-                        //Reportes newReport = new Reportes();
-                        //newReport.reporteFactura(factura);
+                        Reportes newReport = new Reportes();
+                        newReport.reporteFactura(factura, cambio);
+                        
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad mayor o igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     }
@@ -705,6 +706,8 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
                         
+                        Reportes newReport = new Reportes();
+                        newReport.reporteFactura(factura, cambio);
                     }else {
                         JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     }
@@ -727,6 +730,10 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.llenarTablaPedidos();
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
+                        
+                        Reportes newReport = new Reportes();
+                        newReport.reporteFactura(factura, cambio);
+                        
                     }else {
                         JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad igual al total", "Advertencia", JOptionPane.WARNING_MESSAGE);
                     }
@@ -768,6 +775,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.llenarTablaPedidos();
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
+                        
+                        Reportes newReport = new Reportes();
+                        newReport.reporteFactura(factura, cambio);
 
                     } else if (tipoPago2.equals("Débito")) {
 
@@ -788,7 +798,13 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                         ventanaPedidosPagar.llenarTablaPedidos();
                         ventanaPedidosPagar.setVisible(true);
                         this.setVisible(false);
+                        
+                        Reportes newReport = new Reportes();
+                        newReport.reporteFactura(factura, cambio);
                     }
+                    
+                    
+                    
                 }else if(monto1 + monto2 > totalPago){
                     
                     if(monto2 < totalPago){
@@ -816,6 +832,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                             ventanaPedidosPagar.setVisible(true);
                             this.setVisible(false);
 
+                            Reportes newReport = new Reportes();
+                            newReport.reporteFactura(factura, cambio);
+                            
                         } else if (tipoPago2.equals("Débito")) {
                             
                             cambio = monto1 + monto2 - totalPago;
@@ -838,6 +857,9 @@ public class VentanaRegistrarPago extends javax.swing.JFrame {
                             ventanaPedidosPagar.llenarTablaPedidos();
                             ventanaPedidosPagar.setVisible(true);
                             this.setVisible(false);
+                            
+                            Reportes newReport = new Reportes();
+                            newReport.reporteFactura(factura, cambio);
                         }
 
                     }else {

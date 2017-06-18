@@ -49,7 +49,7 @@ public class Reportes {
         lLogger.setLevel((Level)Level.OFF);
     }
     
-    public void reporteFactura(Factura factura){
+    public void reporteFactura(Factura factura, double cambio){
        JasperReport report = null;
        
        try
@@ -63,6 +63,8 @@ public class Reportes {
             parametros.put("numero_factura", factura.getNumero());
             parametros.put("numero_pedido", factura.getPedido().getNumero());
             parametros.put("cajero", factura.getCajero().getNombre()+" "+ factura.getCajero().getApellidos());
+            parametros.put("idCliente", factura.getPedido().getCliente().getId());
+            parametros.put("nomCliente", factura.getPedido().getCliente().getNombre());
             parametros.put("hora_pago", factura.getHoraPago().toString());
             parametros.put("descuento", factura.getDescuento());
             parametros.put("impuestos", factura.getImpuestos());
@@ -70,6 +72,7 @@ public class Reportes {
             parametros.put("total", factura.getTotalPago());
             parametros.put("formas_pago", factura.getFacturaFormasPago());
             parametros.put("items", factura.getItemsFactura());
+            parametros.put("cambio", cambio);
             
             JasperPrint contenido = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
             
@@ -214,7 +217,7 @@ public class Reportes {
         }      
     }
     
-    public void reporteIngresosDiariosMes(int anio, int mes){
+    public void reporteIngresosDiariosMes(String idEmpleado, String nombreE, int anio, int mes){
        JasperReport report = null;
        Connection conectar;
        
@@ -229,7 +232,9 @@ public class Reportes {
             Map parametros = new HashMap();
             parametros.put("logo", logo);            
             parametros.put("mes", mes);
-            parametros.put("anio", anio);  
+            parametros.put("anio", anio); 
+            parametros.put("idEmpleado", idEmpleado);
+            parametros.put("empleado", nombreE);
             
             JasperPrint contenido = JasperFillManager.fillReport(report, parametros, conectar);
             

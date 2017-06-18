@@ -215,7 +215,7 @@ public class VentanaReporteIngresosMes extends javax.swing.JFrame {
         int mes = Integer.parseInt((String)cbMes.getSelectedItem());
         
         Reportes reportes = new Reportes();
-        reportes.reporteIngresosDiariosMes(anio, mes);
+        reportes.reporteIngresosDiariosMes(empleadoActual.getId(), empleadoActual.getNombre(), anio, mes);
         
     }//GEN-LAST:event_bGenerarReporteActionPerformed
 
